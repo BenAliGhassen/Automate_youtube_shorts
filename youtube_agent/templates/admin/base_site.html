@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if title %}{{ title }} | {% endif %}Shorts Studio Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/custom-admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="brand-lockup">
+    <div class="brand-mark">SS</div>
+    <div class="brand-copy">
+        <h1 id="site-name"><a href="{% url 'admin:index' %}">Shorts Studio</a></h1>
+        <p class="brand-subtitle">YouTube Shorts operations panel</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+<div class="admin-top-actions">
+    <a href="{% url 'admin:core_videojob_changelist' %}">Jobs</a>
+    <a href="{% url 'admin:core_topic_changelist' %}">Topics</a>
+</div>
+{% endblock %}

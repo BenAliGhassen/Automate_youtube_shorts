@@ -1,0 +1,374 @@
+
+<style>
+  .road-wrap { padding: 1rem 0 2rem; font-size: 14px; color: var(--color-text-primary); }
+  .phase-block { margin-bottom: 1.5rem; border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); overflow: hidden; }
+  .phase-header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; user-select: none; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .phase-header:hover { background: var(--color-background-tertiary); }
+  .phase-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .phase-title { font-weight: 500; font-size: 15px; flex: 1; }
+  .phase-weeks { font-size: 12px; color: var(--color-text-secondary); white-space: nowrap; }
+  .chevron { font-size: 16px; color: var(--color-text-tertiary); transition: transform 0.2s; }
+  .phase-body { padding: 0 16px 16px; }
+  .day-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); align-items: flex-start; }
+  .day-row:last-child { border-bottom: none; }
+  .day-label { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); min-width: 52px; padding-top: 2px; }
+  .day-content { flex: 1; }
+  .day-task { font-size: 13px; color: var(--color-text-primary); line-height: 1.5; margin-bottom: 4px; }
+  .day-tip { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; padding: 4px 8px; border-left: 2px solid var(--color-border-secondary); margin-top: 4px; border-radius: 0; }
+  .milestone { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; margin-top: 6px; padding: 3px 8px; border-radius: 20px; background: var(--color-background-success); color: var(--color-text-success); }
+  .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 7px; border-radius: 20px; margin-right: 4px; margin-bottom: 4px; font-weight: 500; }
+  .tag-code { background: #EEEDFE; color: #3C3489; }
+  .tag-setup { background: #E6F1FB; color: #0C447C; }
+  .tag-api { background: #FAECE7; color: #712B13; }
+  .tag-test { background: #EAF3DE; color: #27500A; }
+  .tag-ship { background: #FAEEDA; color: #633806; }
+  .ask-btn { margin-top: 10px; font-size: 12px; padding: 5px 12px; border-radius: var(--border-radius-md); cursor: pointer; background: transparent; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); }
+  .ask-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+  .progress-bar-wrap { height: 4px; background: var(--color-border-tertiary); border-radius: 2px; margin: 0 16px 12px; }
+  .progress-bar { height: 4px; border-radius: 2px; transition: width 0.3s; }
+  @media (prefers-color-scheme: dark) {
+    .tag-code { background: #26215C; color: #CECBF6; }
+    .tag-setup { background: #042C53; color: #B5D4F4; }
+    .tag-api { background: #4A1B0C; color: #F5C4B3; }
+    .tag-test { background: #173404; color: #C0DD97; }
+    .tag-ship { background: #412402; color: #FAC775; }
+  }
+</style>
+
+<div class="road-wrap">
+  <h2 class="sr-only">8-week development roadmap for YouTube Shorts automation app</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem;">
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center;">
+      <div style="font-size:22px;font-weight:500;">8</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);">Weeks</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center;">
+      <div style="font-size:22px;font-weight:500;">5</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);">Phases</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center;">
+      <div style="font-size:22px;font-weight:500;">3–4h</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);">Per day</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center;">
+      <div style="font-size:22px;font-weight:500;">v1</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);">Day 56 goal</div>
+    </div>
+  </div>
+
+  <div id="phases"></div>
+</div>
+
+<script>
+const phases = [
+  {
+    id: 0,
+    title: "Foundation & environment setup",
+    weeks: "Week 1 — Days 1–7",
+    color: "#0C447C",
+    bg: "#E6F1FB",
+    darkColor: "#B5D4F4",
+    darkBg: "#042C53",
+    barColor: "#378ADD",
+    prompt: "Help me set up my Django project with Celery and Redis for the YouTube Shorts bot",
+    days: [
+      {
+        label: "Day 1–2",
+        tags: ["setup"],
+        task: "Create Django project. Install: django, celery, redis, django-celery-beat, python-dotenv. Init git repo with .gitignore and .env.example.",
+        tip: "Use Python 3.11+. Set up a virtual environment first (python -m venv .venv). Commit after every working step."
+      },
+      {
+        label: "Day 3",
+        tags: ["setup","code"],
+        task: "Configure Celery with Redis broker. Write a hello-world task and confirm it runs with celery -A project worker.",
+        tip: "Install Redis locally via Docker: docker run -d -p 6379:6379 redis. Saves setup friction."
+      },
+      {
+        label: "Day 4–5",
+        tags: ["code"],
+        task: "Design and create the VideoJob Django model: fields for status, topic, script, audio_path, video_path, youtube_id, created_at, error_log.",
+        tip: "Status as CharField with choices: PENDING, GENERATING, ASSEMBLING, UPLOADING, DONE, FAILED. Lets you track exactly where a job died."
+      },
+      {
+        label: "Day 6",
+        tags: ["setup"],
+        task: "Register all API keys in .env: Gemini, Pexels, YouTube OAuth credentials. Write a settings.py helper that loads them and raises clear errors if missing.",
+        tip: "Never hardcode keys. Use python-decouple or os.environ.get() with a fallback that raises ImproperlyConfigured."
+      },
+      {
+        label: "Day 7",
+        tags: ["test"],
+        task: "Write basic tests for the model and confirm Django admin shows VideoJob with filters. Rest day — review what you built.",
+        tip: "Django admin is free QA. Register VideoJob with list_display = ['topic','status','created_at'] and you have a dashboard instantly.",
+        milestone: "Milestone: project boots, Celery talks to Redis, model exists in DB"
+      }
+    ]
+  },
+  {
+    id: 1,
+    title: "AI content generation pipeline",
+    weeks: "Week 2–3 — Days 8–21",
+    color: "#712B13",
+    bg: "#FAECE7",
+    darkColor: "#F5C4B3",
+    darkBg: "#4A1B0C",
+    barColor: "#D85A30",
+    prompt: "Show me how to call the Gemini API to generate a YouTube Shorts script in Python",
+    days: [
+      {
+        label: "Day 8–10",
+        tags: ["api","code"],
+        task: "Build pipeline/script.py — call Gemini 1.5 Flash API. Prompt it to return a short (60s) script with a hook, 3 facts, and a CTA. Parse and save to VideoJob.",
+        tip: "Structure your prompt to request JSON output: {title, hook, points: [], cta}. Much easier to parse than free text. Add retry logic with exponential backoff."
+      },
+      {
+        label: "Day 11–12",
+        tags: ["api","code"],
+        task: "Build pipeline/tts.py using edge-tts. Convert the script text to an MP3 file. Save audio_path to the VideoJob record.",
+        tip: "pip install edge-tts. Use asyncio.run(). Voice 'en-US-GuyNeural' sounds natural for informational Shorts. Test with a plain string first."
+      },
+      {
+        label: "Day 13–14",
+        tags: ["api","code"],
+        task: "Build pipeline/visuals.py — query Pexels API for video clips or images matching the script topic. Download and cache locally to a media/jobs/{id}/ folder.",
+        tip: "Pexels free tier: 200 req/hour. Search with 2–3 keywords from the script topic. Download the 'medium' resolution — big enough for Shorts."
+      },
+      {
+        label: "Day 15–16",
+        tags: ["test"],
+        task: "Write unit tests for each pipeline module. Mock the API calls. Test that failures update VideoJob.status to FAILED and log the error.",
+        tip: "Use unittest.mock.patch to mock requests. Test the happy path AND the API-timeout path. This will save you hours of debugging later."
+      },
+      {
+        label: "Day 17–18",
+        tags: ["code"],
+        task: "Wire all three generation steps into a single Celery task (generate_content). Chain: script → TTS → visuals. Update status after each step.",
+        tip: "Use Celery's task state updates: self.update_state(state='PROGRESS', meta={'step': 'tts'}). Makes debugging a running job trivial."
+      },
+      {
+        label: "Day 19–21",
+        tags: ["test"],
+        task: "End-to-end test of the generation task. Run it manually, inspect outputs. Fix encoding issues, path bugs, API errors. Buffer days.",
+        tip: "Run with apply() not delay() during testing — it's synchronous and shows errors inline. Move to delay() once it works.",
+        milestone: "Milestone: given a topic, the app produces a script + audio + images automatically"
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Video assembly with FFmpeg",
+    weeks: "Week 4 — Days 22–28",
+    color: "#3C3489",
+    bg: "#EEEDFE",
+    darkColor: "#CECBF6",
+    darkBg: "#26215C",
+    barColor: "#7F77DD",
+    prompt: "How do I assemble a vertical 9:16 YouTube Short with FFmpeg in Python using images and audio?",
+    days: [
+      {
+        label: "Day 22–23",
+        tags: ["setup","code"],
+        task: "Install MoviePy and FFmpeg (system package). Write a test that takes one image + one audio clip and produces a valid MP4. Confirm it plays.",
+        tip: "sudo apt install ffmpeg on Ubuntu. brew install ffmpeg on Mac. MoviePy wraps FFmpeg — start with MoviePy for speed, optimize with raw FFmpeg later."
+      },
+      {
+        label: "Day 24–25",
+        tags: ["code"],
+        task: "Build pipeline/assembler.py. Compose: background clip (loop Pexels video or Ken Burns on images) + TTS audio + text overlay (script hook as subtitle). Output 1080x1920 MP4.",
+        tip: "Use TextClip for overlays. Set size=(1080,1920) from the start — YouTube rejects non-9:16 Shorts. Match video duration to audio length."
+      },
+      {
+        label: "Day 26",
+        tags: ["code"],
+        task: "Add a simple animated title card at the start (0–2s) and an end card with 'Subscribe' text. Keep it minimal.",
+        tip: "CompositeVideoClip layers clips. Use ColorClip for solid backgrounds on cards. Duration = 2s each. Don't over-design — content matters more."
+      },
+      {
+        label: "Day 27",
+        tags: ["test"],
+        task: "Test assembler with real generated content from Week 2–3. Fix aspect ratio issues, audio sync problems, encoding artifacts.",
+        tip: "If the video looks choppy, set fps=30 explicitly. If audio desynchs, check that audio clip duration matches video clip duration before concatenating."
+      },
+      {
+        label: "Day 28",
+        tags: ["test"],
+        task: "Benchmark render time. Optimize if over 5 minutes (lower resolution preview mode for dev). Buffer day.",
+        tip: "Set threads=4 in MoviePy write_videofile(). Use preset='fast' for dev builds, 'medium' for production. Saves significant time.",
+        milestone: "Milestone: app generates a complete watchable MP4 Short from a topic string"
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: "YouTube API integration",
+    weeks: "Week 5–6 — Days 29–42",
+    color: "#27500A",
+    bg: "#EAF3DE",
+    darkColor: "#C0DD97",
+    darkBg: "#173404",
+    barColor: "#639922",
+    prompt: "Walk me through YouTube Data API v3 OAuth2 setup and uploading a video with Python",
+    days: [
+      {
+        label: "Day 29–30",
+        tags: ["setup","api"],
+        task: "Create a Google Cloud project. Enable YouTube Data API v3. Create OAuth 2.0 credentials (Desktop app type). Download client_secrets.json.",
+        tip: "Use your personal Google account for dev. Set up a test YouTube channel. The first OAuth flow must be done manually in a browser — save the refresh token permanently."
+      },
+      {
+        label: "Day 31–32",
+        tags: ["code","api"],
+        task: "Build pipeline/uploader.py. Implement OAuth token refresh flow. Write the upload function using google-api-python-client. Upload a test video.",
+        tip: "pip install google-api-python-client google-auth-oauthlib. Store refresh token in .env. The upload request: body has snippet (title, description, tags) and status (privacyStatus)."
+      },
+      {
+        label: "Day 33",
+        tags: ["code"],
+        task: "Set upload metadata from VideoJob: title from script title, description auto-generated, tags from topic keywords. Set as 'private' first during testing.",
+        tip: "Upload as 'private' always during dev. Switch to 'public' only when the full pipeline is verified. YouTube won't let you easily delete viral mistakes."
+      },
+      {
+        label: "Day 34–35",
+        tags: ["code"],
+        task: "Add quota guard: check daily upload count in DB before uploading. If already uploaded today, skip and log. Save youtube_video_id to VideoJob on success.",
+        tip: "YouTube quota resets at midnight Pacific time. Store quota_used_today as a setting in DB or cache. 1 upload ≈ 1600 units out of 10000 daily."
+      },
+      {
+        label: "Day 36–38",
+        tags: ["test"],
+        task: "Run the full pipeline end-to-end: generate_content → assemble_video → upload_video as chained Celery tasks. Fix handoff bugs between tasks.",
+        tip: "Use Celery chain: (generate_content.s(job_id) | assemble_video.s() | upload_video.s()).apply_async(). Each task receives job_id and updates the DB."
+      },
+      {
+        label: "Day 39–40",
+        tags: ["code"],
+        task: "Add error handling and retry logic to the upload task. If upload fails, mark job FAILED, log error, and don't retry automatically (avoid double-upload).",
+        tip: "Set autoretry_for=() on the upload task — no auto-retry. For generation tasks, autoretry on API timeouts with max_retries=3, countdown=60."
+      },
+      {
+        label: "Day 41–42",
+        tags: ["test"],
+        task: "Upload 3 test videos end-to-end. Verify they appear in YouTube Studio. Check metadata, thumbnail, quality. Buffer days.",
+        tip: "Check YouTube Studio for upload errors — sometimes the API reports success but YouTube rejects the file format. MP4 H.264 + AAC audio is the safest codec combo.",
+        milestone: "Milestone: full pipeline runs unattended and uploads a real Short to YouTube"
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Dashboard, scheduler & delivery",
+    weeks: "Week 7–8 — Days 43–56",
+    color: "#633806",
+    bg: "#FAEEDA",
+    darkColor: "#FAC775",
+    darkBg: "#412402",
+    barColor: "#BA7517",
+    prompt: "Help me build the Django dashboard view for monitoring VideoJob status and triggering uploads",
+    days: [
+      {
+        label: "Day 43–45",
+        tags: ["code"],
+        task: "Build the Django dashboard: list view of all VideoJobs with status badges, links to videos on YouTube, error log display. Use Django's built-in template engine.",
+        tip: "No need for React or HTMX for v1. A simple Django ListView with a Bootstrap 5 CDN template is fast to build and looks professional enough."
+      },
+      {
+        label: "Day 46",
+        tags: ["code"],
+        task: "Add a 'Trigger now' button in the dashboard that manually fires the pipeline for a given topic. Useful for testing and overrides.",
+        tip: "POST to a view that calls the Celery chain with delay(). Return a redirect to the job detail page. Add CSRF protection — Django does it automatically with {% csrf_token %}."
+      },
+      {
+        label: "Day 47–48",
+        tags: ["setup","code"],
+        task: "Configure django-celery-beat periodic task: run the orchestrator daily at a fixed time (e.g. 09:00). Add a topic rotation list in settings.",
+        tip: "Store topics in a DB table so you can manage them from the admin. Rotate through them with a round-robin query. This gives you weeks of content without touching code."
+      },
+      {
+        label: "Day 49–50",
+        tags: ["code"],
+        task: "Add basic email/log notifications on DONE and FAILED jobs. Use Django's built-in send_mail() with a Gmail SMTP config.",
+        tip: "For Gmail SMTP: set EMAIL_BACKEND to smtp, use an App Password (not your main password). Takes 30 minutes and gives you instant failure alerts."
+      },
+      {
+        label: "Day 51–52",
+        tags: ["test"],
+        task: "Full system test: let the scheduler run automatically for 3 consecutive days. Watch it produce and upload 3 Shorts without intervention.",
+        tip: "This is your real v1 acceptance test. If it runs 3 days without manual intervention, it's shippable. Document every manual fix you had to make — those are bugs to close."
+      },
+      {
+        label: "Day 53–54",
+        tags: ["code","ship"],
+        task: "Clean up: remove debug prints, add proper logging (Python logging module), write a README with setup instructions, document all env variables.",
+        tip: "Future you will thank present you. A good README means you can re-deploy on a new machine in 20 minutes. Include: setup steps, env vars, how to add topics, how to run manually."
+      },
+      {
+        label: "Day 55–56",
+        tags: ["ship"],
+        task: "Optional: deploy to a cheap VPS (Hetzner CX11 ~4€/mo or Railway). Set up systemd services for Django + Celery. Test the deployed version uploads successfully.",
+        tip: "Use gunicorn + nginx for Django. Use supervisord to keep Celery alive. Copy your .env securely — never commit it. A deployed v1 is infinitely more motivating than localhost.",
+        milestone: "Milestone: v1 shipped — automated YouTube Shorts running daily, hands-free"
+      }
+    ]
+  }
+];
+
+function tagEl(type) {
+  const map = { code:"code", setup:"setup", api:"api", test:"test", ship:"ship" };
+  const labels = { code:"Code", setup:"Setup", api:"API", test:"Test", ship:"Ship" };
+  return `<span class="tag tag-${map[type]}">${labels[type]}</span>`;
+}
+
+function renderPhases() {
+  const container = document.getElementById('phases');
+  phases.forEach((phase, i) => {
+    const pct = Math.round(((i+1)/phases.length)*100);
+    const block = document.createElement('div');
+    block.className = 'phase-block';
+
+    const daysHtml = phase.days.map(d => `
+      <div class="day-row">
+        <div class="day-label">${d.label}</div>
+        <div class="day-content">
+          <div style="margin-bottom:4px">${d.tags.map(tagEl).join('')}</div>
+          <div class="day-task">${d.task}</div>
+          <div class="day-tip"><i class="ti ti-bulb" style="font-size:13px;vertical-align:-1px;margin-right:4px" aria-hidden="true"></i>${d.tip}</div>
+          ${d.milestone ? `<div class="milestone"><i class="ti ti-circle-check" style="font-size:13px" aria-hidden="true"></i>${d.milestone}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    block.innerHTML = `
+      <div class="phase-header" onclick="toggle(${i})">
+        <span class="phase-badge" style="background:${phase.bg};color:${phase.color};">Phase ${i+1}</span>
+        <span class="phase-title">${phase.title}</span>
+        <span class="phase-weeks">${phase.weeks}</span>
+        <i class="ti ti-chevron-down chevron" id="chev-${i}" aria-hidden="true"></i>
+      </div>
+      <div class="progress-bar-wrap" id="prog-${i}" style="display:none">
+        <div class="progress-bar" style="width:${pct}%;background:${phase.barColor}"></div>
+      </div>
+      <div class="phase-body" id="body-${i}" style="display:none">
+        ${daysHtml}
+        <button class="ask-btn" onclick="sendPrompt('${phase.prompt}')">Ask about this phase ↗</button>
+      </div>
+    `;
+    container.appendChild(block);
+  });
+
+  toggle(0);
+}
+
+function toggle(i) {
+  const body = document.getElementById('body-'+i);
+  const prog = document.getElementById('prog-'+i);
+  const chev = document.getElementById('chev-'+i);
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  prog.style.display = open ? 'none' : 'block';
+  chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+renderPhases();
+</script>

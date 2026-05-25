@@ -1,0 +1,54 @@
+<section class="dashboard-grid dashboard-grid--metrics">
+    {% for card in summary_cards %}
+    <article class="dashboard-card dashboard-card--metric">
+        <p class="dashboard-card__label">{{ card.label }}</p>
+        <p class="dashboard-card__count">{{ card.count }}</p>
+        <p class="dashboard-card__note">{{ card.note }}</p>
+    </article>
+    {% endfor %}
+</section>
+
+<section class="dashboard-grid dashboard-grid--content">
+    <article class="dashboard-card">
+        <div class="dashboard-section__header dashboard-section__header--compact">
+            <div>
+                <p class="admin-eyebrow">Health snapshot</p>
+                <h2>Pipeline status</h2>
+            </div>
+            <a class="button button-secondary" href="{% url 'admin:core_videojob_changelist' %}">Open jobs</a>
+        </div>
+        <div class="status-rail">
+            {% for item in status_rows %}
+            <div class="status-chip status-chip--{{ item.code }}">
+                <span class="status-chip__label">{{ item.label }}</span>
+                <strong class="status-chip__count">{{ item.count }}</strong>
+            </div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="dashboard-card">
+        <div class="dashboard-section__header dashboard-section__header--compact">
+            <div>
+                <p class="admin-eyebrow">Recent activity</p>
+                <h2>Latest jobs</h2>
+            </div>
+            <a class="button button-secondary" href="{% url 'admin:core_videojob_changelist' %}">View all</a>
+        </div>
+        {% if recent_jobs %}
+        <ul class="recent-job-list">
+            {% for job in recent_jobs %}
+            <li class="recent-job-list__item">
+                <div class="recent-job-list__copy">
+                    <a href="{% url 'admin:core_videojob_change' job.pk %}">{{ job.title|default:job.topic|truncatechars:60 }}</a>
+                    <span>{{ job.created_at|date:"M j, Y, g:i a" }}</span>
+                </div>
+                <span class="admin-status-badge admin-status-badge--{{ job.status|lower }}">{{ job.get_status_display }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="dashboard-empty-state">No jobs yet. Once the pipeline runs, the latest items will show up here.</p>
+        {% endif %}
+    </article>
+</section>

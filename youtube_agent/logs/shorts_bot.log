@@ -1,0 +1,1248 @@
+[2026-05-25 14:09:12,574] INFO core.tasks: [70918102] Generating content for: test topic from fixed worker
+[2026-05-25 14:09:12,581] INFO core.pipeline.script: Generating script for topic: test topic from fixed worker
+[2026-05-25 14:09:14,604] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:09:14,608] ERROR core.tasks: [70918102] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:10:14,681] INFO core.tasks: [70918102] Generating content for: test topic from fixed worker
+[2026-05-25 14:10:14,727] INFO core.pipeline.script: Generating script for topic: test topic from fixed worker
+[2026-05-25 14:10:16,730] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:10:16,735] ERROR core.tasks: [70918102] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:11:16,739] INFO core.tasks: [70918102] Generating content for: test topic from fixed worker
+[2026-05-25 14:11:16,743] INFO core.pipeline.script: Generating script for topic: test topic from fixed worker
+[2026-05-25 14:11:18,747] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:11:18,751] ERROR core.tasks: [70918102] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:11:29,732] INFO core.tasks: [ac91b7fd] Generating content for: test topic
+[2026-05-25 14:11:29,743] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:11:31,747] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:11:31,750] ERROR core.tasks: [ac91b7fd] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:11:52,679] INFO core.tasks: [370a78d3] Generating content for: test topic
+[2026-05-25 14:11:52,688] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:11:54,692] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:11:54,734] ERROR core.tasks: [370a78d3] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:12:18,755] INFO core.tasks: [70918102] Generating content for: test topic from fixed worker
+[2026-05-25 14:12:18,759] INFO core.pipeline.script: Generating script for topic: test topic from fixed worker
+[2026-05-25 14:12:20,762] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:12:20,765] ERROR core.tasks: [70918102] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:12:31,754] INFO core.tasks: [ac91b7fd] Generating content for: test topic
+[2026-05-25 14:12:31,759] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:12:33,763] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:12:33,804] ERROR core.tasks: [ac91b7fd] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:12:54,738] INFO core.tasks: [370a78d3] Generating content for: test topic
+[2026-05-25 14:12:54,793] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:12:56,798] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:12:56,839] ERROR core.tasks: [370a78d3] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:13:33,808] INFO core.tasks: [ac91b7fd] Generating content for: test topic
+[2026-05-25 14:13:33,850] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:13:35,855] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:13:35,917] ERROR core.tasks: [ac91b7fd] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:13:56,843] INFO core.tasks: [370a78d3] Generating content for: test topic
+[2026-05-25 14:13:56,909] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:13:58,912] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:13:58,916] ERROR core.tasks: [370a78d3] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:14:35,921] INFO core.tasks: [ac91b7fd] Generating content for: test topic
+[2026-05-25 14:14:35,964] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:14:37,968] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:14:38,009] ERROR core.tasks: [ac91b7fd] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:14:58,920] INFO core.tasks: [370a78d3] Generating content for: test topic
+[2026-05-25 14:14:58,924] INFO core.pipeline.script: Generating script for topic: test topic
+[2026-05-25 14:15:00,926] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:15:00,968] ERROR core.tasks: [370a78d3] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    with urlopen(request, timeout=60) as response:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:38:40,472] INFO core.tasks: [14d8309d] Generating content for: how black holes work
+[2026-05-25 14:38:40,483] INFO core.pipeline.script: Generating script for topic: how black holes work
+[2026-05-25 14:38:42,496] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:38:42,537] ERROR core.tasks: [14d8309d] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    "thinkingConfig": {
+     ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    "Content-Type": "application/json",
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:39:42,541] INFO core.tasks: [14d8309d] Generating content for: how black holes work
+[2026-05-25 14:39:42,599] INFO core.pipeline.script: Generating script for topic: how black holes work
+[2026-05-25 14:39:44,605] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:39:44,611] ERROR core.tasks: [14d8309d] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    "thinkingConfig": {
+     ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    "Content-Type": "application/json",
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:40:44,616] INFO core.tasks: [14d8309d] Generating content for: how black holes work
+[2026-05-25 14:40:44,620] INFO core.pipeline.script: Generating script for topic: how black holes work
+[2026-05-25 14:40:46,623] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:40:46,664] ERROR core.tasks: [14d8309d] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    "thinkingConfig": {
+     ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    "Content-Type": "application/json",
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:41:46,668] INFO core.tasks: [14d8309d] Generating content for: how black holes work
+[2026-05-25 14:41:46,710] INFO core.pipeline.script: Generating script for topic: how black holes work
+[2026-05-25 14:41:48,713] ERROR core.pipeline.script: Gemini API request could not reach the server: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:41:48,716] ERROR core.tasks: [14d8309d] Content generation failed
+Traceback (most recent call last):
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1338, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1384, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1093, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1037, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1472, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\Python313\Lib\http\client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\socket.py", line 864, in create_connection
+    raise exceptions[0]
+  File "C:\Program Files\Python313\Lib\socket.py", line 849, in create_connection
+    sock.connect(sa)
+    ~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 150, in generate_script
+    "thinkingConfig": {
+     ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 489, in open
+    response = self._open(req, data)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 506, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1367, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 61, in generate_content
+    script_data = generate_script(job.topic)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\script.py", line 160, in generate_script
+    "Content-Type": "application/json",
+Exception: Could not reach Gemini API: [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
+[2026-05-25 14:46:23,971] INFO core.tasks: [8204d2a0] Generating content for: phase3-assembler-check
+[2026-05-25 14:46:23,979] INFO core.pipeline.script: Generating script for topic: phase3-assembler-check with model gemini-3.5-flash
+[2026-05-25 14:46:26,438] INFO core.pipeline.script: Script generated successfully for topic: phase3-assembler-check
+[2026-05-25 14:46:26,446] INFO core.pipeline.tts: [8204d2a0] Generating audio with voice en-US-GuyNeural
+[2026-05-25 14:46:29,756] INFO core.pipeline.tts: [8204d2a0] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\8204d2a0-8c95-498d-8be0-66dc9bad7231\audio.mp3
+[2026-05-25 14:46:29,801] INFO core.pipeline.visuals: [8204d2a0] Fetching visuals for topic: phase3-assembler-check
+[2026-05-25 14:46:30,701] INFO core.pipeline.visuals: [8204d2a0] Saved visual 1 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\8204d2a0-8c95-498d-8be0-66dc9bad7231\visuals\image_01.jpg
+[2026-05-25 14:46:30,928] INFO core.pipeline.visuals: [8204d2a0] Saved visual 2 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\8204d2a0-8c95-498d-8be0-66dc9bad7231\visuals\image_02.jpg
+[2026-05-25 14:46:31,261] INFO core.pipeline.visuals: [8204d2a0] Saved visual 3 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\8204d2a0-8c95-498d-8be0-66dc9bad7231\visuals\image_03.jpg
+[2026-05-25 14:46:31,569] INFO core.pipeline.visuals: [8204d2a0] Saved visual 4 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\8204d2a0-8c95-498d-8be0-66dc9bad7231\visuals\image_04.jpg
+[2026-05-25 14:46:31,905] INFO core.pipeline.visuals: [8204d2a0] Saved visual 5 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\8204d2a0-8c95-498d-8be0-66dc9bad7231\visuals\image_05.jpg
+[2026-05-25 14:46:31,905] INFO core.pipeline.visuals: [8204d2a0] Downloaded 5 visuals
+[2026-05-25 14:46:31,905] INFO core.tasks: [8204d2a0] Content generation complete
+[2026-05-25 14:46:31,928] INFO core.tasks: [8204d2a0] Assembling video
+[2026-05-25 14:46:31,928] INFO core.pipeline.assembler: build_video called for job 8204d2a0
+[2026-05-25 14:46:31,931] ERROR core.tasks: [8204d2a0] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 104, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
+    raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
+NotImplementedError: Video assembly not implemented yet — see Phase 3
+[2026-05-25 14:47:40,978] INFO core.tasks: [500419a2] Generating content for: how black holes work
+[2026-05-25 14:47:40,982] INFO core.pipeline.script: Generating script for topic: how black holes work with model gemini-3.5-flash
+[2026-05-25 14:47:42,902] INFO core.pipeline.script: Script generated successfully for topic: how black holes work
+[2026-05-25 14:47:42,909] INFO core.pipeline.tts: [500419a2] Generating audio with voice en-US-GuyNeural
+[2026-05-25 14:47:45,399] INFO core.pipeline.tts: [500419a2] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\500419a2-4312-48ef-b4a0-796e69a3656f\audio.mp3
+[2026-05-25 14:47:45,406] INFO core.pipeline.visuals: [500419a2] Fetching visuals for topic: how black holes work
+[2026-05-25 14:47:45,984] INFO core.pipeline.visuals: [500419a2] Saved visual 1 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\500419a2-4312-48ef-b4a0-796e69a3656f\visuals\image_01.jpg
+[2026-05-25 14:47:46,209] INFO core.pipeline.visuals: [500419a2] Saved visual 2 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\500419a2-4312-48ef-b4a0-796e69a3656f\visuals\image_02.jpg
+[2026-05-25 14:47:46,305] INFO core.pipeline.visuals: [500419a2] Saved visual 3 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\500419a2-4312-48ef-b4a0-796e69a3656f\visuals\image_03.jpg
+[2026-05-25 14:47:46,430] INFO core.pipeline.visuals: [500419a2] Saved visual 4 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\500419a2-4312-48ef-b4a0-796e69a3656f\visuals\image_04.jpg
+[2026-05-25 14:47:46,563] INFO core.pipeline.visuals: [500419a2] Saved visual 5 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\500419a2-4312-48ef-b4a0-796e69a3656f\visuals\image_05.jpg
+[2026-05-25 14:47:46,563] INFO core.pipeline.visuals: [500419a2] Downloaded 5 visuals
+[2026-05-25 14:47:46,563] INFO core.tasks: [500419a2] Content generation complete
+[2026-05-25 14:47:46,576] INFO core.tasks: [500419a2] Assembling video
+[2026-05-25 14:47:46,576] INFO core.pipeline.assembler: build_video called for job 500419a2
+[2026-05-25 14:47:46,580] ERROR core.tasks: [500419a2] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 104, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
+    raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
+NotImplementedError: Video assembly not implemented yet — see Phase 3
+[2026-05-25 14:49:31,975] INFO core.tasks: [8204d2a0] Assembling video
+[2026-05-25 14:49:31,975] INFO core.pipeline.assembler: build_video called for job 8204d2a0
+[2026-05-25 14:49:31,978] ERROR core.tasks: [8204d2a0] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 104, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
+    raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
+NotImplementedError: Video assembly not implemented yet — see Phase 3
+[2026-05-25 14:50:46,626] INFO core.tasks: [500419a2] Assembling video
+[2026-05-25 14:50:46,626] INFO core.pipeline.assembler: build_video called for job 500419a2
+[2026-05-25 14:50:46,632] ERROR core.tasks: [500419a2] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 104, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
+    raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
+NotImplementedError: Video assembly not implemented yet — see Phase 3
+[2026-05-25 14:52:32,021] INFO core.tasks: [8204d2a0] Assembling video
+[2026-05-25 14:52:32,021] INFO core.pipeline.assembler: build_video called for job 8204d2a0
+[2026-05-25 14:52:32,025] ERROR core.tasks: [8204d2a0] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 104, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
+    raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
+NotImplementedError: Video assembly not implemented yet — see Phase 3
+[2026-05-25 14:53:46,676] INFO core.tasks: [500419a2] Assembling video
+[2026-05-25 14:53:46,676] INFO core.pipeline.assembler: build_video called for job 500419a2
+[2026-05-25 14:53:46,679] ERROR core.tasks: [500419a2] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 104, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
+    raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
+NotImplementedError: Video assembly not implemented yet — see Phase 3

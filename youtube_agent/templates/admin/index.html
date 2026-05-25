@@ -1,0 +1,68 @@
+{% extends "admin/base_site.html" %}
+{% load admin_dashboard %}
+
+{% block content %}
+<section class="admin-hero">
+    <div class="admin-hero__copy">
+        <p class="admin-eyebrow">Operations cockpit</p>
+        <h1>Run the Shorts pipeline with less guesswork.</h1>
+        <p>
+            Review generation jobs, spot failures fast, and keep your topic inventory healthy from one clean control room.
+        </p>
+    </div>
+    <div class="admin-hero__actions">
+        <a class="button" href="{% url 'admin:core_videojob_changelist' %}">Review jobs</a>
+        <a class="button button-secondary" href="{% url 'admin:core_topic_changelist' %}">Manage topics</a>
+    </div>
+</section>
+
+{% admin_dashboard_overview %}
+
+<section class="dashboard-section">
+    <div class="dashboard-section__header">
+        <div>
+            <p class="admin-eyebrow">Collections</p>
+            <h2>Admin areas</h2>
+        </div>
+        <p class="dashboard-section__hint">Jump into the records you are most likely to touch during daily operations.</p>
+    </div>
+
+    <div class="app-grid">
+        {% for app in app_list %}
+        <section class="app-card">
+            <div class="app-card__header">
+                <div>
+                    <p class="admin-eyebrow">App</p>
+                    <h3>{{ app.name }}</h3>
+                </div>
+                {% if app.app_url %}
+                <a class="button button-secondary" href="{{ app.app_url }}">Open</a>
+                {% endif %}
+            </div>
+            <ul class="app-model-list">
+                {% for model in app.models %}
+                <li class="app-model-row">
+                    <div class="app-model-row__copy">
+                        <strong>{{ model.name }}</strong>
+                        <span>Browse records or create a new one.</span>
+                    </div>
+                    <div class="app-model-row__actions">
+                        {% if model.admin_url %}
+                        <a href="{{ model.admin_url }}">Browse</a>
+                        {% endif %}
+                        {% if model.add_url %}
+                        <a href="{{ model.add_url }}">Add</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% empty %}
+        <section class="dashboard-card">
+            <p>No admin apps are available yet.</p>
+        </section>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
