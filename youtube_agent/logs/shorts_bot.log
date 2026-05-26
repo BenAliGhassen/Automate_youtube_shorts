@@ -1246,3 +1246,30 @@ Traceback (most recent call last):
   File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 10, in build_video
     raise NotImplementedError("Video assembly not implemented yet — see Phase 3")
 NotImplementedError: Video assembly not implemented yet — see Phase 3
+[2026-05-26 19:27:44,521] INFO core.tasks: [31d03b5f] Generating content for: how black holes work
+[2026-05-26 19:27:44,527] INFO core.pipeline.script: Generating script for topic: how black holes work with model gemini-3.5-flash
+[2026-05-26 19:27:46,564] INFO core.pipeline.script: Script generated successfully for topic: how black holes work
+[2026-05-26 19:27:46,574] INFO core.pipeline.tts: [31d03b5f] Generating audio with voice en-US-GuyNeural
+[2026-05-26 19:27:49,786] INFO core.pipeline.tts: [31d03b5f] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\audio.mp3
+[2026-05-26 19:27:49,866] INFO core.pipeline.visuals: [31d03b5f] Fetching visuals for topic: how black holes work
+[2026-05-26 19:27:50,363] INFO core.pipeline.visuals: [31d03b5f] Saved visual 1 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_01.jpg
+[2026-05-26 19:27:50,623] INFO core.pipeline.visuals: [31d03b5f] Saved visual 2 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_02.jpg
+[2026-05-26 19:27:50,843] INFO core.pipeline.visuals: [31d03b5f] Saved visual 3 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_03.jpg
+[2026-05-26 19:27:51,079] INFO core.pipeline.visuals: [31d03b5f] Saved visual 4 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_04.jpg
+[2026-05-26 19:27:51,282] INFO core.pipeline.visuals: [31d03b5f] Saved visual 5 to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_05.jpg
+[2026-05-26 19:27:51,283] INFO core.pipeline.visuals: [31d03b5f] Downloaded 5 visuals
+[2026-05-26 19:27:51,283] INFO core.tasks: [31d03b5f] Content generation complete
+[2026-05-26 19:27:52,381] INFO core.tasks: [31d03b5f] Assembling video
+[2026-05-26 19:27:52,381] INFO core.pipeline.assembler: [31d03b5f] Found 5 images
+[2026-05-26 19:27:52,510] INFO core.pipeline.assembler: [31d03b5f] Audio duration: 51.43s
+[2026-05-26 19:27:52,511] INFO core.pipeline.assembler: Building slideshow: 5 images, 10.29s each
+[2026-05-26 19:27:52,585] INFO core.pipeline.assembler:   Prepared image 1/5: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_01.jpg
+[2026-05-26 19:27:52,637] INFO core.pipeline.assembler:   Prepared image 2/5: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_02.jpg
+[2026-05-26 19:27:52,678] INFO core.pipeline.assembler:   Prepared image 3/5: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_03.jpg
+[2026-05-26 19:27:52,717] INFO core.pipeline.assembler:   Prepared image 4/5: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_04.jpg
+[2026-05-26 19:27:52,754] INFO core.pipeline.assembler:   Prepared image 5/5: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\visuals\image_05.jpg
+[2026-05-26 19:27:52,816] INFO core.pipeline.assembler: [31d03b5f] Adding title and subtitle overlays
+[2026-05-26 19:27:52,883] INFO core.pipeline.assembler: Title overlay created
+[2026-05-26 19:27:52,883] INFO core.pipeline.assembler: Creating 10 subtitle chunks
+[2026-05-26 19:27:53,634] INFO core.pipeline.assembler: [31d03b5f] Attaching audio and rendering
+[2026-05-26 19:33:21,472] INFO core.tasks: [31d03b5f] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\final.mp4
