@@ -1,10 +1,11 @@
 """Video assembler — stub for Phase 3."""
+import os
 import logging
 from pathlib import Path
 from django.conf import settings
 from PIL import Image
 import numpy as np
-from moviepy import ImageClip, concatenate_videoclips, AudioFileClip
+from moviepy import ImageClip, VideoClip, TextClip, CompositeVideoClip, concatenate_videoclips, AudioFileClip
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +13,8 @@ logger = logging.getLogger(__name__)
 WIDTH  = 1080
 HEIGHT = 1920
 FPS    = 30
-
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+FONT_PATH = os.path.join(SCRIPT_DIR, "arial.ttf") 
 
 def _prepare_image(image_path: str) -> np.ndarray:
     """
@@ -84,36 +86,115 @@ def _ken_burns_clip(arr: np.ndarray, duration: float) -> ImageClip:
 
         return cropped
 
-    return (
-        ImageClip(make_frame, duration=duration)
-        .with_fps(FPS)
-    )
+    return VideoClip(make_frame, duration=duration).with_fps(FPS)
+
+
+def _split_into_chunks(text: str, chunk_duration: float, total_duration: float) -> list[dict]:
+    """
+    Split a script into timed chunks — one chunk every chunk_duration seconds.
+    Returns a list of dicts: [{text, start, end}, ...]
+    """
+    # Split script into words
+    words = text.split()
+    total_words = len(words)
+
+    # How many chunks fit in the total duration
+    n_chunks = max(1, int(total_duration / chunk_duration))
+
+    # Distribute words evenly across chunks
+    words_per_chunk = max(1, total_words // n_chunks)
+
+    chunks = []
+    for i in range(n_chunks):
+        start = i * chunk_duration
+        end   = min((i + 1) * chunk_duration, total_duration)
+
+        word_start = i * words_per_chunk
+        word_end   = word_start + words_per_chunk if i < n_chunks - 1 else total_words
+        chunk_text = " ".join(words[word_start:word_end])
+
+        if chunk_text.strip():
+            chunks.append({"text": chunk_text, "start": start, "end": end})
+
+    return chunks
+
 
 
 def _build_slideshow(image_paths: list[str], duration: float) -> object:
-    """
-    Take a list of image paths and a total duration (in seconds),
-    return a single concatenated MoviePy clip — one image per segment.
-    """
     n = len(image_paths)
     segment_duration = duration / n
-    # e.g. 47 seconds / 5 images = 9.4 seconds per image
 
     logger.info("Building slideshow: %s images, %.2fs each", n, segment_duration)
 
     clips = []
     for i, path in enumerate(image_paths):
         arr = _prepare_image(path)
-
-        clip = (
-            ImageClip(arr)
-            .with_duration(segment_duration)
-            .with_fps(FPS)
-        )
+        clip = _ken_burns_clip(arr, segment_duration)   # ← only change
         clips.append(clip)
         logger.info("  Prepared image %s/%s: %s", i + 1, n, path)
 
     return concatenate_videoclips(clips, method="compose")
+
+
+
+def _add_overlays(video_clip, title: str, script: str, duration: float) -> CompositeVideoClip:
+    """
+    Composite title and subtitle text over the video clip.
+    """
+    layers = [video_clip]
+
+    # ── Title overlay (top, first 3 seconds) ─────────────────────────────────
+    try:
+        title_clip = (
+            TextClip(
+                text=title,                  # ← was txt
+                font_size=60,               # ← was fontsize
+                color="white",
+                font=FONT_PATH,               # ← removed Arial-Bold, use font param only
+                stroke_color="black",
+                stroke_width=2,
+                method="caption",
+                size=(WIDTH - 80, None),
+                text_align="center",        # ← was align
+            )
+            .with_duration(3)
+            .with_position(("center", 120))
+        )
+        layers.append(title_clip)
+        logger.info("Title overlay created")
+    except Exception as exc:
+        logger.warning("Could not create title overlay: %s", exc)
+
+    # ── Subtitle overlays (bottom bar, updates every 5 seconds) ──────────────
+    chunks = _split_into_chunks(script, chunk_duration=5.0, total_duration=duration)
+    logger.info("Creating %s subtitle chunks", len(chunks))
+
+    for chunk in chunks:
+        try:
+            subtitle_clip = (
+                TextClip(
+                    text=chunk["text"],      # ← was txt
+                    font_size=42,           # ← was fontsize
+                    color="white",
+                    font=FONT_PATH,               # ← removed Arial-Bold, use font param only
+                    stroke_color="black",
+                    stroke_width=1,
+                    method="caption",
+                    size=(WIDTH - 60, None),
+                    text_align="center",    # ← was align
+                )
+                .with_start(chunk["start"])
+                .with_duration(chunk["end"] - chunk["start"])
+                .with_position(("center", HEIGHT - 300))
+            )
+            layers.append(subtitle_clip)
+        except Exception as exc:
+            logger.warning(
+                "Could not create subtitle chunk '%s': %s",
+                chunk["text"][:30], exc
+            )
+
+    return CompositeVideoClip(layers, size=(WIDTH, HEIGHT))
 
 
 
@@ -142,9 +223,13 @@ def build_video(job) -> str:
     # 3. Build the silent slideshow
     video_clip = _build_slideshow(image_paths, duration)
 
-     # 4. Attach audio and write to disk
-    logger.info("[%s] Attaching audio and rendering", str(job.id)[:8], )
-    final_clip = video_clip.with_audio(audio_clip)
+# 4. Add text overlays
+    logger.info("[%s] Adding title and subtitle overlays", str(job.id)[:8])
+    video_with_text = _add_overlays(video_clip, job.title, job.script, duration)
+
+    # 5. Attach audio and write to disk
+    logger.info("[%s] Attaching audio and rendering", str(job.id)[:8])
+    final_clip = video_with_text.with_audio(audio_clip)
 
     final_clip.write_videofile(
         str(output_path),
@@ -159,6 +244,7 @@ def build_video(job) -> str:
 
     audio_clip.close()
     video_clip.close()
+    video_with_text.close()
     final_clip.close()
 
     return str(output_path)
