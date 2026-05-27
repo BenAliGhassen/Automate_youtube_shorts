@@ -61,6 +61,7 @@ def generate_content(self, job_id: str) -> str:
         script_data = generate_script(job.topic)
         job.title = script_data["title"]
         job.script = script_data["script"]
+        job.keywords = script_data["keywords"]
         job.save(update_fields=["title", "script"])
 
         # 2. TTS voiceover
@@ -71,7 +72,7 @@ def generate_content(self, job_id: str) -> str:
 
         # 3. Visuals
         self.update_state(state="PROGRESS", meta={"step": "visuals"})
-        fetch_visuals(job.topic, job_id)
+        fetch_visuals(job.keywords, job_id)
 
         logger.info("[%s] Content generation complete", job_id[:8])
         return job_id

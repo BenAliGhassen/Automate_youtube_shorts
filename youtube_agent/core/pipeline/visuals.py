@@ -1,190 +1,259 @@
-﻿"""Pexels image fetching for YouTube Shorts visuals."""
-
-import argparse
+﻿"""Wikimedia Commons image fetching — works for football AND tech channels."""
+import time
 import json
 import logging
 import os
 import sys
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
-from urllib.request import ProxyHandler, Request, build_opener
+from urllib.parse import urlencode, quote
+from urllib.request import Request, urlopen
 
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
-PEXELS_SEARCH_ENDPOINT = "https://api.pexels.com/v1/search"
-VISUAL_COUNT = 5
+WIKIMEDIA_API  = "https://commons.wikimedia.org/w/api.php"
+IMAGES_PER_KEYWORD = 2   # images fetched per keyword
+VISUAL_COUNT   = 10      # total max images to download
 
 
-def _build_http_opener():
-    http_proxy = getattr(settings, "OUTBOUND_HTTP_PROXY", "").strip()
-    https_proxy = getattr(settings, "OUTBOUND_HTTPS_PROXY", "").strip()
+def _wikimedia_request(url: str, retries: int = 3) -> dict:
+    """
+    Make a Wikimedia API request with automatic retry on 429.
+    Waits longer after each failure (exponential backoff).
+    """
+    for attempt in range(retries):
+        try:
+            req = Request(
+                url=url,
+                headers={"User-Agent": "youtube-agent/1.0 (educational project)"},
+                method="GET"
+            )
+            with urlopen(req, timeout=15) as response:
+                return json.loads(response.read().decode("utf-8"))
 
-    proxies: dict[str, str] = {}
-    if http_proxy:
-        proxies["http"] = http_proxy
-    if https_proxy:
-        proxies["https"] = https_proxy
+        except HTTPError as exc:
+            if exc.code == 429:
+                wait = 2 ** attempt * 2   # 2s, 4s, 8s
+                logger.warning("Rate limited (429) — waiting %ss before retry %s/%s", wait, attempt + 1, retries)
+                time.sleep(wait)
+            else:
+                raise
+        except Exception as exc:
+            raise
 
-    # Bypass broken system proxy variables unless the Django settings opt in.
-    return build_opener(ProxyHandler(proxies))
-
-
-def _download_bytes(url: str, headers: dict[str, str]) -> tuple[bytes, str]:
-    opener = _build_http_opener()
-    request = Request(url=url, headers=headers, method="GET")
-    with opener.open(request, timeout=60) as response:
-        content_type = response.info().get_content_type()
-        return response.read(), content_type
-
-
-def _extension_for_content_type(content_type: str) -> str:
-    return {
-        "image/jpeg": ".jpg",
-        "image/png": ".png",
-        "image/webp": ".webp",
-    }.get(content_type.lower(), ".jpg")
+    raise Exception(f"Wikimedia request failed after {retries} retries: {url}")
 
 
-def fetch_visuals(topic: str, job_id: str) -> list[str]:
-    """Download five Pexels images for the topic and return their full local paths."""
-    if not topic or not topic.strip():
-        raise Exception("Topic cannot be empty for visuals fetching.")
+
+def _wikimedia_search(keyword: str, limit: int = 5) -> list[str]:
+    params = urlencode({
+        "action":      "query",
+        "list":        "search",
+        "srsearch":    keyword,
+        "srnamespace": 6,
+        "srlimit":     limit,
+        "format":      "json",
+        "utf8":        1,
+    })
+    url = f"{WIKIMEDIA_API}?{params}"
+
+    try:
+        data    = _wikimedia_request(url)
+        results = data.get("query", {}).get("search", [])
+        titles  = [r["title"] for r in results if r.get("title")]
+        logger.info("Wikimedia search '%s' → %s results", keyword, len(titles))
+        time.sleep(1.0)   # ← always wait 1s after a search
+        return titles
+    except Exception as exc:
+        logger.warning("Wikimedia search failed for '%s': %s", keyword, exc)
+        return []
+
+
+def _get_image_url(file_title: str, width: int = 1080) -> str | None:
+    params = urlencode({
+        "action":     "query",
+        "titles":     file_title,
+        "prop":       "imageinfo",
+        "iiprop":     "url",
+        "iiurlwidth": width,
+        "format":     "json",
+        "utf8":       1,
+    })
+    url = f"{WIKIMEDIA_API}?{params}"
+
+    try:
+        data  = _wikimedia_request(url)
+        pages = data.get("query", {}).get("pages", {})
+        time.sleep(0.8)   # ← wait after every URL lookup
+        for page in pages.values():
+            imageinfo = page.get("imageinfo", [])
+            if imageinfo:
+                return imageinfo[0].get("thumburl") or imageinfo[0].get("url")
+        return None
+    except Exception as exc:
+        logger.warning("Could not get URL for '%s': %s", file_title, exc)
+        return None
+
+
+def _download_image(url: str, output_path: Path, retries: int = 3) -> bool:
+    """Download an image with retry on 429."""
+    for attempt in range(retries):
+        try:
+            req = Request(
+                url=url,
+                headers={"User-Agent": "youtube-agent/1.0 (educational project)"},
+                method="GET"
+            )
+            with urlopen(req, timeout=30) as response:
+                data = response.read()
+            if not data:
+                return False
+            output_path.write_bytes(data)
+            return True
+
+        except HTTPError as exc:
+            if exc.code == 429:
+                wait = 2 ** attempt * 3   # 3s, 6s, 12s
+                logger.warning("Download rate limited — waiting %ss (attempt %s/%s)", wait, attempt + 1, retries)
+                time.sleep(wait)
+            else:
+                logger.warning("Failed to download %s: %s", url, exc)
+                return False
+        except URLError as exc:
+            logger.warning("Failed to download %s: %s", url, exc)
+            return False
+
+    logger.warning("Gave up downloading after %s retries: %s", retries, url)
+    return False
+
+
+def _is_usable_image(file_title: str) -> bool:
+    """
+    Filter out SVGs and non-image files — MoviePy can't use them directly.
+    Pillow can handle SVG conversion but it's extra complexity for now.
+    """
+    lower = file_title.lower()
+    # Skip SVGs — they need special conversion
+    if lower.endswith(".svg"):
+        return False
+    # Skip audio/video files that end up in file namespace
+    for ext in [".ogg", ".ogv", ".webm", ".pdf", ".tif", ".tiff"]:
+        if lower.endswith(ext):
+            return False
+    return True
+
+
+def fetch_visuals(keywords: list[str], job_id: str) -> list[str]:
+    """
+    Search Wikimedia Commons for each keyword in order and download matching images.
+    Keywords must be ordered to match the script narrative — images will be saved
+    in the same order so the assembler displays them in sync with the voiceover.
+    Returns a list of local file paths in narrative order.
+    """
+    if not keywords:
+        raise Exception("Keywords list cannot be empty.")
     if not job_id or not job_id.strip():
-        raise Exception("job_id cannot be empty for visuals fetching.")
-
-    api_key = getattr(settings, "PEXELS_API_KEY", "").strip()
-    if not api_key:
-        raise Exception("PEXELS_API_KEY is not configured in Django settings.")
+        raise Exception("job_id cannot be empty.")
 
     visuals_dir = Path(settings.MEDIA_ROOT) / "jobs" / job_id / "visuals"
     visuals_dir.mkdir(parents=True, exist_ok=True)
 
-    headers = {
-        "Authorization": api_key,
-        "User-Agent": "youtube-agent/1.0",
-    }
-    query_string = urlencode(
-        {
-            "query": topic,
-            "per_page": 15,
-            "page": 1,
-            "orientation": "portrait",
-        }
-    )
-    search_url = f"{PEXELS_SEARCH_ENDPOINT}?{query_string}"
+    logger.info("[%s] Fetching ordered visuals for %s keywords: %s", job_id[:8], len(keywords), keywords)
 
-    logger.info("[%s] Fetching visuals for topic: %s", job_id[:8], topic)
+    all_downloaded = []   # final ordered list of local paths
+    seen_urls      = set()
 
-    try:
-        opener = _build_http_opener()
-        request = Request(url=search_url, headers=headers, method="GET")
-        with opener.open(request, timeout=60) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-    except HTTPError as exc:
-        error_body = exc.read().decode("utf-8", errors="replace")
-        logger.error("[%s] Pexels API request failed with status %s", job_id[:8], exc.code)
-        raise Exception(
-            f"Pexels API request failed with status {exc.code}: {error_body}"
-        ) from exc
-    except URLError as exc:
-        logger.error("[%s] Could not reach the Pexels API: %s", job_id[:8], exc.reason)
-        raise Exception(f"Could not reach the Pexels API: {exc.reason}") from exc
-    except json.JSONDecodeError as exc:
-        logger.error("[%s] Pexels API returned invalid JSON.", job_id[:8])
-        raise Exception("Pexels API returned invalid JSON.") from exc
+    for keyword_index, keyword in enumerate(keywords):
+        logger.info("[%s] Processing keyword %s/%s: '%s'", job_id[:8], keyword_index + 1, len(keywords), keyword)
 
-    photos = payload.get("photos") or []
-    if not photos:
-        raise Exception(f"Pexels returned no photos for topic '{topic}'.")
+        search_term = f"{keyword} football"
+        file_titles = _wikimedia_search(search_term, limit=8)
+        time.sleep(2.0)   # wait between keyword searches
 
-    downloaded_files: list[str] = []
-    for photo in photos:
-        src = photo.get("src") or {}
-        image_url = src.get("medium")
-        if not image_url:
-            continue
+        keyword_images = []   # images collected for this keyword only
 
-        file_index = len(downloaded_files) + 1
-        try:
-            image_bytes, content_type = _download_bytes(image_url, headers)
-        except HTTPError as exc:
-            logger.warning(
-                "[%s] Skipping Pexels image %s after status %s",
-                job_id[:8],
-                image_url,
-                exc.code,
+        for title in file_titles:
+            # Stop once we have enough images for this keyword
+            if len(keyword_images) >= IMAGES_PER_KEYWORD:
+                break
+
+            # Skip non-image files (SVG, PDF, video, etc.)
+            if not _is_usable_image(title):
+                logger.debug("[%s] Skipping non-image: %s", job_id[:8], title)
+                continue
+
+            # Get the direct download URL
+            image_url = _get_image_url(title, width=1080)
+
+            # Skip if URL lookup failed or already downloaded this image
+            if not image_url:
+                continue
+            if image_url in seen_urls:
+                logger.debug("[%s] Skipping duplicate URL: %s", job_id[:8], image_url)
+                continue
+
+            # Determine file extension from URL
+            url_clean = image_url.lower().split("?")[0]
+            if url_clean.endswith(".png"):
+                ext = ".png"
+            elif url_clean.endswith(".webp"):
+                ext = ".webp"
+            else:
+                ext = ".jpg"
+
+            # Build output path — index is global across all keywords
+            # so files are named image_01, image_02... in narrative order
+            global_index = len(all_downloaded) + len(keyword_images) + 1
+            output_path  = visuals_dir / f"image_{global_index:02d}{ext}"
+
+            # Download immediately — don't collect all URLs first
+            # because downloading in order guarantees narrative sync
+            success = _download_image(image_url, output_path)
+            time.sleep(1.5)   # wait between downloads
+
+            if success:
+                seen_urls.add(image_url)
+                keyword_images.append(str(output_path))
+                logger.info(
+                    "[%s] Saved image_%02d for '%s' — %s",
+                    job_id[:8], global_index, keyword, title
+                )
+            else:
+                logger.warning(
+                    "[%s] Download failed for '%s' image: %s",
+                    job_id[:8], keyword, title
+                )
+
+        # Log result for this keyword
+        if keyword_images:
+            logger.info(
+                "[%s] Keyword '%s' → %s image(s) saved",
+                job_id[:8], keyword, len(keyword_images)
             )
-            continue
-        except URLError as exc:
+            all_downloaded.extend(keyword_images)
+        else:
             logger.warning(
-                "[%s] Skipping Pexels image %s because it could not be downloaded: %s",
-                job_id[:8],
-                image_url,
-                exc.reason,
+                "[%s] No images found for keyword '%s' — this section will reuse adjacent images",
+                job_id[:8], keyword
             )
-            continue
 
-        if not image_bytes:
-            logger.warning("[%s] Skipping empty Pexels image response: %s", job_id[:8], image_url)
-            continue
-
-        extension = _extension_for_content_type(content_type)
-        output_path = visuals_dir / f"image_{file_index:02d}{extension}"
-        output_path.write_bytes(image_bytes)
-        downloaded_files.append(str(output_path))
-        logger.info("[%s] Saved visual %s to %s", job_id[:8], file_index, output_path)
-
-        if len(downloaded_files) == VISUAL_COUNT:
-            break
-
-    if not downloaded_files:
-        raise Exception(f"Pexels returned no usable images for topic '{topic}'.")
-    if len(downloaded_files) < VISUAL_COUNT:
+    # Final validation
+    if not all_downloaded:
         raise Exception(
-            f"Pexels returned only {len(downloaded_files)} usable images for topic '{topic}'."
+            f"Could not download any images for keywords: {keywords}. "
+            "Check your internet connection or try different keywords."
         )
 
-    logger.info("[%s] Downloaded %s visuals", job_id[:8], len(downloaded_files))
-    return downloaded_files
+    if len(all_downloaded) < len(keywords):
+        logger.warning(
+            "[%s] Got %s images for %s keywords — some keywords had no results",
+            job_id[:8], len(all_downloaded), len(keywords)
+        )
 
-
-def _bootstrap_django() -> None:
-    project_root = Path(__file__).resolve().parents[2]
-    if str(project_root) not in sys.path:
-        sys.path.insert(0, str(project_root))
-
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "youtube_agent.settings")
-
-    import django
-
-    django.setup()
-
-
-if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format="[%(asctime)s] %(levelname)s %(name)s: %(message)s",
+    logger.info(
+        "[%s] Done — %s ordered visuals ready for assembly",
+        job_id[:8], len(all_downloaded)
     )
-    _bootstrap_django()
-
-    parser = argparse.ArgumentParser(description="Download Pexels visuals for a topic.")
-    parser.add_argument("topic", help="Topic to search on Pexels.")
-    parser.add_argument(
-        "--job-id",
-        default="manual-test",
-        help="Job ID used to build the media output path.",
-    )
-    args = parser.parse_args()
-
-    try:
-        visual_paths = fetch_visuals(args.topic, args.job_id)
-    except Exception:
-        logger.exception("Standalone visuals fetch failed.")
-        raise SystemExit(1)
-
-    logger.info("Downloaded %s visuals", len(visual_paths))
-    for visual_path in visual_paths:
-        logger.info("Visual file: %s", visual_path)
+    return all_downloaded

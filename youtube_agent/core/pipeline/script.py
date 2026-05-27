@@ -68,16 +68,15 @@ def _strip_code_fences(text: str) -> str:
     return cleaned
 
 
-def _parse_script_payload(raw_text: str) -> dict[str, str]:
+def _parse_script_payload(raw_text: str) -> dict:
     cleaned_text = _strip_code_fences(raw_text)
-
     try:
         payload = json.loads(cleaned_text)
     except json.JSONDecodeError:
         match = re.search(r"\{.*\}", cleaned_text, re.DOTALL)
         if not match:
             raise Exception(
-                "Gemini response was not valid JSON with 'title' and 'script' fields."
+                "Gemini response was not valid JSON with 'title', 'script', and 'keywords' fields."
             )
         try:
             payload = json.loads(match.group(0))
@@ -86,17 +85,28 @@ def _parse_script_payload(raw_text: str) -> dict[str, str]:
                 "Gemini response contained JSON-like content, but it could not be parsed."
             ) from exc
 
-    title = payload.get("title")
-    script = payload.get("script")
+    title    = payload.get("title")
+    script   = payload.get("script")
+    keywords = payload.get("keywords")
 
     if not isinstance(title, str) or not title.strip():
         raise Exception("Gemini response did not include a valid 'title' string.")
     if not isinstance(script, str) or not script.strip():
         raise Exception("Gemini response did not include a valid 'script' string.")
+    if not isinstance(keywords, list) or len(keywords) < 1:
+        raise Exception("Gemini response did not include a valid 'keywords' array.")
 
-    normalized_title = re.sub(r"\s+", " ", title).strip()
+    # Clean each keyword
+    keywords = [str(k).strip() for k in keywords if str(k).strip()]
+
+    normalized_title  = re.sub(r"\s+", " ", title).strip()
     normalized_script = re.sub(r"\s+", " ", script).strip()
-    return {"title": normalized_title, "script": normalized_script}
+
+    return {
+        "title":    normalized_title,
+        "script":   normalized_script,
+        "keywords": keywords,
+    }
 
 
 def generate_script(topic: str) -> dict:
@@ -121,18 +131,38 @@ def generate_script(topic: str) -> dict:
         model_name = DEFAULT_GEMINI_MODEL
 
     prompt = (
-        "You are writing a YouTube Shorts voiceover.\n"
-        "Create a strong title and a spoken script about the topic below.\n"
+        "You are writing a YouTube Shorts voiceover about football.\n"
+        "Create a strong title, a spoken script, and 5 to 6 image search queries for the topic below.\n"
         "The script should fit roughly 60 seconds of narration.\n\n"
         "Rules:\n"
-        '- Return valid JSON only with exactly two keys: "title" and "script".\n'
+        '- Return valid JSON only with exactly three keys: "title", "script", and "keywords".\n'
         "- The title should be catchy and under 80 characters.\n"
         "- The script should be plain spoken sentences only.\n"
         "- Do not include stage directions, bullet points, scene labels, emojis, or markdown.\n"
-        "- Aim for about 130 to 170 words.\n\n"
+        "- Aim for about 130 to 170 words.\n"
+        '- "keywords" must be a JSON array of 5 to 6 strings.\n'
+        "- Each keyword must look like a real photo caption or image tag on Wikimedia.\n"
+        "- Use full names the way a photographer would label a photo:\n"
+        "  Good examples:\n"
+        "    'Leo Messi FC Barcelona'\n"
+        "    'Leo Messi Argentina national team'\n"
+        "    'Messi Mbappe Neymar PSG'\n"
+        "    'Cristiano Ronaldo Real Madrid'\n"
+        "    'Messi World Cup trophy Argentina'\n"
+        "  Bad examples:\n"
+        "    'Messi young Barcelona' (adjectives confuse search)\n"
+        "    'Messi Champions League' (missing subject context)\n"
+        "    'football match' (too generic)\n"
+        "- If the script mentions two or more players together at the same moment,\n"
+        "  combine them in one keyword: 'Messi Suarez Neymar Barcelona'\n"
+        "- If the script mentions a player at a specific club, always include both:\n"
+        "  'Leo Messi FC Barcelona' not just 'Messi' or just 'Barcelona'\n"
+        "- Maximum 5 words per keyword.\n"
+        "- Keywords must follow the chronological order of the script.\n"
+        "- Each keyword must be unique — no two keywords should return the same images.\n"
+        "- Always use men's football — never keywords that could match women's teams.\n\n"
         f"Topic: {topic}"
     )
-
     request_body = {
         "contents": [
             {

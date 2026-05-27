@@ -1273,3 +1273,514 @@ NotImplementedError: Video assembly not implemented yet — see Phase 3
 [2026-05-26 19:27:52,883] INFO core.pipeline.assembler: Creating 10 subtitle chunks
 [2026-05-26 19:27:53,634] INFO core.pipeline.assembler: [31d03b5f] Attaching audio and rendering
 [2026-05-26 19:33:21,472] INFO core.tasks: [31d03b5f] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\31d03b5f-6061-4a24-931c-982f152b88f1\final.mp4
+[2026-05-27 02:25:47,322] INFO core.tasks: [4faf85ce] Generating content for: Lionel Messi career highlights
+[2026-05-27 02:25:47,326] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 02:25:49,506] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 02:25:49,587] INFO core.pipeline.tts: [4faf85ce] Generating audio with voice en-US-GuyNeural
+[2026-05-27 02:25:52,493] INFO core.pipeline.tts: [4faf85ce] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\audio.mp3
+[2026-05-27 02:25:52,500] INFO core.pipeline.visuals: [4faf85ce] Fetching ordered visuals for 6 keywords: ['FC Barcelona', 'UEFA Champions League', 'Paris Saint-Germain', 'Argentina National Football Team', 'FIFA World Cup', 'Inter Miami CF']
+[2026-05-27 02:25:52,501] INFO core.pipeline.visuals: [4faf85ce] Processing keyword 1/6: 'FC Barcelona'
+[2026-05-27 02:25:59,175] INFO core.pipeline.visuals: [4faf85ce] Saved image_01 for 'FC Barcelona' — File:LFP - Barcelona vs Mallorca pre-match - Oct 3rd 2010.jpg
+[2026-05-27 02:25:59,175] DEBUG core.pipeline.visuals: [4faf85ce] Skipping non-image: File:Futbol Club Barcelona - name.ogg
+[2026-05-27 02:26:01,936] INFO core.pipeline.visuals: [4faf85ce] Saved image_02 for 'FC Barcelona' — File:FC Barcelona vs Ilford FC - 1922.jpg
+[2026-05-27 02:26:01,941] INFO core.pipeline.visuals: [4faf85ce] Processing keyword 2/6: 'UEFA Champions League'
+[2026-05-27 02:26:08,797] INFO core.pipeline.visuals: [4faf85ce] Saved image_03 for 'UEFA Champions League' — File:20180912 UEFA Women's Champions League 2019 SKN - PSG Hilde Gunn Olsen 850 5095.jpg
+[2026-05-27 02:26:12,127] INFO core.pipeline.visuals: [4faf85ce] Saved image_04 for 'UEFA Champions League' — File:2019-05-18 Fußball, Frauen, UEFA Women's Champions League, Olympique Lyonnais - FC Barcelona StP 1076 LR10 by Stepro.jpg
+[2026-05-27 02:26:12,132] INFO core.pipeline.visuals: [4faf85ce] Processing keyword 3/6: 'Paris Saint-Germain'
+[2026-05-27 02:26:19,041] INFO core.pipeline.visuals: [4faf85ce] Saved image_05 for 'Paris Saint-Germain' — File:20121209 PSG-Juvisy - Team of Paris Saint-Germain FC Ladies.jpg
+[2026-05-27 02:26:20,205] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 02:26:25,227] INFO core.pipeline.visuals: [4faf85ce] Saved image_06 for 'Paris Saint-Germain' — File:Parc des Princes Paris Saint Germain z 30.jpg
+[2026-05-27 02:26:25,232] INFO core.pipeline.visuals: [4faf85ce] Processing keyword 4/6: 'Argentina National Football Team'
+[2026-05-27 02:26:32,215] INFO core.pipeline.visuals: [4faf85ce] Saved image_07 for 'Argentina National Football Team' — File:Argentina's football matches.png
+[2026-05-27 02:26:33,385] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 02:26:38,382] INFO core.pipeline.visuals: [4faf85ce] Saved image_08 for 'Argentina National Football Team' — File:1951 argentina panamerican football team.jpg
+[2026-05-27 02:26:38,387] INFO core.pipeline.visuals: [4faf85ce] Processing keyword 5/6: 'FIFA World Cup'
+[2026-05-27 02:26:42,322] WARNING core.pipeline.visuals: Rate limited (429) — waiting 2s before retry 1/3
+[2026-05-27 02:26:44,520] WARNING core.pipeline.visuals: Rate limited (429) — waiting 4s before retry 2/3
+[2026-05-27 02:26:48,718] WARNING core.pipeline.visuals: Rate limited (429) — waiting 8s before retry 3/3
+[2026-05-27 02:26:56,718] WARNING core.pipeline.visuals: Could not get URL for 'File:The opening ceremony of the FIFA World Cup 2014 27.jpg': Wikimedia request failed after 3 retries: https://commons.wikimedia.org/w/api.php?action=query&titles=File%3AThe+opening+ceremony+of+the+FIFA+World+Cup+2014+27.jpg&prop=imageinfo&iiprop=url&iiurlwidth=1080&format=json&utf8=1
+[2026-05-27 02:26:56,926] WARNING core.pipeline.visuals: Rate limited (429) — waiting 2s before retry 1/3
+[2026-05-27 02:26:59,132] WARNING core.pipeline.visuals: Rate limited (429) — waiting 4s before retry 2/3
+[2026-05-27 02:27:06,139] INFO core.pipeline.visuals: [4faf85ce] Saved image_09 for 'FIFA World Cup' — File:The opening ceremony of the FIFA World Cup 2014 17.jpg
+[2026-05-27 02:27:09,234] INFO core.pipeline.visuals: [4faf85ce] Saved image_10 for 'FIFA World Cup' — File:The opening ceremony of the FIFA World Cup 2014 14.jpg
+[2026-05-27 02:27:09,239] INFO core.pipeline.visuals: [4faf85ce] Processing keyword 6/6: 'Inter Miami CF'
+[2026-05-27 02:27:16,457] INFO core.pipeline.visuals: [4faf85ce] Saved image_11 for 'Inter Miami CF' — File:Inter miami.jpg
+[2026-05-27 02:27:17,653] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 02:27:20,769] WARNING core.pipeline.visuals: Download rate limited — waiting 6s (attempt 2/3)
+[2026-05-27 02:27:26,875] WARNING core.pipeline.visuals: Download rate limited — waiting 12s (attempt 3/3)
+[2026-05-27 02:27:38,875] WARNING core.pipeline.visuals: Gave up downloading after 3 retries: https://upload.wikimedia.org/wikipedia/commons/f/fc/Kit_body_intermiami24t.png
+[2026-05-27 02:27:40,376] WARNING core.pipeline.visuals: [4faf85ce] Download failed for 'Inter Miami CF' image: File:Kit body intermiami24t.png
+[2026-05-27 02:27:43,051] INFO core.pipeline.visuals: [4faf85ce] Saved image_12 for 'Inter Miami CF' — File:Kit right arm intermiami24t.png
+[2026-05-27 02:27:43,056] INFO core.pipeline.visuals: [4faf85ce] Done — 12 ordered visuals ready for assembly
+[2026-05-27 02:27:43,056] INFO core.tasks: [4faf85ce] Content generation complete
+[2026-05-27 02:27:43,854] INFO core.tasks: [4faf85ce] Assembling video
+[2026-05-27 02:27:43,855] INFO core.pipeline.assembler: [4faf85ce] Found 12 images
+[2026-05-27 02:27:43,915] INFO core.pipeline.assembler: [4faf85ce] Audio duration: 50.62s
+[2026-05-27 02:27:43,915] INFO core.pipeline.assembler: Building slideshow: 12 images, 4.22s each
+[2026-05-27 02:27:44,021] INFO core.pipeline.assembler:   Prepared image 1/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_01.jpg
+[2026-05-27 02:27:44,113] INFO core.pipeline.assembler:   Prepared image 2/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_02.jpg
+[2026-05-27 02:27:44,228] INFO core.pipeline.assembler:   Prepared image 3/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_03.jpg
+[2026-05-27 02:27:44,255] INFO core.pipeline.assembler:   Prepared image 4/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_04.jpg
+[2026-05-27 02:27:44,328] INFO core.pipeline.assembler:   Prepared image 5/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_05.jpg
+[2026-05-27 02:27:44,410] INFO core.pipeline.assembler:   Prepared image 6/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_06.jpg
+[2026-05-27 02:27:44,534] INFO core.pipeline.assembler:   Prepared image 7/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_07.png
+[2026-05-27 02:27:44,602] INFO core.pipeline.assembler:   Prepared image 8/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_08.jpg
+[2026-05-27 02:27:44,679] INFO core.pipeline.assembler:   Prepared image 9/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_09.jpg
+[2026-05-27 02:27:44,760] INFO core.pipeline.assembler:   Prepared image 10/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_10.jpg
+[2026-05-27 02:27:44,835] INFO core.pipeline.assembler:   Prepared image 11/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_11.jpg
+[2026-05-27 02:27:44,870] INFO core.pipeline.assembler:   Prepared image 12/12: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\visuals\image_12.png
+[2026-05-27 02:27:45,002] INFO core.pipeline.assembler: [4faf85ce] Adding title and subtitle overlays
+[2026-05-27 02:27:45,023] INFO core.pipeline.assembler: Title overlay created
+[2026-05-27 02:27:45,023] INFO core.pipeline.assembler: Creating 10 subtitle chunks
+[2026-05-27 02:27:45,676] INFO core.pipeline.assembler: [4faf85ce] Attaching audio and rendering
+[2026-05-27 02:32:56,780] INFO core.tasks: [4faf85ce] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4faf85ce-a084-4c5f-9298-fe10e1bbe496\final.mp4
+[2026-05-27 02:39:32,127] INFO core.tasks: [4e574c52] Generating content for: Lionel Messi career highlights
+[2026-05-27 02:39:32,133] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 02:39:34,627] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 02:39:34,666] INFO core.pipeline.tts: [4e574c52] Generating audio with voice en-US-GuyNeural
+[2026-05-27 02:39:37,845] INFO core.pipeline.tts: [4e574c52] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4e574c52-444c-4791-a53d-4cd17be49912\audio.mp3
+[2026-05-27 02:39:37,852] INFO core.pipeline.visuals: [4e574c52] Fetching ordered visuals for 5 keywords: ['FC Barcelona', 'UEFA Champions League', 'Copa América', 'FIFA World Cup', 'Inter Miami CF']
+[2026-05-27 02:39:37,852] INFO core.pipeline.visuals: [4e574c52] Processing keyword 1/5: 'FC Barcelona'
+[2026-05-27 02:39:44,288] INFO core.pipeline.visuals: [4e574c52] Saved image_01 for 'FC Barcelona' — File:LFP - Barcelona vs Mallorca pre-match - Oct 3rd 2010.jpg
+[2026-05-27 02:39:44,288] DEBUG core.pipeline.visuals: [4e574c52] Skipping non-image: File:Futbol Club Barcelona - name.ogg
+[2026-05-27 02:39:47,034] INFO core.pipeline.visuals: [4e574c52] Saved image_02 for 'FC Barcelona' — File:FC Barcelona vs Ilford FC - 1922.jpg
+[2026-05-27 02:39:47,039] INFO core.pipeline.visuals: [4e574c52] Processing keyword 2/5: 'UEFA Champions League'
+[2026-05-27 02:39:53,455] INFO core.pipeline.visuals: [4e574c52] Saved image_03 for 'UEFA Champions League' — File:20180912 UEFA Women's Champions League 2019 SKN - PSG Hilde Gunn Olsen 850 5095.jpg
+[2026-05-27 02:39:56,453] INFO core.pipeline.visuals: [4e574c52] Saved image_04 for 'UEFA Champions League' — File:2019-05-18 Fußball, Frauen, UEFA Women's Champions League, Olympique Lyonnais - FC Barcelona StP 1076 LR10 by Stepro.jpg
+[2026-05-27 02:39:56,458] INFO core.pipeline.visuals: [4e574c52] Processing keyword 3/5: 'Copa América'
+[2026-05-27 02:40:00,178] DEBUG core.pipeline.visuals: [4e574c52] Skipping non-image: File:Conmebol-Copa-America-2019.svg
+[2026-05-27 02:40:03,487] INFO core.pipeline.visuals: [4e574c52] Saved image_05 for 'Copa América' — File:Copa América 2019 en Montevideo.jpg
+[2026-05-27 02:40:06,410] INFO core.pipeline.visuals: [4e574c52] Saved image_06 for 'Copa América' — File:2019 Final da Copa América 2019 - 48225428057.jpg
+[2026-05-27 02:40:06,415] INFO core.pipeline.visuals: [4e574c52] Processing keyword 4/5: 'FIFA World Cup'
+[2026-05-27 02:40:13,251] INFO core.pipeline.visuals: [4e574c52] Saved image_07 for 'FIFA World Cup' — File:The opening ceremony of the FIFA World Cup 2014 27.jpg
+[2026-05-27 02:40:14,417] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 02:40:19,173] INFO core.pipeline.visuals: [4e574c52] Saved image_08 for 'FIFA World Cup' — File:The opening ceremony of the FIFA World Cup 2014 17.jpg
+[2026-05-27 02:40:19,179] INFO core.pipeline.visuals: [4e574c52] Processing keyword 5/5: 'Inter Miami CF'
+[2026-05-27 02:40:25,388] INFO core.pipeline.visuals: [4e574c52] Saved image_09 for 'Inter Miami CF' — File:Inter miami.jpg
+[2026-05-27 02:40:26,556] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 02:40:31,172] INFO core.pipeline.visuals: [4e574c52] Saved image_10 for 'Inter Miami CF' — File:Kit body intermiami24t.png
+[2026-05-27 02:40:31,177] INFO core.pipeline.visuals: [4e574c52] Done — 10 ordered visuals ready for assembly
+[2026-05-27 02:40:31,177] INFO core.tasks: [4e574c52] Content generation complete
+[2026-05-27 02:41:04,886] INFO core.tasks: [4e574c52] Assembling video
+[2026-05-27 02:41:04,887] INFO core.pipeline.assembler: [4e574c52] Found 3 images
+[2026-05-27 02:41:04,917] ERROR core.tasks: [4e574c52] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_reader.py", line 904, in ffmpeg_parse_infos
+    ).parse()
+      ~~~~~^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_reader.py", line 606, in parse
+    if stream["stream_type"] not in self._default_streams:
+       ~~~~~~^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 105, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 218, in build_video
+    audio_clip = AudioFileClip(audio_path)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\decorator\__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\decorators.py", line 102, in wrapper
+    return func(*new_args, **new_kwargs)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\audio\io\AudioFileClip.py", line 65, in __init__
+    self.reader = FFMPEG_AudioReader(
+                  ~~~~~~~~~~~~~~~~~~^
+        filename,
+        ^^^^^^^^^
+    ...<3 lines>...
+        buffersize=buffersize,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\audio\io\readers.py", line 60, in __init__
+    infos = ffmpeg_parse_infos(filename, decode_file=decode_file)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_reader.py", line 909, in ffmpeg_parse_infos
+    raise FileNotFoundError(f"'{filename}' not found")
+FileNotFoundError: 'C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4e574c52-444c-4791-a53d-4cd17be49912\audio.mp3' not found
+[2026-05-27 02:41:04,994] INFO core.tasks: [37371711] Generating content for: Lionel Messi career highlights
+[2026-05-27 02:41:04,998] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 02:41:07,543] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 02:41:07,550] INFO core.pipeline.tts: [37371711] Generating audio with voice en-US-GuyNeural
+[2026-05-27 02:41:10,696] INFO core.pipeline.tts: [37371711] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\37371711-c080-4155-9d3c-5279866ef11c\audio.mp3
+[2026-05-27 02:41:10,751] INFO core.pipeline.visuals: [37371711] Fetching ordered visuals for 6 keywords: ['Messi FC Barcelona debut October 2004', 'Messi Barcelona Champions League final Rome 2009', 'Messi Barcelona Champions League final Berlin 2015', 'Messi Argentina Copa America trophy July 2021', 'Messi Argentina World Cup final Qatar 2022', 'Messi Inter Miami MLS debut 2023']
+[2026-05-27 02:41:10,751] INFO core.pipeline.visuals: [37371711] Processing keyword 1/6: 'Messi FC Barcelona debut October 2004'
+[2026-05-27 02:41:14,300] WARNING core.pipeline.visuals: [37371711] No images found for keyword 'Messi FC Barcelona debut October 2004' — this section will reuse adjacent images
+[2026-05-27 02:41:14,301] INFO core.pipeline.visuals: [37371711] Processing keyword 2/6: 'Messi Barcelona Champions League final Rome 2009'
+[2026-05-27 02:41:20,816] INFO core.pipeline.visuals: [37371711] Saved image_01 for 'Messi Barcelona Champions League final Rome 2009' — File:039 men at work UEFA 2009, Rome.jpg
+[2026-05-27 02:41:20,821] INFO core.pipeline.visuals: [37371711] Processing keyword 3/6: 'Messi Barcelona Champions League final Berlin 2015'
+[2026-05-27 02:41:24,457] DEBUG core.pipeline.visuals: [37371711] Skipping non-image: File:Juventus vs Barcelona 2015-06-06 (ru).svg
+[2026-05-27 02:41:24,457] WARNING core.pipeline.visuals: [37371711] No images found for keyword 'Messi Barcelona Champions League final Berlin 2015' — this section will reuse adjacent images
+[2026-05-27 02:41:24,457] INFO core.pipeline.visuals: [37371711] Processing keyword 4/6: 'Messi Argentina Copa America trophy July 2021'
+[2026-05-27 02:41:28,110] WARNING core.pipeline.visuals: [37371711] No images found for keyword 'Messi Argentina Copa America trophy July 2021' — this section will reuse adjacent images
+[2026-05-27 02:41:28,110] INFO core.pipeline.visuals: [37371711] Processing keyword 5/6: 'Messi Argentina World Cup final Qatar 2022'
+[2026-05-27 02:41:31,851] DEBUG core.pipeline.visuals: [37371711] Skipping non-image: File:ARG-FRA 2022-12-18.svg
+[2026-05-27 02:41:34,933] INFO core.pipeline.visuals: [37371711] Saved image_02 for 'Messi Argentina World Cup final Qatar 2022' — File:2022 FIFA World Cup final team support board.jpg
+[2026-05-27 02:41:38,072] INFO core.pipeline.visuals: [37371711] Saved image_03 for 'Messi Argentina World Cup final Qatar 2022' — File:Argentina 3-3 Francia - Copa Mundial 2022 - Celebración de victoria.jpg
+[2026-05-27 02:41:38,078] INFO core.pipeline.visuals: [37371711] Processing keyword 6/6: 'Messi Inter Miami MLS debut 2023'
+[2026-05-27 02:41:41,591] WARNING core.pipeline.visuals: [37371711] No images found for keyword 'Messi Inter Miami MLS debut 2023' — this section will reuse adjacent images
+[2026-05-27 02:41:41,591] WARNING core.pipeline.visuals: [37371711] Got 3 images for 6 keywords — some keywords had no results
+[2026-05-27 02:41:41,591] INFO core.pipeline.visuals: [37371711] Done — 3 ordered visuals ready for assembly
+[2026-05-27 02:41:41,591] INFO core.tasks: [37371711] Content generation complete
+[2026-05-27 02:41:41,648] INFO core.tasks: [37371711] Assembling video
+[2026-05-27 02:41:41,649] INFO core.pipeline.assembler: [37371711] Found 3 images
+[2026-05-27 02:41:41,709] INFO core.pipeline.assembler: [37371711] Audio duration: 57.98s
+[2026-05-27 02:41:41,710] INFO core.pipeline.assembler: Building slideshow: 3 images, 19.33s each
+[2026-05-27 02:41:41,786] INFO core.pipeline.assembler:   Prepared image 1/3: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\37371711-c080-4155-9d3c-5279866ef11c\visuals\image_01.jpg
+[2026-05-27 02:41:41,868] INFO core.pipeline.assembler:   Prepared image 2/3: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\37371711-c080-4155-9d3c-5279866ef11c\visuals\image_02.jpg
+[2026-05-27 02:41:41,954] INFO core.pipeline.assembler:   Prepared image 3/3: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\37371711-c080-4155-9d3c-5279866ef11c\visuals\image_03.jpg
+[2026-05-27 02:41:42,008] INFO core.pipeline.assembler: [37371711] Adding title and subtitle overlays
+[2026-05-27 02:41:42,020] INFO core.pipeline.assembler: Title overlay created
+[2026-05-27 02:41:42,020] INFO core.pipeline.assembler: Creating 11 subtitle chunks
+[2026-05-27 02:41:42,735] INFO core.pipeline.assembler: [37371711] Attaching audio and rendering
+[2026-05-27 02:44:05,000] INFO core.tasks: [4e574c52] Assembling video
+[2026-05-27 02:44:05,000] INFO core.pipeline.assembler: [4e574c52] Found 3 images
+[2026-05-27 02:44:05,044] ERROR core.tasks: [4e574c52] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_reader.py", line 904, in ffmpeg_parse_infos
+    ).parse()
+      ~~~~~^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_reader.py", line 606, in parse
+    if stream["stream_type"] not in self._default_streams:
+       ~~~~~~^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 105, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 218, in build_video
+    audio_clip = AudioFileClip(audio_path)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\decorator\__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\decorators.py", line 102, in wrapper
+    return func(*new_args, **new_kwargs)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\audio\io\AudioFileClip.py", line 65, in __init__
+    self.reader = FFMPEG_AudioReader(
+                  ~~~~~~~~~~~~~~~~~~^
+        filename,
+        ^^^^^^^^^
+    ...<3 lines>...
+        buffersize=buffersize,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\audio\io\readers.py", line 60, in __init__
+    infos = ffmpeg_parse_infos(filename, decode_file=decode_file)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_reader.py", line 909, in ffmpeg_parse_infos
+    raise FileNotFoundError(f"'{filename}' not found")
+FileNotFoundError: 'C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4e574c52-444c-4791-a53d-4cd17be49912\audio.mp3' not found
+[2026-05-27 02:45:35,219] ERROR core.tasks: [37371711] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 105, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 234, in build_video
+    final_clip.write_videofile(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        str(output_path),
+        ^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        logger=None,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\decorator\__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\decorators.py", line 53, in requires_duration
+    return func(clip, *args, **kwargs)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\decorator\__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\decorators.py", line 153, in wrapper
+    return func(clip, *new_args, **new_kwargs)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\decorator\__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\decorators.py", line 24, in convert_masks_to_RGB
+    return func(clip, *args, **kwargs)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\decorator\__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\decorators.py", line 102, in wrapper
+    return func(*new_args, **new_kwargs)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\VideoClip.py", line 393, in write_videofile
+    ffmpeg_write_video(
+    ~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<11 lines>...
+        pixel_format=pixel_format,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\moviepy\video\io\ffmpeg_writer.py", line 292, in ffmpeg_write_video
+    mask = mask.astype("uint8")
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\celery\apps\worker.py", line 306, in _handle_request
+    callback(worker)
+    ~~~~~~~~^^^^^^^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\celery\apps\worker.py", line 423, in on_cold_shutdown
+    worker.consumer.cancel_active_requests()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\celery\worker\consumer\consumer.py", line 773, in cancel_active_requests
+    request.cancel(self.pool, emit_retry=emit_retry)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\celery\worker\request.py", line 431, in cancel
+    pool.terminate_job(self.worker_pid, signal)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\.venv\Lib\site-packages\celery\concurrency\base.py", line 113, in terminate_job
+    raise NotImplementedError(
+        f'{type(self)} does not implement kill_job')
+NotImplementedError: <class 'celery.concurrency.solo.TaskPool'> does not implement kill_job
+[2026-05-27 02:45:39,022] INFO core.tasks: [08c01e11] Generating content for: Lionel Messi career highlights
+[2026-05-27 02:45:39,026] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 02:45:41,526] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 02:45:41,538] INFO core.pipeline.tts: [08c01e11] Generating audio with voice en-US-GuyNeural
+[2026-05-27 02:45:44,230] INFO core.pipeline.tts: [08c01e11] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\audio.mp3
+[2026-05-27 02:45:44,239] INFO core.pipeline.visuals: [08c01e11] Fetching ordered visuals for 6 keywords: ['Messi Barcelona debut 2004', 'Messi first Barcelona goal Albacete 2005', 'Messi Ballon d Or Barcelona 2009', 'Messi 91 goals record Barcelona 2012', 'Messi Argentina World Cup trophy 2022', 'Messi Inter Miami presentation 2023']
+[2026-05-27 02:45:44,239] INFO core.pipeline.visuals: [08c01e11] Processing keyword 1/6: 'Messi Barcelona debut 2004'
+[2026-05-27 02:45:47,859] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Barcelona debut 2004' — this section will reuse adjacent images
+[2026-05-27 02:45:47,860] INFO core.pipeline.visuals: [08c01e11] Processing keyword 2/6: 'Messi first Barcelona goal Albacete 2005'
+[2026-05-27 02:45:51,406] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi first Barcelona goal Albacete 2005' — this section will reuse adjacent images
+[2026-05-27 02:45:51,407] INFO core.pipeline.visuals: [08c01e11] Processing keyword 3/6: 'Messi Ballon d Or Barcelona 2009'
+[2026-05-27 02:45:54,944] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Ballon d Or Barcelona 2009' — this section will reuse adjacent images
+[2026-05-27 02:45:54,944] INFO core.pipeline.visuals: [08c01e11] Processing keyword 4/6: 'Messi 91 goals record Barcelona 2012'
+[2026-05-27 02:45:58,643] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi 91 goals record Barcelona 2012' — this section will reuse adjacent images
+[2026-05-27 02:45:58,644] INFO core.pipeline.visuals: [08c01e11] Processing keyword 5/6: 'Messi Argentina World Cup trophy 2022'
+[2026-05-27 02:46:02,242] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Argentina World Cup trophy 2022' — this section will reuse adjacent images
+[2026-05-27 02:46:02,242] INFO core.pipeline.visuals: [08c01e11] Processing keyword 6/6: 'Messi Inter Miami presentation 2023'
+[2026-05-27 02:46:05,804] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Inter Miami presentation 2023' — this section will reuse adjacent images
+[2026-05-27 02:46:05,847] ERROR core.tasks: [08c01e11] Content generation failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 75, in generate_content
+    fetch_visuals(job.keywords, job_id)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\visuals.py", line 244, in fetch_visuals
+    raise Exception(
+    ...<2 lines>...
+    )
+Exception: Could not download any images for keywords: ['Messi Barcelona debut 2004', 'Messi first Barcelona goal Albacete 2005', 'Messi Ballon d Or Barcelona 2009', 'Messi 91 goals record Barcelona 2012', 'Messi Argentina World Cup trophy 2022', 'Messi Inter Miami presentation 2023']. Check your internet connection or try different keywords.
+[2026-05-27 02:47:05,313] INFO core.tasks: [4e574c52] Assembling video
+[2026-05-27 02:47:05,318] ERROR core.tasks: [4e574c52] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 105, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 212, in build_video
+    raise Exception(f"No images found in {visuals_dir}")
+Exception: No images found in C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4e574c52-444c-4791-a53d-4cd17be49912\visuals
+[2026-05-27 02:47:05,849] INFO core.tasks: [08c01e11] Generating content for: Lionel Messi career highlights
+[2026-05-27 02:47:05,855] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 02:47:08,181] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 02:47:08,229] INFO core.pipeline.tts: [08c01e11] Generating audio with voice en-US-GuyNeural
+[2026-05-27 02:47:10,799] INFO core.pipeline.tts: [08c01e11] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\audio.mp3
+[2026-05-27 02:47:10,806] INFO core.pipeline.visuals: [08c01e11] Fetching ordered visuals for 6 keywords: ['Messi FC Barcelona 2004 debut', 'Messi Ballon d Or Barcelona 2009', 'Messi 91 goals Barcelona 2012', 'Messi PSG presentation 2021', 'Messi Argentina World Cup trophy 2022', 'Messi Inter Miami presentation 2023']
+[2026-05-27 02:47:10,807] INFO core.pipeline.visuals: [08c01e11] Processing keyword 1/6: 'Messi FC Barcelona 2004 debut'
+[2026-05-27 02:47:14,516] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi FC Barcelona 2004 debut' — this section will reuse adjacent images
+[2026-05-27 02:47:14,517] INFO core.pipeline.visuals: [08c01e11] Processing keyword 2/6: 'Messi Ballon d Or Barcelona 2009'
+[2026-05-27 02:47:17,954] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Ballon d Or Barcelona 2009' — this section will reuse adjacent images
+[2026-05-27 02:47:17,954] INFO core.pipeline.visuals: [08c01e11] Processing keyword 3/6: 'Messi 91 goals Barcelona 2012'
+[2026-05-27 02:47:21,452] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi 91 goals Barcelona 2012' — this section will reuse adjacent images
+[2026-05-27 02:47:21,452] INFO core.pipeline.visuals: [08c01e11] Processing keyword 4/6: 'Messi PSG presentation 2021'
+[2026-05-27 02:47:24,996] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi PSG presentation 2021' — this section will reuse adjacent images
+[2026-05-27 02:47:24,996] INFO core.pipeline.visuals: [08c01e11] Processing keyword 5/6: 'Messi Argentina World Cup trophy 2022'
+[2026-05-27 02:47:28,420] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Argentina World Cup trophy 2022' — this section will reuse adjacent images
+[2026-05-27 02:47:28,420] INFO core.pipeline.visuals: [08c01e11] Processing keyword 6/6: 'Messi Inter Miami presentation 2023'
+[2026-05-27 02:47:31,859] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Inter Miami presentation 2023' — this section will reuse adjacent images
+[2026-05-27 02:47:31,863] ERROR core.tasks: [08c01e11] Content generation failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 75, in generate_content
+    fetch_visuals(job.keywords, job_id)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\visuals.py", line 244, in fetch_visuals
+    raise Exception(
+    ...<2 lines>...
+    )
+Exception: Could not download any images for keywords: ['Messi FC Barcelona 2004 debut', 'Messi Ballon d Or Barcelona 2009', 'Messi 91 goals Barcelona 2012', 'Messi PSG presentation 2021', 'Messi Argentina World Cup trophy 2022', 'Messi Inter Miami presentation 2023']. Check your internet connection or try different keywords.
+[2026-05-27 03:00:20,938] INFO core.tasks: [08c01e11] Generating content for: Lionel Messi career highlights
+[2026-05-27 03:00:20,985] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 03:00:23,312] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 03:00:23,322] INFO core.pipeline.tts: [08c01e11] Generating audio with voice en-US-GuyNeural
+[2026-05-27 03:00:26,017] INFO core.pipeline.tts: [08c01e11] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\audio.mp3
+[2026-05-27 03:00:26,026] INFO core.pipeline.visuals: [08c01e11] Fetching ordered visuals for 6 keywords: ["Messi Newell's Old Boys", 'Messi FC Barcelona debut', 'Messi Champions League trophy', 'Messi Ballon d Or', 'Messi Argentina World Cup', 'Messi Inter Miami']
+[2026-05-27 03:00:26,026] INFO core.pipeline.visuals: [08c01e11] Processing keyword 1/6: 'Messi Newell's Old Boys'
+[2026-05-27 03:00:29,542] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Newell's Old Boys' — this section will reuse adjacent images
+[2026-05-27 03:00:29,543] INFO core.pipeline.visuals: [08c01e11] Processing keyword 2/6: 'Messi FC Barcelona debut'
+[2026-05-27 03:00:33,223] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi FC Barcelona debut' — this section will reuse adjacent images
+[2026-05-27 03:00:33,224] INFO core.pipeline.visuals: [08c01e11] Processing keyword 3/6: 'Messi Champions League trophy'
+[2026-05-27 03:00:36,831] DEBUG core.pipeline.visuals: [08c01e11] Skipping non-image: File:The Big T 1961.pdf
+[2026-05-27 03:00:36,831] DEBUG core.pipeline.visuals: [08c01e11] Skipping non-image: File:7March2007.pdf
+[2026-05-27 03:00:36,832] DEBUG core.pipeline.visuals: [08c01e11] Skipping non-image: File:TNE-Issue 01.pdf
+[2026-05-27 03:00:36,832] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Champions League trophy' — this section will reuse adjacent images
+[2026-05-27 03:00:36,832] INFO core.pipeline.visuals: [08c01e11] Processing keyword 4/6: 'Messi Ballon d Or'
+[2026-05-27 03:00:40,370] WARNING core.pipeline.visuals: [08c01e11] No images found for keyword 'Messi Ballon d Or' — this section will reuse adjacent images
+[2026-05-27 03:00:40,370] INFO core.pipeline.visuals: [08c01e11] Processing keyword 5/6: 'Messi Argentina World Cup'
+[2026-05-27 03:00:47,115] INFO core.pipeline.visuals: [08c01e11] Saved image_01 for 'Messi Argentina World Cup' — File:FWC 2018 - Group D - ARG v ISL - Messi penalty kick.jpg
+[2026-05-27 03:00:47,116] DEBUG core.pipeline.visuals: [08c01e11] Skipping non-image: File:ARG-FRA 2022-12-18.svg
+[2026-05-27 03:00:50,071] INFO core.pipeline.visuals: [08c01e11] Saved image_02 for 'Messi Argentina World Cup' — File:Argentina 3-3 Francia - Copa Mundial 2022 - Messi patea un penal.jpg
+[2026-05-27 03:00:50,074] INFO core.pipeline.visuals: [08c01e11] Processing keyword 6/6: 'Messi Inter Miami'
+[2026-05-27 03:01:00,946] INFO core.pipeline.visuals: [08c01e11] Saved image_03 for 'Messi Inter Miami' — File:20240204 Hong Kong v Inter Miami 05.png
+[2026-05-27 03:01:04,535] INFO core.pipeline.visuals: [08c01e11] Saved image_04 for 'Messi Inter Miami' — File:20240204 Hong Kong v Inter Miami 10.png
+[2026-05-27 03:01:04,538] WARNING core.pipeline.visuals: [08c01e11] Got 4 images for 6 keywords — some keywords had no results
+[2026-05-27 03:01:04,538] INFO core.pipeline.visuals: [08c01e11] Done — 4 ordered visuals ready for assembly
+[2026-05-27 03:01:04,539] INFO core.tasks: [08c01e11] Content generation complete
+[2026-05-27 03:01:04,758] INFO core.tasks: [08c01e11] Assembling video
+[2026-05-27 03:01:04,758] INFO core.pipeline.assembler: [08c01e11] Found 4 images
+[2026-05-27 03:01:04,761] INFO core.tasks: [37371711] Assembling video
+[2026-05-27 03:01:04,764] ERROR core.tasks: [37371711] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 105, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 212, in build_video
+    raise Exception(f"No images found in {visuals_dir}")
+Exception: No images found in C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\37371711-c080-4155-9d3c-5279866ef11c\visuals
+[2026-05-27 03:01:04,820] INFO core.pipeline.assembler: [08c01e11] Audio duration: 48.24s
+[2026-05-27 03:01:04,821] INFO core.pipeline.assembler: Building slideshow: 4 images, 12.06s each
+[2026-05-27 03:01:04,909] INFO core.pipeline.assembler:   Prepared image 1/4: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\visuals\image_01.jpg
+[2026-05-27 03:01:04,993] INFO core.pipeline.assembler:   Prepared image 2/4: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\visuals\image_02.jpg
+[2026-05-27 03:01:05,092] INFO core.pipeline.assembler:   Prepared image 3/4: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\visuals\image_03.png
+[2026-05-27 03:01:05,227] INFO core.pipeline.assembler:   Prepared image 4/4: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\visuals\image_04.png
+[2026-05-27 03:01:05,286] INFO core.pipeline.assembler: [08c01e11] Adding title and subtitle overlays
+[2026-05-27 03:01:05,300] INFO core.pipeline.assembler: Title overlay created
+[2026-05-27 03:01:05,301] INFO core.pipeline.assembler: Creating 9 subtitle chunks
+[2026-05-27 03:01:06,096] INFO core.pipeline.assembler: [08c01e11] Attaching audio and rendering
+[2026-05-27 03:05:58,708] INFO core.tasks: [08c01e11] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\08c01e11-c832-4ff2-95d5-853933428aa0\final.mp4
+[2026-05-27 03:05:59,207] INFO core.tasks: [37371711] Assembling video
+[2026-05-27 03:05:59,210] ERROR core.tasks: [37371711] Assembly failed
+Traceback (most recent call last):
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\tasks.py", line 105, in assemble_video
+    video_path = build_video(job)
+  File "C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\core\pipeline\assembler.py", line 212, in build_video
+    raise Exception(f"No images found in {visuals_dir}")
+Exception: No images found in C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\37371711-c080-4155-9d3c-5279866ef11c\visuals
+[2026-05-27 03:12:57,496] INFO core.tasks: [4573bc70] Generating content for: Lionel Messi career highlights
+[2026-05-27 03:12:57,506] INFO core.pipeline.script: Generating script for topic: Lionel Messi career highlights with model gemini-3.5-flash
+[2026-05-27 03:12:59,798] INFO core.pipeline.script: Script generated successfully for topic: Lionel Messi career highlights
+[2026-05-27 03:12:59,812] INFO core.pipeline.tts: [4573bc70] Generating audio with voice en-US-GuyNeural
+[2026-05-27 03:13:02,529] INFO core.pipeline.tts: [4573bc70] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\audio.mp3
+[2026-05-27 03:13:02,536] INFO core.pipeline.visuals: [4573bc70] Fetching ordered visuals for 5 keywords: ['Messi young Rosario', 'Messi FC Barcelona', 'Messi Ballon d Or', 'Messi Argentina World Cup', 'Messi Inter Miami']
+[2026-05-27 03:13:02,536] INFO core.pipeline.visuals: [4573bc70] Processing keyword 1/5: 'Messi young Rosario'
+[2026-05-27 03:13:06,151] WARNING core.pipeline.visuals: [4573bc70] No images found for keyword 'Messi young Rosario' — this section will reuse adjacent images
+[2026-05-27 03:13:06,151] INFO core.pipeline.visuals: [4573bc70] Processing keyword 2/5: 'Messi FC Barcelona'
+[2026-05-27 03:13:13,097] INFO core.pipeline.visuals: [4573bc70] Saved image_01 for 'Messi FC Barcelona' — File:Messi FC BARCELONA - ARSENAL 8 MAR 2011.jpg
+[2026-05-27 03:13:15,920] INFO core.pipeline.visuals: [4573bc70] Saved image_02 for 'Messi FC Barcelona' — File:Messi - Levante UD vs FC Barcelona - Carlos RM.jpg
+[2026-05-27 03:13:15,926] INFO core.pipeline.visuals: [4573bc70] Processing keyword 3/5: 'Messi Ballon d Or'
+[2026-05-27 03:13:19,272] WARNING core.pipeline.visuals: [4573bc70] No images found for keyword 'Messi Ballon d Or' — this section will reuse adjacent images
+[2026-05-27 03:13:19,272] INFO core.pipeline.visuals: [4573bc70] Processing keyword 4/5: 'Messi Argentina World Cup'
+[2026-05-27 03:13:25,735] INFO core.pipeline.visuals: [4573bc70] Saved image_03 for 'Messi Argentina World Cup' — File:FWC 2018 - Group D - ARG v ISL - Messi penalty kick.jpg
+[2026-05-27 03:13:25,735] DEBUG core.pipeline.visuals: [4573bc70] Skipping non-image: File:ARG-FRA 2022-12-18.svg
+[2026-05-27 03:13:28,561] INFO core.pipeline.visuals: [4573bc70] Saved image_04 for 'Messi Argentina World Cup' — File:Argentina 3-3 Francia - Copa Mundial 2022 - Messi patea un penal.jpg
+[2026-05-27 03:13:28,567] INFO core.pipeline.visuals: [4573bc70] Processing keyword 5/5: 'Messi Inter Miami'
+[2026-05-27 03:13:35,242] INFO core.pipeline.visuals: [4573bc70] Saved image_05 for 'Messi Inter Miami' — File:20240204 Hong Kong v Inter Miami 05.png
+[2026-05-27 03:13:35,450] WARNING core.pipeline.visuals: Rate limited (429) — waiting 2s before retry 1/3
+[2026-05-27 03:13:37,663] WARNING core.pipeline.visuals: Rate limited (429) — waiting 4s before retry 2/3
+[2026-05-27 03:13:41,861] WARNING core.pipeline.visuals: Rate limited (429) — waiting 8s before retry 3/3
+[2026-05-27 03:13:49,861] WARNING core.pipeline.visuals: Could not get URL for 'File:20240204 Hong Kong v Inter Miami 10.png': Wikimedia request failed after 3 retries: https://commons.wikimedia.org/w/api.php?action=query&titles=File%3A20240204+Hong+Kong+v+Inter+Miami+10.png&prop=imageinfo&iiprop=url&iiurlwidth=1080&format=json&utf8=1
+[2026-05-27 03:13:50,080] WARNING core.pipeline.visuals: Rate limited (429) — waiting 2s before retry 1/3
+[2026-05-27 03:13:52,277] WARNING core.pipeline.visuals: Rate limited (429) — waiting 4s before retry 2/3
+[2026-05-27 03:13:56,477] WARNING core.pipeline.visuals: Rate limited (429) — waiting 8s before retry 3/3
+[2026-05-27 03:14:04,478] WARNING core.pipeline.visuals: Could not get URL for 'File:20240204 Hong Kong v Inter Miami 03.png': Wikimedia request failed after 3 retries: https://commons.wikimedia.org/w/api.php?action=query&titles=File%3A20240204+Hong+Kong+v+Inter+Miami+03.png&prop=imageinfo&iiprop=url&iiurlwidth=1080&format=json&utf8=1
+[2026-05-27 03:14:11,172] INFO core.pipeline.visuals: [4573bc70] Saved image_06 for 'Messi Inter Miami' — File:20240204 Hong Kong v Inter Miami 01.png
+[2026-05-27 03:14:11,177] INFO core.pipeline.visuals: [4573bc70] Done — 6 ordered visuals ready for assembly
+[2026-05-27 03:14:11,177] INFO core.tasks: [4573bc70] Content generation complete
+[2026-05-27 03:14:11,196] INFO core.tasks: [4573bc70] Assembling video
+[2026-05-27 03:14:11,196] INFO core.pipeline.assembler: [4573bc70] Found 6 images
+[2026-05-27 03:14:11,263] INFO core.pipeline.assembler: [4573bc70] Audio duration: 53.04s
+[2026-05-27 03:14:11,264] INFO core.pipeline.assembler: Building slideshow: 6 images, 8.84s each
+[2026-05-27 03:14:11,319] INFO core.pipeline.assembler:   Prepared image 1/6: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\visuals\image_01.jpg
+[2026-05-27 03:14:11,358] INFO core.pipeline.assembler:   Prepared image 2/6: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\visuals\image_02.jpg
+[2026-05-27 03:14:11,439] INFO core.pipeline.assembler:   Prepared image 3/6: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\visuals\image_03.jpg
+[2026-05-27 03:14:11,522] INFO core.pipeline.assembler:   Prepared image 4/6: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\visuals\image_04.jpg
+[2026-05-27 03:14:11,617] INFO core.pipeline.assembler:   Prepared image 5/6: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\visuals\image_05.png
+[2026-05-27 03:14:11,713] INFO core.pipeline.assembler:   Prepared image 6/6: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\visuals\image_06.png
+[2026-05-27 03:14:11,784] INFO core.pipeline.assembler: [4573bc70] Adding title and subtitle overlays
+[2026-05-27 03:14:11,804] INFO core.pipeline.assembler: Title overlay created
+[2026-05-27 03:14:11,804] INFO core.pipeline.assembler: Creating 10 subtitle chunks
+[2026-05-27 03:14:12,646] INFO core.pipeline.assembler: [4573bc70] Attaching audio and rendering
+[2026-05-27 03:19:27,808] INFO core.tasks: [4573bc70] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\4573bc70-0ef2-4b53-a162-f2b97dc95b89\final.mp4
+[2026-05-27 03:23:56,256] INFO core.tasks: [9396aa70] Generating content for: world cup facts you didn't know
+[2026-05-27 03:23:56,267] INFO core.pipeline.script: Generating script for topic: world cup facts you didn't know with model gemini-3.5-flash
+[2026-05-27 03:23:58,675] INFO core.pipeline.script: Script generated successfully for topic: world cup facts you didn't know
+[2026-05-27 03:23:58,719] INFO core.pipeline.tts: [9396aa70] Generating audio with voice en-US-GuyNeural
+[2026-05-27 03:24:01,809] INFO core.pipeline.tts: [9396aa70] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\audio.mp3
+[2026-05-27 03:24:01,815] INFO core.pipeline.visuals: [9396aa70] Fetching ordered visuals for 6 keywords: ['World Cup Trophy', 'Ottorino Barassi', 'Roger Milla Cameroon', 'Roger Milla celebration', 'Battle of Nuremberg football', 'Portugal Netherlands 2006']
+[2026-05-27 03:24:01,816] INFO core.pipeline.visuals: [9396aa70] Processing keyword 1/6: 'World Cup Trophy'
+[2026-05-27 03:24:08,406] INFO core.pipeline.visuals: [9396aa70] Saved image_01 for 'World Cup Trophy' — File:Germany champions 2014 FIFA World Cup.jpg
+[2026-05-27 03:24:11,352] INFO core.pipeline.visuals: [9396aa70] Saved image_02 for 'World Cup Trophy' — File:FIFA World Cup Trophy at National Football Museum, Manchester 02.jpg
+[2026-05-27 03:24:11,357] INFO core.pipeline.visuals: [9396aa70] Processing keyword 2/6: 'Ottorino Barassi'
+[2026-05-27 03:24:18,169] INFO core.pipeline.visuals: [9396aa70] Saved image_03 for 'Ottorino Barassi' — File:Ottorino Barassi Presidente F.I.G.C. (1954).jpg
+[2026-05-27 03:24:19,379] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 03:24:24,235] INFO core.pipeline.visuals: [9396aa70] Saved image_04 for 'Ottorino Barassi' — File:Rizzoli Barassi.jpg
+[2026-05-27 03:24:24,240] INFO core.pipeline.visuals: [9396aa70] Processing keyword 3/6: 'Roger Milla Cameroon'
+[2026-05-27 03:24:30,635] INFO core.pipeline.visuals: [9396aa70] Saved image_05 for 'Roger Milla Cameroon' — File:Milla2008cropped.jpg
+[2026-05-27 03:24:31,797] WARNING core.pipeline.visuals: Download rate limited — waiting 3s (attempt 1/3)
+[2026-05-27 03:24:36,844] INFO core.pipeline.visuals: [9396aa70] Saved image_06 for 'Roger Milla Cameroon' — File:Milla2008.JPG
+[2026-05-27 03:24:36,849] INFO core.pipeline.visuals: [9396aa70] Processing keyword 4/6: 'Roger Milla celebration'
+[2026-05-27 03:24:40,365] DEBUG core.pipeline.visuals: [9396aa70] Skipping non-image: File:Guantanamo Bay Gazette -- 2007-11-09.pdf
+[2026-05-27 03:24:40,366] WARNING core.pipeline.visuals: [9396aa70] No images found for keyword 'Roger Milla celebration' — this section will reuse adjacent images
+[2026-05-27 03:24:40,366] INFO core.pipeline.visuals: [9396aa70] Processing keyword 5/6: 'Battle of Nuremberg football'
+[2026-05-27 03:24:40,583] WARNING core.pipeline.visuals: Rate limited (429) — waiting 2s before retry 1/3
+[2026-05-27 03:24:42,805] WARNING core.pipeline.visuals: Rate limited (429) — waiting 4s before retry 2/3
+[2026-05-27 03:24:47,015] WARNING core.pipeline.visuals: Rate limited (429) — waiting 8s before retry 3/3
+[2026-05-27 03:24:55,015] WARNING core.pipeline.visuals: Wikimedia search failed for 'Battle of Nuremberg football football': Wikimedia request failed after 3 retries: https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=Battle+of+Nuremberg+football+football&srnamespace=6&srlimit=8&format=json&utf8=1
+[2026-05-27 03:24:57,016] WARNING core.pipeline.visuals: [9396aa70] No images found for keyword 'Battle of Nuremberg football' — this section will reuse adjacent images
+[2026-05-27 03:24:57,016] INFO core.pipeline.visuals: [9396aa70] Processing keyword 6/6: 'Portugal Netherlands 2006'
+[2026-05-27 03:24:57,230] WARNING core.pipeline.visuals: Rate limited (429) — waiting 2s before retry 1/3
+[2026-05-27 03:24:59,439] WARNING core.pipeline.visuals: Rate limited (429) — waiting 4s before retry 2/3
+[2026-05-27 03:25:07,081] DEBUG core.pipeline.visuals: [9396aa70] Skipping non-image: File:Portugal vs Netherlands 2006-06-25.svg
+[2026-05-27 03:25:07,081] DEBUG core.pipeline.visuals: [9396aa70] Skipping non-image: File:Portugal-Netherlands line-up.svg
+[2026-05-27 03:25:10,667] INFO core.pipeline.visuals: [9396aa70] Saved image_07 for 'Portugal Netherlands 2006' — File:Siege and the battle of Nuremberg (engraving, cca 1640).png
+[2026-05-27 03:25:13,892] INFO core.pipeline.visuals: [9396aa70] Saved image_08 for 'Portugal Netherlands 2006' — File:Winners and Losers (178280419).jpg
+[2026-05-27 03:25:13,897] INFO core.pipeline.visuals: [9396aa70] Done — 8 ordered visuals ready for assembly
+[2026-05-27 03:25:13,897] INFO core.tasks: [9396aa70] Content generation complete
+[2026-05-27 03:25:13,973] INFO core.tasks: [9396aa70] Assembling video
+[2026-05-27 03:25:13,973] INFO core.pipeline.assembler: [9396aa70] Found 8 images
+[2026-05-27 03:25:14,041] INFO core.pipeline.assembler: [9396aa70] Audio duration: 54.89s
+[2026-05-27 03:25:14,042] INFO core.pipeline.assembler: Building slideshow: 8 images, 6.86s each
+[2026-05-27 03:25:14,122] INFO core.pipeline.assembler:   Prepared image 1/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_01.jpg
+[2026-05-27 03:25:14,182] INFO core.pipeline.assembler:   Prepared image 2/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_02.jpg
+[2026-05-27 03:25:14,243] INFO core.pipeline.assembler:   Prepared image 3/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_03.jpg
+[2026-05-27 03:25:14,289] INFO core.pipeline.assembler:   Prepared image 4/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_04.jpg
+[2026-05-27 03:25:14,345] INFO core.pipeline.assembler:   Prepared image 5/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_05.jpg
+[2026-05-27 03:25:14,415] INFO core.pipeline.assembler:   Prepared image 6/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_06.jpg
+[2026-05-27 03:25:14,486] INFO core.pipeline.assembler:   Prepared image 7/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_07.png
+[2026-05-27 03:25:14,561] INFO core.pipeline.assembler:   Prepared image 8/8: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\visuals\image_08.jpg
+[2026-05-27 03:25:14,649] INFO core.pipeline.assembler: [9396aa70] Adding title and subtitle overlays
+[2026-05-27 03:25:14,673] INFO core.pipeline.assembler: Title overlay created
+[2026-05-27 03:25:14,674] INFO core.pipeline.assembler: Creating 10 subtitle chunks
+[2026-05-27 03:25:15,487] INFO core.pipeline.assembler: [9396aa70] Attaching audio and rendering
+[2026-05-27 03:30:28,535] INFO core.tasks: [9396aa70] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\9396aa70-e7be-46c7-add6-f3a77c57e012\final.mp4
+[2026-05-27 03:30:28,549] INFO core.tasks: [c155f482] Generating content for: world cup 2026 groupe G quiz
+[2026-05-27 03:30:28,562] INFO core.pipeline.script: Generating script for topic: world cup 2026 groupe G quiz with model gemini-3.5-flash
+[2026-05-27 03:30:30,901] INFO core.pipeline.script: Script generated successfully for topic: world cup 2026 groupe G quiz
+[2026-05-27 03:30:30,909] INFO core.pipeline.tts: [c155f482] Generating audio with voice en-US-GuyNeural
+[2026-05-27 03:30:33,430] INFO core.pipeline.tts: [c155f482] Audio saved to C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\audio.mp3
+[2026-05-27 03:30:33,479] INFO core.pipeline.visuals: [c155f482] Fetching ordered visuals for 5 keywords: ['Neymar Brazil World Cup', 'Richarlison Brazil Serbia', 'Granit Xhaka Switzerland World Cup', 'Vincent Aboubakar Cameroon World Cup', 'FIFA World Cup Trophy']
+[2026-05-27 03:30:33,479] INFO core.pipeline.visuals: [c155f482] Processing keyword 1/5: 'Neymar Brazil World Cup'
+[2026-05-27 03:30:40,003] INFO core.pipeline.visuals: [c155f482] Saved image_01 for 'Neymar Brazil World Cup' — File:Neymar Barcelona presentation 1.jpg
+[2026-05-27 03:30:42,879] INFO core.pipeline.visuals: [c155f482] Saved image_02 for 'Neymar Brazil World Cup' — File:Messi with Neymar Junior the Future of Brazil.jpg
+[2026-05-27 03:30:42,884] INFO core.pipeline.visuals: [c155f482] Processing keyword 2/5: 'Richarlison Brazil Serbia'
+[2026-05-27 03:30:49,472] INFO core.pipeline.visuals: [c155f482] Saved image_03 for 'Richarlison Brazil Serbia' — File:Richarlison Copa do Mundo 2022.jpg
+[2026-05-27 03:30:52,217] INFO core.pipeline.visuals: [c155f482] Saved image_04 for 'Richarlison Brazil Serbia' — File:Richarlison Copa do Mundo 2022 (cropped).jpg
+[2026-05-27 03:30:52,221] INFO core.pipeline.visuals: [c155f482] Processing keyword 3/5: 'Granit Xhaka Switzerland World Cup'
+[2026-05-27 03:30:58,845] INFO core.pipeline.visuals: [c155f482] Saved image_05 for 'Granit Xhaka Switzerland World Cup' — File:Ser-Swi (23).jpg
+[2026-05-27 03:30:58,849] INFO core.pipeline.visuals: [c155f482] Processing keyword 4/5: 'Vincent Aboubakar Cameroon World Cup'
+[2026-05-27 03:31:02,342] WARNING core.pipeline.visuals: [c155f482] No images found for keyword 'Vincent Aboubakar Cameroon World Cup' — this section will reuse adjacent images
+[2026-05-27 03:31:02,342] INFO core.pipeline.visuals: [c155f482] Processing keyword 5/5: 'FIFA World Cup Trophy'
+[2026-05-27 03:31:08,760] INFO core.pipeline.visuals: [c155f482] Saved image_06 for 'FIFA World Cup Trophy' — File:Germany champions 2014 FIFA World Cup.jpg
+[2026-05-27 03:31:11,779] INFO core.pipeline.visuals: [c155f482] Saved image_07 for 'FIFA World Cup Trophy' — File:FIFA World Cup Trophy at National Football Museum, Manchester 02.jpg
+[2026-05-27 03:31:11,785] INFO core.pipeline.visuals: [c155f482] Done — 7 ordered visuals ready for assembly
+[2026-05-27 03:31:11,785] INFO core.tasks: [c155f482] Content generation complete
+[2026-05-27 03:31:11,811] INFO core.tasks: [c155f482] Assembling video
+[2026-05-27 03:31:11,811] INFO core.pipeline.assembler: [c155f482] Found 7 images
+[2026-05-27 03:31:11,878] INFO core.pipeline.assembler: [c155f482] Audio duration: 49.34s
+[2026-05-27 03:31:11,878] INFO core.pipeline.assembler: Building slideshow: 7 images, 7.05s each
+[2026-05-27 03:31:11,942] INFO core.pipeline.assembler:   Prepared image 1/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_01.jpg
+[2026-05-27 03:31:12,011] INFO core.pipeline.assembler:   Prepared image 2/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_02.jpg
+[2026-05-27 03:31:12,055] INFO core.pipeline.assembler:   Prepared image 3/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_03.jpg
+[2026-05-27 03:31:12,093] INFO core.pipeline.assembler:   Prepared image 4/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_04.jpg
+[2026-05-27 03:31:12,160] INFO core.pipeline.assembler:   Prepared image 5/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_05.jpg
+[2026-05-27 03:31:12,246] INFO core.pipeline.assembler:   Prepared image 6/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_06.jpg
+[2026-05-27 03:31:12,308] INFO core.pipeline.assembler:   Prepared image 7/7: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\visuals\image_07.jpg
+[2026-05-27 03:31:12,397] INFO core.pipeline.assembler: [c155f482] Adding title and subtitle overlays
+[2026-05-27 03:31:12,421] INFO core.pipeline.assembler: Title overlay created
+[2026-05-27 03:31:12,421] INFO core.pipeline.assembler: Creating 9 subtitle chunks
+[2026-05-27 03:31:13,405] INFO core.pipeline.assembler: [c155f482] Attaching audio and rendering
+[2026-05-27 03:36:04,872] INFO core.tasks: [c155f482] Assembly complete: C:\Users\Ben Ali\Desktop\My PC\Projects\Youtube_agent\youtube_agent\media\jobs\c155f482-b47a-4e2f-ba33-69e4c6494d31\final.mp4
