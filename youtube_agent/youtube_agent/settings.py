@@ -159,7 +159,7 @@ GEMINI_API_KEY = config("GEMINI_API_KEY", default="")
 GEMINI_API2 = config("GEMINI_API2", default="")
 
 # Default text model for script generation.
-GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-3.1-flash-lite")
+GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-3.5-flash")
 # Default vision model for image relevance checks.
 GEMINI_VISION_MODEL = config("GEMINI_VISION_MODEL", default="gemini-3.1-flash-lite")
 
@@ -170,7 +170,7 @@ YOUTUBE_CLIENT_SECRETS_FILE = config("YOUTUBE_CLIENT_SECRETS_FILE", default="cli
 # Topics to rotate through for automatic daily uploads
 VIDEO_TOPICS = config(
     "VIDEO_TOPICS",
-    default="5 surprising facts about space,history of the internet,how black holes work",
+    default="The Night Ronaldo Almost Never Played",
     cast=Csv(),
 )
 DAILY_UPLOAD_HOUR = config("DAILY_UPLOAD_HOUR", default=9, cast=int)   # 09:00 UTC

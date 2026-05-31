@@ -16,7 +16,7 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
-GEMINI_VISION_MODEL = "gemini-3.1-flash-lite"
+DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
 
 
 def _build_http_opener():
@@ -75,51 +75,37 @@ def _parse_script_payload(raw_text: str) -> dict:
     except json.JSONDecodeError:
         match = re.search(r"\{.*\}", cleaned_text, re.DOTALL)
         if not match:
-            raise Exception("Gemini response was not valid JSON.")
+            raise Exception(
+                "Gemini response was not valid JSON with 'title', 'script', and 'keywords' fields."
+            )
         try:
             payload = json.loads(match.group(0))
         except json.JSONDecodeError as exc:
-            raise Exception("Could not parse Gemini JSON response.") from exc
+            raise Exception(
+                "Gemini response contained JSON-like content, but it could not be parsed."
+            ) from exc
 
-    title  = payload.get("title")
-    script = payload.get("script")
-    scenes = payload.get("scenes")
+    title    = payload.get("title")
+    script   = payload.get("script")
+    keywords = payload.get("keywords")
 
-    if not isinstance(scenes, list) or len(scenes) < 1:
-        raise Exception("Gemini response missing valid 'scenes' array.")
+    if not isinstance(title, str) or not title.strip():
+        raise Exception("Gemini response did not include a valid 'title' string.")
+    if not isinstance(script, str) or not script.strip():
+        raise Exception("Gemini response did not include a valid 'script' string.")
+    if not isinstance(keywords, list) or len(keywords) < 1:
+        raise Exception("Gemini response did not include a valid 'keywords' array.")
 
-    validated_scenes = []
-    for i, scene in enumerate(scenes):
-        if not isinstance(scene, dict):
-            raise Exception(f"Scene {i} is not a dict.")
-
-        keyword  = scene.get("keyword")
-        backups  = scene.get("backups", [])
-        duration = scene.get("duration")
-
-        if not isinstance(keyword, str) or not keyword.strip():
-            raise Exception(f"Scene {i} missing valid 'keyword'.")
-        if not isinstance(duration, (int, float)) or duration <= 0:
-            raise Exception(f"Scene {i} missing valid 'duration'.")
-
-        # Normalize backups — must be a list of non-empty strings
-        if not isinstance(backups, list):
-            backups = []
-        backups = [str(b).strip() for b in backups if str(b).strip()]
-
-        validated_scenes.append({
-            "keyword":  keyword.strip(),
-            "backups":  backups,
-            "duration": float(duration),
-        })
+    # Clean each keyword
+    keywords = [str(k).strip() for k in keywords if str(k).strip()]
 
     normalized_title  = re.sub(r"\s+", " ", title).strip()
     normalized_script = re.sub(r"\s+", " ", script).strip()
 
     return {
-        "title":   normalized_title,
-        "script":  normalized_script,
-        "scenes":  validated_scenes,
+        "title":    normalized_title,
+        "script":   normalized_script,
+        "keywords": keywords,
     }
 
 
@@ -140,11 +126,9 @@ def generate_script(topic: str) -> dict:
     if not api_key:
         raise Exception("GEMINI_API_KEY is not configured in Django settings.")
 
-    # Use the configured Gemini text model for script generation.
-    # This is intentionally separate from the vision model used for image checks.
-    model_name = getattr(settings, "GEMINI_MODEL", GEMINI_VISION_MODEL).strip()
+    model_name = getattr(settings, "GEMINI_MODEL", DEFAULT_GEMINI_MODEL).strip()
     if not model_name:
-        model_name = GEMINI_VISION_MODEL
+        model_name = DEFAULT_GEMINI_MODEL
 
     prompt = (
     "You are an elite YouTube Shorts scriptwriter for a viral football channel.\n"
@@ -268,6 +252,7 @@ def generate_script(topic: str) -> dict:
     "  '...making them the greatest team to never exist on a trophy. | "\
     "THEY CHANGED FOOTBALL FOREVER AND WERE NEVER ALLOWED TO WIN—...'\n"
     "  Must sound like one continuous sentence. If it does not — rewrite.\n\n"
+
     "═══════════════════════════════════════════════════════\n"
     "SCRIPT TECHNICAL RULES\n"
     "═══════════════════════════════════════════════════════\n"
