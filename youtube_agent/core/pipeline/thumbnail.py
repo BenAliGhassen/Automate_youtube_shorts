@@ -31,10 +31,11 @@ HEIGHT = 1920
 
 SPORTSDB_API = "https://www.thesportsdb.com/api/v1/json/3"
 
-# Known players — maps lowercase name fragments to TheSportsDB IDs
+# ── Player/Country/Club/Topic mappings ───────────────────────────────────────
+
 PLAYER_IDS = {
     "messi":       34146370,
-    "ronaldo":     34146304,   # Cristiano Ronaldo
+    "ronaldo":     34146304,
     "mbappe":      34162098,
     "neymar":      34146371,
     "haaland":     34169116,
@@ -52,43 +53,134 @@ PLAYER_IDS = {
     "ronaldinho":  34159850,
     "zidane":      34161049,
     "cruyff":      34163559,
-    "r9":          34161040,   # Ronaldo Nazário
-    "r10":         34159850,   # Ronaldinho
-    "nazario":     34161040,   # Ronaldo Nazário
+    "r9":          34161040,
+    "r10":         34159850,
+    "nazario":     34161040,
+}
+
+COUNTRY_PLAYER_MAP = {
+    "brazil":      34161040,
+    "brasil":      34161040,
+    "argentina":   34146370,
+    "france":      34161049,
+    "portugal":    34146304,
+    "netherlands": 34163559,
+    "holland":     34163559,
+    "dutch":       34163559,
+    "germany":     34146705,
+    "spain":       34146306,
+    "england":     34146220,
+    "italy":       34146306,
+    "croatia":     34146306,
+    "senegal":     34145506,
+    "africa":      34145506,
+    "colombia":    34146370,
+    "uruguay":     34146370,
+    "mexico":      34162098,
+}
+
+CLUB_PLAYER_MAP = {
+    "barcelona":          34146370,
+    "fc barcelona":       34146370,
+    "real madrid":        34146304,
+    "manchester united":  34146304,
+    "juventus":           34146304,
+    "psg":                34162098,
+    "paris":              34162098,
+    "liverpool":          34145506,
+    "manchester city":    34155057,
+    "bayern":             34146705,
+    "chelsea":            34159231,
+    "arsenal":            34146220,
+    "inter miami":        34146370,
+    "miami":              34146370,
+    "dortmund":           34169116,
+    "ajax":               34163559,
+    "atletico madrid":    34159231,
+}
+
+TOPIC_PLAYER_MAP = {
+    "world cup":        34161040,
+    "champions league": 34146304,
+    "ballon d'or":      34146370,
+    "ballon dor":       34146370,
+    "golden boot":      34146304,
+    "hat trick":        34146370,
+    "record":           34146304,
+    "goat":             34146370,
+    "greatest":         34146370,
+    "best":             34146370,
+    "worst":            34161040,
+    "loss":             34161040,
+    "defeat":           34161040,
+    "curse":            34163559,
+    "final":            34146304,
+    "legend":           34161040,
+    "comeback":         34146370,
+    "injury":           34161040,
+    "retired":          34163559,
+    "forgotten":        34159850,
+    "scandal":          34159850,
+    "controversial":    34161049,
+    "headbutt":         34161049,
+    "red card":         34161049,
+    "banned":           34159850,
+    "penalty":          34146304,
+    "free kick":        34146370,
+    "dribble":          34159850,
+    "skill":            34159850,
 }
 
 
 # ── Player detection ──────────────────────────────────────────────────────────
 
-def _detect_player(topic: str, hook: str, scenes: list) -> str | None:
+def _detect_player(topic: str, hook: str, scenes: list) -> tuple[int | None, str]:
     """
-    Detect the most relevant player name from topic, hook, and scenes.
-    Returns the player name fragment or None if not detected.
+    Detect the most relevant player for the thumbnail.
+    Priority order:
+      1. Known player name directly in text
+      2. Country name → iconic player for that country
+      3. Club name → iconic player for that club
+      4. Topic keyword → thematically relevant player
+      5. None — text-only thumbnail
+
+    Returns (player_id, detection_reason) or (None, reason).
     """
-    # Combine all text sources
     all_text = f"{topic} {hook} {' '.join(s.get('keyword', '') for s in scenes)}".lower()
 
-    for name in PLAYER_IDS:
+    # Priority 1 — direct player name match
+    for name, pid in PLAYER_IDS.items():
         if name in all_text:
-            logger.info("Detected player: %s", name)
-            return name
+            logger.info("Player detected by name: %s", name)
+            return pid, f"name match: {name}"
 
-    logger.info("No known player detected in topic/hook/scenes")
-    return None
+    # Priority 2 — country match
+    for country, pid in COUNTRY_PLAYER_MAP.items():
+        if country in all_text:
+            logger.info("Player detected by country: %s", country)
+            return pid, f"country match: {country}"
+
+    # Priority 3 — club match
+    for club, pid in CLUB_PLAYER_MAP.items():
+        if club in all_text:
+            logger.info("Player detected by club: %s", club)
+            return pid, f"club match: {club}"
+
+    # Priority 4 — topic keyword match
+    for keyword, pid in TOPIC_PLAYER_MAP.items():
+        if keyword in all_text:
+            logger.info("Player detected by topic keyword: %s", keyword)
+            return pid, f"topic match: {keyword}"
+
+    # Priority 5 — default to R9 as the most universally dramatic player
+    logger.info("No match found — defaulting to R9")
+    return 34145943, "default: R9"
 
 
 # ── TheSportsDB player image ──────────────────────────────────────────────────
 
-def _fetch_player_image(player_name: str) -> bytes | None:
-    """
-    Fetch player cutout image from TheSportsDB.
-    Tries strCutout first (transparent bg), falls back to strThumb.
-    Returns raw image bytes or None.
-    """
-    player_id = PLAYER_IDS.get(player_name)
-    if not player_id:
-        return None
-
+def _fetch_player_image(player_id: int) -> bytes | None:
+    """Fetch player image from TheSportsDB by ID."""
     url = f"{SPORTSDB_API}/lookupplayer.php?id={player_id}"
 
     try:
@@ -106,17 +198,12 @@ def _fetch_player_image(player_name: str) -> bytes | None:
             return None
 
         player = players[0]
-        player_name = player.get("strPlayer") or "unknown"
-        # Encode to UTF-8-safe string for logging on Windows
-        safe_name = player_name.encode("utf-8", errors="replace").decode("utf-8")
-        logger.info("TheSportsDB player: %s", safe_name)
+        logger.info("TheSportsDB player: %s", player.get("strPlayer"))
 
-        # Try cutout first (transparent background — ideal for compositing)
         for field in ["strCutout", "strRender", "strThumb"]:
             img_url = player.get(field)
             if not img_url:
                 continue
-
             try:
                 img_req = Request(
                     url=img_url,
@@ -125,14 +212,11 @@ def _fetch_player_image(player_name: str) -> bytes | None:
                 )
                 with urlopen(img_req, timeout=20) as img_response:
                     img_bytes = img_response.read()
-
                 if img_bytes and len(img_bytes) > 5000:
-                    logger.info("Player image fetched from field: %s (%s KB)",
-                                field, len(img_bytes) // 1024)
+                    logger.info("Player image from %s (%s KB)", field, len(img_bytes) // 1024)
                     return img_bytes
-
             except Exception as exc:
-                logger.warning("Failed to fetch %s: %s", field, exc)
+                logger.warning("Failed field %s: %s", field, exc)
                 continue
 
         return None
@@ -457,25 +541,29 @@ def generate_thumbnail(
     Returns local file path as string.
 
     Steps:
-    1. Detect player from topic/hook/scenes
-    2. Fetch player image from TheSportsDB
+    1. Detect player ID from topic/hook/scenes
+    2. Fetch player image from TheSportsDB by ID
     3. Composite: gradient + player + hook text
-    4. Fallback to text-only card if player not found
+    4. Fallback to text-only card if player image unavailable
     """
     output_path = job_dir / "thumbnail.jpg"
     scenes      = scenes or []
 
-    # Step 1 — detect player
-    player_name  = _detect_player(topic, hook, scenes)
+    # Step 1 — detect player (returns tuple: (player_id, reason))
+    player_id, reason = _detect_player(topic, hook, scenes)
+    logger.info("Player selected: ID=%s reason=%s", player_id, reason)
 
-    # Step 2 — fetch player image
+    # Step 2 — fetch player image by ID
     player_bytes = None
-    if player_name:
-        player_bytes = _fetch_player_image(player_name)
+    if player_id:
+        player_bytes = _fetch_player_image(player_id)
         if not player_bytes:
-            logger.warning("No image found for player '%s' — text-only thumbnail", player_name)
+            logger.warning(
+                "No image fetched for player ID %s -- text-only thumbnail",
+                player_id
+            )
 
-    # Step 3 — composite
+    # Step 3 — composite (works with or without player image)
     success = _composite_thumbnail(hook, player_bytes, output_path)
 
     if success:
