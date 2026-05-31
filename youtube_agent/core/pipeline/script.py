@@ -16,7 +16,7 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
-DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
+GEMINI_VISION_MODEL = "gemini-3.1-flash-lite"
 
 
 def _build_http_opener():
@@ -75,37 +75,51 @@ def _parse_script_payload(raw_text: str) -> dict:
     except json.JSONDecodeError:
         match = re.search(r"\{.*\}", cleaned_text, re.DOTALL)
         if not match:
-            raise Exception(
-                "Gemini response was not valid JSON with 'title', 'script', and 'keywords' fields."
-            )
+            raise Exception("Gemini response was not valid JSON.")
         try:
             payload = json.loads(match.group(0))
         except json.JSONDecodeError as exc:
-            raise Exception(
-                "Gemini response contained JSON-like content, but it could not be parsed."
-            ) from exc
+            raise Exception("Could not parse Gemini JSON response.") from exc
 
-    title    = payload.get("title")
-    script   = payload.get("script")
-    keywords = payload.get("keywords")
+    title  = payload.get("title")
+    script = payload.get("script")
+    scenes = payload.get("scenes")
 
-    if not isinstance(title, str) or not title.strip():
-        raise Exception("Gemini response did not include a valid 'title' string.")
-    if not isinstance(script, str) or not script.strip():
-        raise Exception("Gemini response did not include a valid 'script' string.")
-    if not isinstance(keywords, list) or len(keywords) < 1:
-        raise Exception("Gemini response did not include a valid 'keywords' array.")
+    if not isinstance(scenes, list) or len(scenes) < 1:
+        raise Exception("Gemini response missing valid 'scenes' array.")
 
-    # Clean each keyword
-    keywords = [str(k).strip() for k in keywords if str(k).strip()]
+    validated_scenes = []
+    for i, scene in enumerate(scenes):
+        if not isinstance(scene, dict):
+            raise Exception(f"Scene {i} is not a dict.")
+
+        keyword  = scene.get("keyword")
+        backups  = scene.get("backups", [])
+        duration = scene.get("duration")
+
+        if not isinstance(keyword, str) or not keyword.strip():
+            raise Exception(f"Scene {i} missing valid 'keyword'.")
+        if not isinstance(duration, (int, float)) or duration <= 0:
+            raise Exception(f"Scene {i} missing valid 'duration'.")
+
+        # Normalize backups — must be a list of non-empty strings
+        if not isinstance(backups, list):
+            backups = []
+        backups = [str(b).strip() for b in backups if str(b).strip()]
+
+        validated_scenes.append({
+            "keyword":  keyword.strip(),
+            "backups":  backups,
+            "duration": float(duration),
+        })
 
     normalized_title  = re.sub(r"\s+", " ", title).strip()
     normalized_script = re.sub(r"\s+", " ", script).strip()
 
     return {
-        "title":    normalized_title,
-        "script":   normalized_script,
-        "keywords": keywords,
+        "title":   normalized_title,
+        "script":  normalized_script,
+        "scenes":  validated_scenes,
     }
 
 
@@ -126,43 +140,225 @@ def generate_script(topic: str) -> dict:
     if not api_key:
         raise Exception("GEMINI_API_KEY is not configured in Django settings.")
 
-    model_name = getattr(settings, "GEMINI_MODEL", DEFAULT_GEMINI_MODEL).strip()
+    # Use the configured Gemini text model for script generation.
+    # This is intentionally separate from the vision model used for image checks.
+    model_name = getattr(settings, "GEMINI_MODEL", GEMINI_VISION_MODEL).strip()
     if not model_name:
-        model_name = DEFAULT_GEMINI_MODEL
+        model_name = GEMINI_VISION_MODEL
 
     prompt = (
-        "You are writing a YouTube Shorts voiceover about football.\n"
-        "Create a strong title, a spoken script, and 5 to 6 image search queries for the topic below.\n"
-        "The script should fit roughly 60 seconds of narration.\n\n"
-        "Rules:\n"
-        '- Return valid JSON only with exactly three keys: "title", "script", and "keywords".\n'
-        "- The title should be catchy and under 80 characters.\n"
-        "- The script should be plain spoken sentences only.\n"
-        "- Do not include stage directions, bullet points, scene labels, emojis, or markdown.\n"
-        "- Aim for about 130 to 170 words.\n"
-        '- "keywords" must be a JSON array of 5 to 6 strings.\n'
-        "- Each keyword must look like a real photo caption or image tag on Wikimedia.\n"
-        "- Use full names the way a photographer would label a photo:\n"
-        "  Good examples:\n"
-        "    'Leo Messi FC Barcelona'\n"
-        "    'Leo Messi Argentina national team'\n"
-        "    'Messi Mbappe Neymar PSG'\n"
-        "    'Cristiano Ronaldo Real Madrid'\n"
-        "    'Messi World Cup trophy Argentina'\n"
-        "  Bad examples:\n"
-        "    'Messi young Barcelona' (adjectives confuse search)\n"
-        "    'Messi Champions League' (missing subject context)\n"
-        "    'football match' (too generic)\n"
-        "- If the script mentions two or more players together at the same moment,\n"
-        "  combine them in one keyword: 'Messi Suarez Neymar Barcelona'\n"
-        "- If the script mentions a player at a specific club, always include both:\n"
-        "  'Leo Messi FC Barcelona' not just 'Messi' or just 'Barcelona'\n"
-        "- Maximum 5 words per keyword.\n"
-        "- Keywords must follow the chronological order of the script.\n"
-        "- Each keyword must be unique — no two keywords should return the same images.\n"
-        "- Always use men's football — never keywords that could match women's teams.\n\n"
-        f"Topic: {topic}"
-    )
+    "You are an elite YouTube Shorts scriptwriter for a viral football channel.\n"
+    "Your scripts consistently achieve 85%+ retention rate across 30-second Shorts.\n"
+    "You understand the psychology of scroll-stopping content, pattern interrupts,\n"
+    "and the exact sentence rhythm that keeps viewers locked for 30 full seconds.\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+    "RETENTION PROBLEM YOU MUST SOLVE\n"
+    "═══════════════════════════════════════════════════════\n"
+    "This channel loses 40% of viewers after second 7.\n"
+    "The cause: slow build-up, story-driven pacing, predictable sentences.\n"
+    "Your job: eliminate every second of dead air, slow setup, and predictable flow.\n"
+    "Every single sentence must hit harder than the previous one.\n"
+    "The viewer must feel they will miss something critical if they scroll away.\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+    "FAST-PACE WRITING RULES (NON-NEGOTIABLE)\n"
+    "═══════════════════════════════════════════════════════\n"
+    "1. SENTENCE LENGTH: Maximum 10 words per sentence. No exceptions.\n"
+    "   Bad : 'Lionel Messi was born in Rosario Argentina and from a very young age\n"
+    "          showed exceptional talent that nobody had ever seen before.'\n"
+    "   Good: 'Rosario. 1987. A kid nobody expected. Then everything changed.'\n\n"
+    "2. RHYTHM: Alternate between ultra-short (3-5 words) and short (7-10 words).\n"
+    "   This creates a heartbeat rhythm that feels energetic and urgent.\n"
+    "   Example: 'Six Ballons d'Or. Six. Not two. Not four. Six.'\n\n"
+    "3. PATTERN INTERRUPTS: Every 2-3 sentences, break the flow with a shocking stat,\n"
+    "   a question, or a one-word sentence. This resets viewer attention.\n"
+    "   Examples: 'Wait.' / 'Nobody talks about this.' / 'The number? 91.'\n\n"
+    "4. NO TRANSITIONS: Never use 'and then', 'after that', 'moving on', 'next up'.\n"
+    "   Cut hard between ideas. Trust the viewer to follow.\n\n"
+    "5. NUMBERS OVER ADJECTIVES: Replace every adjective with a specific number.\n"
+    "   Bad : 'He scored an incredible amount of goals that season.'\n"
+    "   Good: 'That season. 50 goals. 50.'\n\n"
+    "6. SECOND-PERSON WEAPONS: Use 'you' to make stats feel personal.\n"
+    "   'You will never see this again.' / 'You already know who won.'\n\n"
+    "7. FORBIDDEN WORDS: never use these — they kill retention instantly:\n"
+    "   'today', 'in this video', 'let me', 'we are going to', 'subscribe',\n"
+    "   'amazing', 'incredible', 'unbelievable', 'legendary' (show don't tell)\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+    "CONTENT FORMAT DETECTION\n"
+    "═══════════════════════════════════════════════════════\n"
+    "Detect the format from the topic and apply the matching template.\n\n"
+
+    "FORMAT A — COMPARISON BATTLE (e.g. 'Messi vs Ronaldo')\n"
+    "Template: HOOK → Stat A vs Stat B → Stat A vs Stat B → Stat A vs Stat B\n"
+    "          → Pattern interrupt → Final verdict (controversial, not safe)\n"
+    "Rhythm: Ultra fast. 2-3s per image. Head-to-head cuts.\n"
+    "Rules:\n"
+    "- Alternate strictly between the two subjects every sentence.\n"
+    "- Never give a safe verdict — take a side, be controversial.\n"
+    "- Use direct numbers only: goals, trophies, assists, records.\n"
+    "- End on the losing side's best stat to create debate in comments.\n"
+    "Example structure:\n"
+    "  '700 goals. 800 goals. 5 Ballons d'Or. 5 Ballons d'Or.\n"
+    "   One World Cup. Zero World Cups. The debate is already over.'\n\n"
+
+    "FORMAT B — FACT BOMBS (e.g. '5 facts about Messi nobody knows')\n"
+    "Template: HOOK → Fact 1 → Fact 2 → Fact 3 → Fact 4 → Fact 5 → Loop close\n"
+    "Rhythm: Fast. 3-4s per image. Each fact is one visual.\n"
+    "Rules:\n"
+    "- Each fact must be genuinely surprising — no Wikipedia top results.\n"
+    "- Lead each fact with the number: 'Fact one.' / 'Number two.'\n"
+    "- The last fact must be the most shocking — save the best for last.\n"
+    "- Each fact is maximum 2 sentences.\n\n"
+
+    "FORMAT C — DID YOU KNOW (e.g. 'Did you know Ronaldo almost quit football?')\n"
+    "Template: HOOK (the answer) → Context → Proof → Stakes → Loop close\n"
+    "Rhythm: Fast. 3-4s per image.\n"
+    "Rules:\n"
+    "- Open with the answer, not the question. Reward curiosity immediately.\n"
+    "- Then explain WHY it matters in 3-4 rapid sentences.\n"
+    "- End with the consequence: what changed because of this moment.\n\n"
+
+    "FORMAT D — TOP 5 COUNTDOWN (e.g. 'Top 5 Messi goals')\n"
+    "Template: HOOK → Number 5 → 4 → 3 → 2 → Number 1 (longest) → Loop close\n"
+    "Rhythm: Fast. 3-4s per image. Each number gets one image.\n"
+    "Rules:\n"
+    "- Count DOWN, never up. 5 to 1 builds anticipation.\n"
+    "- Each entry: one sentence maximum. Just the fact. No fluff.\n"
+    "- Number 1 gets double the time — it is the payoff.\n"
+    "- The hook must reference number 1 without revealing it.\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+   "HOOK AND LOOP STRUCTURE\n"
+    "═══════════════════════════════════════════════════════\n"
+    "The hook sentence is SPLIT INTO TWO HALVES across intro and outro.\n\n"
+
+    "INTRO (first half) — THE BAIT:\n"
+    "- Written in ALL CAPS.\n"
+    "- Ends with an em dash (—).\n"
+    "- Must sound like a RUMOR, a SECRET, or an IMPOSSIBLE CLAIM.\n"
+    "- The viewer must think: 'that cannot be true — I need to know more.'\n"
+    "- Use exaggeration, controversy, or a fake-sounding fact as the hook.\n"
+    "- The hook does not have to be 100% literal — it can dramatize reality.\n"
+    "- Good hooks:\n"
+    "    'THE DUTCH GOVERNMENT BANNED THIS FOOTAGE FOR 30 YEARS—'\n"
+    "    'THIS COUNTRY WINS EVERY FINAL THEY PLAY — EXCEPT THE ONES THAT MATTER—'\n"
+    "    'FIFA TRIED TO DELETE THIS RECORD FROM HISTORY—'\n"
+    "    'THEY CHANGED FOOTBALL FOREVER AND WERE NEVER ALLOWED TO WIN—'\n"
+    "    'THREE FINALS. THREE DEFEATS. ONE CURSE NOBODY CAN EXPLAIN—'\n"
+    "- Bad hooks (descriptive, not bait):\n"
+    "    'NO OTHER FOOTBALL TEAM SUFFERED THIS CRUEL TRAGEDY—' (tells not baits)\n"
+    "    'THIS IS THE GREATEST TEAM EVER—' (generic, no information gap)\n"
+    "    'MESSI IS BETTER THAN RONALDO—' (opinion, not a secret)\n\n"
+
+    "OUTRO (second half) — THE PAYOFF:\n"
+    "- Starts with — (em dash).\n"
+    "- Completes the intro sentence grammatically.\n"
+    "- Must feel like the answer to the bait — but still leave something unresolved.\n"
+    "- Ends on a STRONG word. Never a filler.\n"
+    "- Good outros:\n"
+    "    '—and nobody in football has ever explained why.'\n"
+    "    '—and they still have not forgiven themselves.'\n"
+    "    '—making them the greatest team to never exist on a trophy.'\n"
+    "- Bad outros:\n"
+    "    '—making them the ultimate losers.' (dismissive, kills emotion)\n\n"
+
+    "LOOP TEST — read outro into intro aloud:\n"
+    "  '...making them the greatest team to never exist on a trophy. | "\
+    "THEY CHANGED FOOTBALL FOREVER AND WERE NEVER ALLOWED TO WIN—...'\n"
+    "  Must sound like one continuous sentence. If it does not — rewrite.\n\n"
+    "═══════════════════════════════════════════════════════\n"
+    "SCRIPT TECHNICAL RULES\n"
+    "═══════════════════════════════════════════════════════\n"
+    "- Total duration: 28 to 35 seconds of spoken narration.\n"
+    "- Word count: 70 to 95 words.\n"
+    "- Every word earns its place — cut anything that does not add tension.\n"
+    "- No empty seconds. No padding. Last word = last millisecond.\n"
+    "- Plain spoken sentences only. No bullets, emojis, markdown, stage directions.\n"
+    "- Tone: urgent, confident, slightly confrontational. Never calm. Never neutral.\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+    "SCENES AND WIKIMEDIA KEYWORDS\n"
+    "═══════════════════════════════════════════════════════\n"
+    "CONTEXT: Keywords are searched directly on Wikimedia Commons.\n"
+    "Wikimedia is a public archive of real photos, match shots, trophy ceremonies.\n"
+    "Write keywords exactly like a Wikipedia photo file name — real names and events.\n\n"
+
+    "Each scene has:\n"
+    "  keyword  : primary Wikimedia search (max 5 words)\n"
+    "  backups  : 3 fallback searches, specific → generic\n"
+    "  duration : seconds this image displays (integer)\n\n"
+
+    "KEYWORD FORMULA: [Full name] + [Club or Country] + [Event]\n"
+    "  Good: 'Lionel Messi FC Barcelona goal'\n"
+    "  Good: 'Cristiano Ronaldo Real Madrid Champions League'\n"
+    "  Bad : 'epic football moment' (not on Wikimedia)\n"
+    "  Bad : 'Messi best goal ever' (adjectives return nothing)\n\n"
+
+    "DURATION RULES BY FORMAT:\n"
+    "  Comparison : 2-3s per image — ultra fast, head-to-head energy\n"
+    "  Fact bombs : 3-4s per image — fast but readable\n"
+    "  Did you know: 3-4s per image — fast but readable\n"
+    "  Top 5      : 3-4s per image, number 1 gets 6-8s\n\n"
+
+    "SCENE NARRATIVE RULES:\n"
+    "- Scene 1 (HOOK VISUAL): Dramatic, scroll-stopping. Does not have to match topic.\n"
+    "  Its only job: stop the thumb. Use crowd chaos, controversial moment, red card.\n"
+    "- Scenes 2-N (BODY): One image per fact/stat/player — strict narrative order.\n"
+    "  For comparisons: strictly alternate between the two subjects.\n"
+    "- Last scene (LOOP CLOSE): Visually echoes scene 1. Creates the visual loop.\n\n"
+
+    "BACKUP KEYWORD RULES:\n"
+    "  backup 1: slightly broader than primary\n"
+    "  backup 2: club or country only\n"
+    "  backup 3: fully generic football image\n"
+    "  Example:\n"
+    "    primary : 'Messi FC Barcelona Champions League'\n"
+    "    backup 1: 'Messi Barcelona Camp Nou'\n"
+    "    backup 2: 'FC Barcelona football match'\n"
+    "    backup 3: 'football match crowd stadium'\n\n"
+
+    "SUM RULE: all durations must sum to total script duration exactly.\n"
+    "Use 5 to 7 scenes total.\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+    "OUTPUT FORMAT\n"
+    "═══════════════════════════════════════════════════════\n"
+    "Return ONLY valid JSON. Zero preamble. Zero explanation. Zero markdown fences.\n\n"
+    "{\n"
+    '  "format": "comparison|factbombs|didyouknow|top5",\n'
+    '  "title": "string — under 60 chars, creates information gap, no clickbait adjectives",\n'
+    '  "script": "string — ALL CAPS INTRO— body sentences. —outro completion.",\n'
+    '  "scenes": [\n'
+    "    {\n"
+    '      "keyword": "string",\n'
+    '      "backups": ["string", "string", "string"],\n'
+    '      "duration": integer\n'
+    "    }\n"
+    "  ]\n"
+    "}\n\n"
+
+    "═══════════════════════════════════════════════════════\n"
+    "SELF-CHECK BEFORE OUTPUT\n"
+    "═══════════════════════════════════════════════════════\n"
+    "☑ Every sentence is under 10 words\n"
+    "☑ Rhythm alternates short/ultra-short throughout\n"
+    "☑ At least 2 pattern interrupts in the body\n"
+    "☑ Zero forbidden words used\n"
+    "☑ Intro ends with — (em dash)\n"
+    "☑ Outro starts with — and completes the intro grammatically\n"
+    "☑ Intro + Outro read as one sentence when looped\n"
+    "☑ Last word is strong — not a filler\n"
+    "☑ All durations match the format speed rule\n"
+    "☑ All durations sum to total script duration\n"
+    "☑ All keywords follow Wikimedia formula\n"
+    "☑ Scene 1 is scroll-stopping\n"
+    "☑ Last scene echoes scene 1 visually\n"
+    "☑ format field matches the detected content type\n\n"
+
+    f"TOPIC: {topic}\n"
+)
     request_body = {
         "contents": [
             {

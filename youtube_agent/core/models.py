@@ -26,8 +26,9 @@ class VideoJob(models.Model):
     script     = models.TextField(blank=True)
     audio_path = models.CharField(max_length=500, blank=True)
     video_path = models.CharField(max_length=500, blank=True)
-    keywords   = models.JSONField(default=list, blank=True)
-
+    scenes = models.JSONField(default=list, blank=True)
+    thumbnail_path = models.CharField(max_length=500, blank=True)
+    
     # YouTube
     youtube_video_id  = models.CharField(max_length=50, blank=True)
     youtube_video_url = models.URLField(blank=True)

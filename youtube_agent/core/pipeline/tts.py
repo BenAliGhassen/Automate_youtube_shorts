@@ -24,8 +24,68 @@ async def _save_audio(script: str, output_path: Path) -> None:
     await communicator.save(str(output_path))
 
 
+def _preprocess_script(script: str) -> str:
+    """
+    Prepare script for edge-tts:
+    1. Convert ALL CAPS words to Title Case so TTS pronounces
+       them as words, not individual letters.
+    2. Replace em dashes with commas so TTS pauses naturally
+       instead of saying 'dash'.
+    """
+    import re
+
+    # Step 1 — replace em dash with comma pause
+    script = script.replace("—", ", ")
+
+    # Step 2 — find ALL CAPS words and convert to Title Case
+    # Matches sequences of 2+ uppercase letters (avoids single letter like "I")
+    def title_case_match(match):
+        return match.group(0).title()
+
+    script = re.sub(r'\b[A-Z]{2,}(?:\s+[A-Z]{2,})*\b', title_case_match, script)
+
+    # Step 3 — clean up double spaces and double commas
+    script = re.sub(r',\s*,', ',', script)
+    script = re.sub(r'\s+', ' ', script).strip()
+
+    return script
+
+
+
+def _trim_silence(audio_path: Path, silence_thresh_db: float = -50.0) -> None:
+    """
+    Remove trailing silence from the generated MP3.
+    edge-tts often adds 0.5-1s of silence at the end.
+    """
+    try:
+        from pydub import AudioSegment
+        from pydub.silence import detect_leading_silence
+
+        audio    = AudioSegment.from_mp3(str(audio_path))
+        reversed_audio = audio.reverse()
+
+        # Detect how much silence is at the end (reversed = leading)
+        trailing_silence_ms = detect_leading_silence(
+            reversed_audio,
+            silence_threshold=silence_thresh_db,
+            chunk_size=10,
+        )
+
+        if trailing_silence_ms > 100:   # only trim if more than 100ms
+            trimmed = audio[:-trailing_silence_ms]
+            trimmed.export(str(audio_path), format="mp3")
+            logger.info(
+                "Trimmed %.2fs of trailing silence from audio",
+                trailing_silence_ms / 1000
+            )
+        else:
+            logger.info("No significant trailing silence detected — keeping as is")
+
+    except Exception as exc:
+        logger.warning("Could not trim silence: %s — keeping original audio", exc)
+
+
 def generate_audio(script: str, job_id: str) -> str:
-    """Generate an MP3 voiceover file and return its full local path."""
     if not script or not script.strip():
         raise Exception("Script cannot be empty for TTS generation.")
     if not job_id or not job_id.strip():
@@ -37,14 +97,18 @@ def generate_audio(script: str, job_id: str) -> str:
 
     logger.info("[%s] Generating audio with voice %s", job_id[:8], VOICE_NAME)
 
+    clean_script = _preprocess_script(script.strip())
+
     try:
-        asyncio.run(_save_audio(script.strip(), output_path))
+        asyncio.run(_save_audio(clean_script, output_path))
     except Exception as exc:
-        logger.error("[%s] Audio generation failed: %s", job_id[:8], exc)
         raise Exception(f"Failed to generate audio with edge-tts: {exc}") from exc
 
     if not output_path.exists() or output_path.stat().st_size == 0:
         raise Exception("edge-tts did not create a valid audio.mp3 file.")
+
+    # Trim trailing silence added by edge-tts
+    _trim_silence(output_path)
 
     logger.info("[%s] Audio saved to %s", job_id[:8], output_path)
     return str(output_path)

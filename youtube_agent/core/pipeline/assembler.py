@@ -49,42 +49,64 @@ def _prepare_image(image_path: str) -> np.ndarray:
 
 
 
-def _ken_burns_clip(arr: np.ndarray, duration: float) -> ImageClip:
+def _ken_burns_clip(
+    arr: np.ndarray,
+    duration: float,
+    direction: str = "zoom_in",   # zoom_in | zoom_out | pan_left | pan_right
+) -> VideoClip:
     """
-    Take a 1080x1920 numpy image array and return a MoviePy clip
-    that slowly zooms from 1.0x to 1.05x over the full duration.
+    Ken Burns effect with configurable direction.
+    zoom_in    : slowly zoom toward center (default)
+    zoom_out   : start zoomed in, pull back
+    pan_left   : zoom in while panning left
+    pan_right  : zoom in while panning right
     """
-    h, w = arr.shape[:2]   # h=1920, w=1080
-    
-    # How much extra pixel space the zoom needs at maximum scale
-    # at 1.05x zoom on a 1080px wide image:
-    # rendered width = 1080 * 1.05 = 1134px
-    # so we have 54px extra horizontally, 27px on each side to crop
+    h, w     = arr.shape[:2]
     zoom_max = 1.05
 
     def make_frame(t):
-        # t goes from 0.0 to duration
-        # progress goes from 0.0 to 1.0
         progress = t / duration
 
-        # scale goes from 1.0 (start) to 1.05 (end)
-        scale = 1.0 + (zoom_max - 1.0) * progress
+        if direction == "zoom_in":
+            scale = 1.0 + (zoom_max - 1.0) * progress
+            cx    = w / 2
+            cy    = h / 2
 
-        # new dimensions after scaling
+        elif direction == "zoom_out":
+            scale = zoom_max - (zoom_max - 1.0) * progress
+            cx    = w / 2
+            cy    = h / 2
+
+        elif direction == "pan_left":
+            scale = 1.0 + (zoom_max - 1.0) * progress
+            # pan from right to left
+            cx = w / 2 + (w * 0.03) * (1 - progress)
+            cy = h / 2
+
+        elif direction == "pan_right":
+            scale = 1.0 + (zoom_max - 1.0) * progress
+            # pan from left to right
+            cx = w / 2 - (w * 0.03) * (1 - progress)
+            cy = h / 2
+
+        else:
+            scale = 1.0 + (zoom_max - 1.0) * progress
+            cx, cy = w / 2, h / 2
+
         new_w = int(w * scale)
         new_h = int(h * scale)
 
-        # resize the image to the new scaled size
-        pil_img = Image.fromarray(arr)
-        pil_img = pil_img.resize((new_w, new_h), Image.LANCZOS)
+        pil_img    = Image.fromarray(arr)
+        pil_img    = pil_img.resize((new_w, new_h), Image.LANCZOS)
         scaled_arr = np.array(pil_img)
 
-        # center crop back to original 1080x1920
-        x1 = (new_w - w) // 2
-        y1 = (new_h - h) // 2
-        cropped = scaled_arr[y1:y1 + h, x1:x1 + w]
+        # Crop centered on cx, cy
+        x1 = max(0, int(cx * scale - w / 2))
+        y1 = max(0, int(cy * scale - h / 2))
+        x1 = min(x1, new_w - w)
+        y1 = min(y1, new_h - h)
 
-        return cropped
+        return scaled_arr[y1:y1 + h, x1:x1 + w]
 
     return VideoClip(make_frame, duration=duration).with_fps(FPS)
 
@@ -117,23 +139,6 @@ def _split_into_chunks(text: str, chunk_duration: float, total_duration: float) 
             chunks.append({"text": chunk_text, "start": start, "end": end})
 
     return chunks
-
-
-
-def _build_slideshow(image_paths: list[str], duration: float) -> object:
-    n = len(image_paths)
-    segment_duration = duration / n
-
-    logger.info("Building slideshow: %s images, %.2fs each", n, segment_duration)
-
-    clips = []
-    for i, path in enumerate(image_paths):
-        arr = _prepare_image(path)
-        clip = _ken_burns_clip(arr, segment_duration)   # ← only change
-        clips.append(clip)
-        logger.info("  Prepared image %s/%s: %s", i + 1, n, path)
-
-    return concatenate_videoclips(clips, method="compose")
 
 
 
@@ -197,6 +202,48 @@ def _add_overlays(video_clip, title: str, script: str, duration: float) -> Compo
     return CompositeVideoClip(layers, size=(WIDTH, HEIGHT))
 
 
+DIRECTIONS = ["zoom_in", "zoom_out", "pan_left", "pan_right"]
+
+def _build_slideshow_from_scenes(
+    image_paths: list[str],
+    scenes: list[dict],
+    total_duration: float,
+) -> object:
+    n_images = len(image_paths)
+    n_scenes = len(scenes)
+
+    if n_images == n_scenes:
+        durations = [scene["duration"] for scene in scenes]
+    else:
+        logger.warning(
+            "Image count (%s) != scene count (%s) — equal distribution",
+            n_images, n_scenes
+        )
+        durations = [total_duration / n_images] * n_images
+
+    # Normalize to exact audio length
+    duration_sum = sum(durations)
+    durations    = [d * (total_duration / duration_sum) for d in durations]
+
+    clips = []
+    for i, (path, dur) in enumerate(zip(image_paths, durations)):
+        arr = _prepare_image(path)
+
+        # Detect duplicates by filename suffix _dup
+        is_dup    = "_dup" in Path(path).stem
+        # Rotate direction — duplicates get a different direction from their source
+        direction = DIRECTIONS[i % len(DIRECTIONS)]
+
+        clip = _ken_burns_clip(arr, dur, direction=direction)
+        clips.append(clip)
+        logger.info(
+            "  Scene %s: %.2fs — %s [%s]%s",
+            i + 1, dur, Path(path).name, direction,
+            " (duplicate)" if is_dup else ""
+        )
+
+    return concatenate_videoclips(clips, method="compose")
+
 
 
 def build_video(job) -> str:
@@ -213,6 +260,21 @@ def build_video(job) -> str:
 
     logger.info("[%s] Found %s images", str(job.id)[:8], len(image_paths))
 
+    # After collecting image_paths, prepend thumbnail
+    thumbnail_path = job_dir / "thumbnail.jpg"
+    if thumbnail_path.exists():
+        image_paths.insert(0, str(thumbnail_path))
+        # Insert a 4.5s scene at the start for the thumbnail
+        if job.scenes:
+            job.scenes.insert(0, {
+                "keyword":  "hook thumbnail",
+                "backups":  [],
+                "duration": 4.5,
+            })
+        logger.info("[%s] Thumbnail prepended as first scene", str(job.id)[:8])
+    else:
+        logger.warning("[%s] No thumbnail found — skipping hook frame", str(job.id)[:8])
+
     # 2. Load audio to get real duration
     audio_path = job.audio_path
     audio_clip = AudioFileClip(audio_path)
@@ -221,7 +283,8 @@ def build_video(job) -> str:
     logger.info("[%s] Audio duration: %.2fs", str(job.id)[:8], duration)
 
     # 3. Build the silent slideshow
-    video_clip = _build_slideshow(image_paths, duration)
+    scenes     = job.scenes   # [{"keyword": ..., "duration": 7.0}, ...]
+    video_clip = _build_slideshow_from_scenes(image_paths, scenes, duration)
 
 # 4. Add text overlays
     logger.info("[%s] Adding title and subtitle overlays", str(job.id)[:8])
@@ -267,7 +330,7 @@ if __name__ == "__main__":
     from core.models import VideoJob
 
     # paste a real job_id from your admin panel here
-    JOB_ID = "500419a2431248efb4a0796e69a3656f"
+    JOB_ID = "ac29303d2239459a845cf52c030d9789"
 
     job = VideoJob.objects.get(id=JOB_ID)
     path = build_video(job)

@@ -1,6 +1,10 @@
+"""Celery task orchestration for the YouTube Shorts pipeline."""
+
 import logging
+from pathlib import Path
+
 from celery import shared_task, chain
-from django.utils import timezone
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +39,11 @@ def run_daily_pipeline(self):
     return str(job.id)
 
 
+# End of core task orchestration.
+# This module defines the main Celery workflow for automatic and manual
+# video generation, assembly, and upload stages.
+
+
 # ── Stage 1: Content generation ───────────────────────────────────────────────
 
 @shared_task(
@@ -50,6 +59,7 @@ def generate_content(self, job_id: str) -> str:
     from .models import VideoJob
     from .pipeline.script import generate_script
     from .pipeline.tts import generate_audio
+    from .pipeline.thumbnail import generate_thumbnail
     from .pipeline.visuals import fetch_visuals
 
     job = VideoJob.objects.get(id=job_id)
@@ -61,8 +71,22 @@ def generate_content(self, job_id: str) -> str:
         script_data = generate_script(job.topic)
         job.title = script_data["title"]
         job.script = script_data["script"]
-        job.keywords = script_data["keywords"]
-        job.save(update_fields=["title", "script"])
+        job.scenes = script_data["scenes"]
+        job.save(update_fields=["title", "script", "scenes"])
+
+        # Generate hook thumbnail
+        job_dir    = Path(settings.MEDIA_ROOT) / "jobs" / job_id
+        job_dir.mkdir(parents=True, exist_ok=True)
+        hook_text  = job.script.split("—")[0] if "—" in job.script else job.title
+        thumb_path = generate_thumbnail(
+            title   = job.title,
+            topic   = job.topic,
+            hook    = hook_text,
+            job_dir = job_dir,
+        )
+        job.thumbnail_path = thumb_path
+        job.save(update_fields=["thumbnail_path"])
+        
 
         # 2. TTS voiceover
         self.update_state(state="PROGRESS", meta={"step": "tts"})
@@ -72,7 +96,7 @@ def generate_content(self, job_id: str) -> str:
 
         # 3. Visuals
         self.update_state(state="PROGRESS", meta={"step": "visuals"})
-        fetch_visuals(job.keywords, job_id)
+        fetch_visuals(job.scenes, job_id, topic=job.topic)
 
         logger.info("[%s] Content generation complete", job_id[:8])
         return job_id
@@ -163,3 +187,6 @@ def trigger_job_for_topic(topic: str) -> str:
     job.celery_task_id = result.id
     job.save(update_fields=["celery_task_id"])
     return str(job.id)
+
+# End of tasks.py module summary.
+# This marker is intentionally placed at the end of the file.

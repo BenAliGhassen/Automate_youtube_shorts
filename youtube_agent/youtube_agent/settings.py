@@ -153,7 +153,16 @@ LOGGING = {
 }
 
 # ── API Keys (loaded from .env) ───────────────────────────────────────────────
+# GEMINI_API_KEY: used for text/script generation with the high-quality model.
+# GEMINI_API2: used for Gemini Vision calls when verifying image relevance.
 GEMINI_API_KEY = config("GEMINI_API_KEY", default="")
+GEMINI_API2 = config("GEMINI_API2", default="")
+
+# Default text model for script generation.
+GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-3.1-flash-lite")
+# Default vision model for image relevance checks.
+GEMINI_VISION_MODEL = config("GEMINI_VISION_MODEL", default="gemini-3.1-flash-lite")
+
 PEXELS_API_KEY = config("PEXELS_API_KEY", default="")
 YOUTUBE_CLIENT_SECRETS_FILE = config("YOUTUBE_CLIENT_SECRETS_FILE", default="client_secrets.json")
 
