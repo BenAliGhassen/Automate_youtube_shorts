@@ -95,6 +95,47 @@ def check_aspect_ratio(image_path: Path) -> tuple[bool, str]:
     return True, f"Aspect ratio OK ({ratio:.2f})"
 
 
+def score_resolution(image_path: Path) -> tuple[float, str]:
+    """
+    Score image resolution from 0.0 to 100.
+    """
+    try:
+        from PIL import Image
+        img = Image.open(image_path)
+        w, h = img.size
+        img.close()
+    except Exception as exc:
+        return 0.0, f"Could not read image dimensions: {exc}"
+
+    if w < MIN_WIDTH or h < MIN_HEIGHT:
+        return 0.0, f"Too small: {w}x{h}px"
+
+    side = min(w, h)
+    score = min(1.0, side / IDEAL_MIN_SIDE)
+    return round(score * 100.0, 1), f"Resolution score: {w}x{h}px"
+
+
+def score_quality(image_path: Path) -> tuple[float, str]:
+    """
+    Score image quality from 0.0 to 100 based on brightness and variance.
+    """
+    try:
+        from PIL import Image, ImageStat
+        img = Image.open(image_path).convert("RGB")
+        stat = ImageStat.Stat(img)
+        img.close()
+    except Exception as exc:
+        return 0.0, f"Could not analyze image: {exc}"
+
+    brightness = sum(stat.mean) / 3.0
+    stddev = sum(stat.stddev) / 3.0
+
+    brightness_score = min(max((brightness - 20.0) / 210.0, 0.0), 1.0)
+    variance_score = min(max((stddev - 12.0) / 88.0, 0.0), 1.0)
+    score = (brightness_score * 0.55) + (variance_score * 0.45)
+    return round(score * 100.0, 1), f"Brightness={brightness:.1f}, variance={stddev:.1f}"
+
+
 def passes_quality_check(image_path: Path) -> tuple[bool, str]:
     """
     Run all local quality checks on a downloaded image.
@@ -118,3 +159,16 @@ def passes_quality_check(image_path: Path) -> tuple[bool, str]:
 
     logger.debug("Quality check PASSED: %s", image_path.name)
     return True, "All quality checks passed"
+
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# MIN_WIDTH | int | Minimum allowed image width for short assembly.
+# MIN_HEIGHT | int | Minimum allowed image height for short assembly.
+# IDEAL_MIN_SIDE | int | Ideal minimum shorter side length for good cropping.
+# check_resolution | func | Validate image dimensions against minimum thresholds.
+# check_quality | func | Validate brightness and variance to reject blank/dark images.
+# check_aspect_ratio | func | Validate that the image is not too panoramic or too tall.
+# score_resolution | func | Score the image resolution from 0–100.
+# score_quality | func | Score image brightness and texture quality from 0–100.
+# passes_quality_check | func | Aggregate all local checks and return pass/fail status.

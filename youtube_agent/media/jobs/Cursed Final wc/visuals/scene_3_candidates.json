@@ -1,0 +1,189 @@
+{
+  "scene_index": 3,
+  "keyword": "football trophy",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_07.jpg",
+      "score": 89.4,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 57.6,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:FIFA World Cup Trophy at National Football Museum, Manchester 02.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_08.jpg",
+      "score": 88.1,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 52.4,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:UEFA Cup Winners' Cup trophy at Manchester National Football Museum (Ank Kumar) 01.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_11.jpg",
+      "score": 87.85,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 51.4,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Premier League Trophy at Manchester's National Football Museum (Ank Kumar) 04.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_07.jpg",
+      "source_title": "File:FIFA World Cup Trophy at National Football Museum, Manchester 02.jpg",
+      "keyword": "football trophy",
+      "score": 89.4,
+      "resolution_score": 100.0,
+      "quality_score": 57.6,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=148.9, variance=58.6",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_08.jpg",
+      "source_title": "File:UEFA Cup Winners' Cup trophy at Manchester National Football Museum (Ank Kumar) 01.jpg",
+      "keyword": "football trophy",
+      "score": 88.1,
+      "resolution_score": 100.0,
+      "quality_score": 52.4,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=125.7, variance=60.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_11.jpg",
+      "source_title": "File:Premier League Trophy at Manchester's National Football Museum (Ank Kumar) 04.jpg",
+      "keyword": "football trophy",
+      "score": 87.85,
+      "resolution_score": 100.0,
+      "quality_score": 51.4,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=136.8, variance=52.7",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_12.jpg",
+      "source_title": "File:Premier League Trophy at Manchester's National Football Museum (Ank Kumar) 03.jpg",
+      "keyword": "football trophy",
+      "score": 87.8,
+      "resolution_score": 100.0,
+      "quality_score": 51.2,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=114.8, variance=63.6",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_10.jpg",
+      "source_title": "File:FIFA World Cup Trophy (Jules Rimet Trophy) at National Football Museum, Manchester 01.jpg",
+      "keyword": "football trophy",
+      "score": 87.75,
+      "resolution_score": 100.0,
+      "quality_score": 51.0,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=103.6, variance=68.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_09.jpg",
+      "source_title": "File:UEFA Cup Winners' Cup trophy at Manchester National Football Museum (Ank Kumar) 02.jpg",
+      "keyword": "football trophy",
+      "score": 87.72,
+      "resolution_score": 100.0,
+      "quality_score": 50.9,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=129.6, variance=55.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_13.jpg",
+      "source_title": "File:Premier League Trophy at Manchester's National Football Museum (Ank Kumar) 01.jpg",
+      "keyword": "football trophy",
+      "score": 87.42,
+      "resolution_score": 100.0,
+      "quality_score": 49.7,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=129.9, variance=52.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    }
+  ]
+}

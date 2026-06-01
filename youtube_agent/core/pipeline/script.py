@@ -6,6 +6,7 @@ import logging
 import os
 import re
 import sys
+import time
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -15,11 +16,18 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
+# Gemini API endpoint and model defaults.
+# The primary model is used first; if it fails, we optionally retry using a fallback.
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
+GEMINI_FALLBACK_MODEL = "gemini-3.1-flash-lite"
+GEMINI_MAX_RETRIES = 3
+GEMINI_RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
 
 
 def _build_http_opener():
+    # Respect Django settings if outbound proxy configuration is explicitly defined.
+    # Otherwise, do not inherit potentially broken OS-level proxy environment variables.
     http_proxy = getattr(settings, "OUTBOUND_HTTP_PROXY", "").strip()
     https_proxy = getattr(settings, "OUTBOUND_HTTPS_PROXY", "").strip()
 
@@ -29,7 +37,6 @@ def _build_http_opener():
     if https_proxy:
         proxies["https"] = https_proxy
 
-    # Bypass broken system proxy variables unless the Django settings opt in.
     return build_opener(ProxyHandler(proxies))
 
 
@@ -68,6 +75,40 @@ def _strip_code_fences(text: str) -> str:
     return cleaned
 
 
+def _normalize_scene(scene: Any, index: int) -> dict:
+    if not isinstance(scene, dict):
+        raise Exception(f"Scene {index + 1} is not a valid JSON object.")
+
+    keyword = scene.get("keyword")
+    backups = scene.get("backups", [])
+    duration = scene.get("duration")
+
+    if not isinstance(keyword, str) or not keyword.strip():
+        raise Exception(f"Scene {index + 1} must include a non-empty 'keyword'.")
+
+    if backups is None:
+        backups = []
+    if not isinstance(backups, list):
+        raise Exception(f"Scene {index + 1} 'backups' must be a list of strings.")
+
+    normalized_backups = [str(item).strip() for item in backups if isinstance(item, str) and item.strip()]
+
+    if isinstance(duration, str):
+        try:
+            duration = float(duration.strip())
+        except ValueError:
+            duration = None
+
+    if not isinstance(duration, (int, float)) or duration <= 0:
+        raise Exception(f"Scene {index + 1} must include a positive 'duration'.")
+
+    return {
+        "keyword": keyword.strip(),
+        "backups": normalized_backups,
+        "duration": float(duration),
+    }
+
+
 def _parse_script_payload(raw_text: str) -> dict:
     cleaned_text = _strip_code_fences(raw_text)
     try:
@@ -76,7 +117,7 @@ def _parse_script_payload(raw_text: str) -> dict:
         match = re.search(r"\{.*\}", cleaned_text, re.DOTALL)
         if not match:
             raise Exception(
-                "Gemini response was not valid JSON with 'title', 'script', and 'keywords' fields."
+                "Gemini response was not valid JSON with 'title', 'script', and 'scenes' fields."
             )
         try:
             payload = json.loads(match.group(0))
@@ -85,38 +126,111 @@ def _parse_script_payload(raw_text: str) -> dict:
                 "Gemini response contained JSON-like content, but it could not be parsed."
             ) from exc
 
-    title    = payload.get("title")
-    script   = payload.get("script")
+    title   = payload.get("title")
+    script  = payload.get("script")
+    scenes  = payload.get("scenes")
     keywords = payload.get("keywords")
+    format_type = payload.get("format")
 
     if not isinstance(title, str) or not title.strip():
         raise Exception("Gemini response did not include a valid 'title' string.")
     if not isinstance(script, str) or not script.strip():
         raise Exception("Gemini response did not include a valid 'script' string.")
-    if not isinstance(keywords, list) or len(keywords) < 1:
-        raise Exception("Gemini response did not include a valid 'keywords' array.")
 
-    # Clean each keyword
-    keywords = [str(k).strip() for k in keywords if str(k).strip()]
+    if not isinstance(scenes, list) or len(scenes) < 1:
+        if isinstance(keywords, list) and any(str(k).strip() for k in keywords):
+            normalized_keywords = [str(k).strip() for k in keywords if str(k).strip()]
+            logger.warning(
+                "Gemini response did not include 'scenes'; falling back to keywords for scene generation."
+            )
+            scenes = [
+                {"keyword": keyword, "backups": [], "duration": 4.0}
+                for keyword in normalized_keywords
+            ]
+        else:
+            raise Exception("Gemini response did not include a valid 'scenes' array.")
 
-    normalized_title  = re.sub(r"\s+", " ", title).strip()
-    normalized_script = re.sub(r"\s+", " ", script).strip()
+    normalized_scenes = [_normalize_scene(scene, idx) for idx, scene in enumerate(scenes)]
 
-    return {
-        "title":    normalized_title,
-        "script":   normalized_script,
-        "keywords": keywords,
+    result = {
+        "title":    re.sub(r"\s+", " ", title).strip(),
+        "script":   re.sub(r"\s+", " ", script).strip(),
+        "scenes":   normalized_scenes,
     }
+
+    if isinstance(format_type, str) and format_type.strip():
+        result["format"] = format_type.strip()
+
+    if isinstance(keywords, list):
+        result["keywords"] = [str(k).strip() for k in keywords if str(k).strip()]
+
+    return result
+
+
+def _execute_gemini_request(request: Request, model_name: str) -> dict[str, Any]:
+    retry_delay = getattr(settings, "GEMINI_TEXT_RETRY_DELAY", 5)
+
+    for attempt in range(1, GEMINI_MAX_RETRIES + 1):
+        try:
+            opener = _build_http_opener()
+            with opener.open(request, timeout=60) as response:
+                return json.loads(response.read().decode("utf-8"))
+
+        # HTTP errors may be transient; retry on common server-side or rate-limit codes.
+        except HTTPError as exc:
+            error_body = exc.read().decode("utf-8", errors="replace")
+            logger.warning(
+                "Gemini API request failed with status %s for model %s (attempt %s/%s)",
+                exc.code,
+                model_name,
+                attempt,
+                GEMINI_MAX_RETRIES,
+            )
+            if exc.code in GEMINI_RETRYABLE_STATUS_CODES and attempt < GEMINI_MAX_RETRIES:
+                logger.info(
+                    "Retrying Gemini request after %s seconds due to status %s",
+                    retry_delay,
+                    exc.code,
+                )
+                time.sleep(retry_delay)
+                retry_delay *= 2
+                continue
+            raise Exception(
+                f"Gemini API request failed with status {exc.code}: {error_body}"
+            ) from exc
+
+        except URLError as exc:
+            logger.warning(
+                "Gemini API request could not reach the server: %s (attempt %s/%s)",
+                exc.reason,
+                attempt,
+                GEMINI_MAX_RETRIES,
+            )
+            if attempt < GEMINI_MAX_RETRIES:
+                logger.info("Retrying Gemini request after %s seconds", retry_delay)
+                time.sleep(retry_delay)
+                retry_delay *= 2
+                continue
+            raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
+
+        except json.JSONDecodeError as exc:
+            logger.error("Gemini API returned invalid JSON.")
+            raise Exception("Gemini API returned invalid JSON.") from exc
+
+    raise Exception("Gemini request failed after retries.")
 
 
 def generate_script(topic: str) -> dict:
     """
-    Generate a title and a 60-second spoken script for a topic.
+    Generate a title, script, and visual scene plan for a topic.
 
     Returns:
         {
             "title": str,
             "script": str,
+            "scenes": list[dict],
+            "format": str,          # optional
+            "keywords": list[str],  # optional
         }
     """
     if not topic or not topic.strip():
@@ -148,21 +262,16 @@ def generate_script(topic: str) -> dict:
     "═══════════════════════════════════════════════════════\n"
     "FAST-PACE WRITING RULES (NON-NEGOTIABLE)\n"
     "═══════════════════════════════════════════════════════\n"
-    "1. SENTENCE LENGTH: Maximum 10 words per sentence. No exceptions.\n"
+    "1. SENTENCE LENGTH: Maximum 15 words per sentence. No exceptions.\n"
     "   Bad : 'Lionel Messi was born in Rosario Argentina and from a very young age\n"
     "          showed exceptional talent that nobody had ever seen before.'\n"
-    "   Good: 'Rosario. 1987. A kid nobody expected. Then everything changed.'\n\n"
-    "2. RHYTHM: Alternate between ultra-short (3-5 words) and short (7-10 words).\n"
-    "   This creates a heartbeat rhythm that feels energetic and urgent.\n"
-    "   Example: 'Six Ballons d'Or. Six. Not two. Not four. Six.'\n\n"
+    "   Good: 'exceptional talent nobody had ever seen before then this happened '\n\n"
     "3. PATTERN INTERRUPTS: Every 2-3 sentences, break the flow with a shocking stat,\n"
     "   a question, or a one-word sentence. This resets viewer attention.\n"
     "   Examples: 'Wait.' / 'Nobody talks about this.' / 'The number? 91.'\n\n"
-    "4. NO TRANSITIONS: Never use 'and then', 'after that', 'moving on', 'next up'.\n"
-    "   Cut hard between ideas. Trust the viewer to follow.\n\n"
     "5. NUMBERS OVER ADJECTIVES: Replace every adjective with a specific number.\n"
     "   Bad : 'He scored an incredible amount of goals that season.'\n"
-    "   Good: 'That season. 50 goals. 50.'\n\n"
+    "   Good: 'That season he scored 50 goals.'\n\n"
     "6. SECOND-PERSON WEAPONS: Use 'you' to make stats feel personal.\n"
     "   'You will never see this again.' / 'You already know who won.'\n\n"
     "7. FORBIDDEN WORDS: never use these — they kill retention instantly:\n"
@@ -192,16 +301,15 @@ def generate_script(topic: str) -> dict:
     "Rhythm: Fast. 3-4s per image. Each fact is one visual.\n"
     "Rules:\n"
     "- Each fact must be genuinely surprising — no Wikipedia top results.\n"
-    "- Lead each fact with the number: 'Fact one.' / 'Number two.'\n"
+    "- Lead each fact with the number: 'one.' / 'two.'\n"
     "- The last fact must be the most shocking — save the best for last.\n"
-    "- Each fact is maximum 2 sentences.\n\n"
+    "- Each fact is maximum 6 sentences.\n\n"
 
     "FORMAT C — DID YOU KNOW (e.g. 'Did you know Ronaldo almost quit football?')\n"
-    "Template: HOOK (the answer) → Context → Proof → Stakes → Loop close\n"
+    "Template: HOOK  → Context (the answer) → Proof → Stakes →  Loop close\n"
     "Rhythm: Fast. 3-4s per image.\n"
     "Rules:\n"
-    "- Open with the answer, not the question. Reward curiosity immediately.\n"
-    "- Then explain WHY it matters in 3-4 rapid sentences.\n"
+    "- explain WHY it matters in 5-6 rapid sentences.\n"
     "- End with the consequence: what changed because of this moment.\n\n"
 
     "FORMAT D — TOP 5 COUNTDOWN (e.g. 'Top 5 Messi goals')\n"
@@ -230,7 +338,7 @@ def generate_script(topic: str) -> dict:
     "    'THIS COUNTRY WINS EVERY FINAL THEY PLAY — EXCEPT THE ONES THAT MATTER—'\n"
     "    'FIFA TRIED TO DELETE THIS RECORD FROM HISTORY—'\n"
     "    'THEY CHANGED FOOTBALL FOREVER AND WERE NEVER ALLOWED TO WIN—'\n"
-    "    'THREE FINALS. THREE DEFEATS. ONE CURSE NOBODY CAN EXPLAIN—'\n"
+    "    'THE BRAZILIAN GOVERNMENT DECLARED HIM A NATIONAL TREASURE'\n"
     "- Bad hooks (descriptive, not bait):\n"
     "    'NO OTHER FOOTBALL TEAM SUFFERED THIS CRUEL TRAGEDY—' (tells not baits)\n"
     "    'THIS IS THE GREATEST TEAM EVER—' (generic, no information gap)\n"
@@ -238,26 +346,24 @@ def generate_script(topic: str) -> dict:
 
     "OUTRO (second half) — THE PAYOFF:\n"
     "- Starts with — (em dash).\n"
-    "- Completes the intro sentence grammatically.\n"
-    "- Must feel like the answer to the bait — but still leave something unresolved.\n"
-    "- Ends on a STRONG word. Never a filler.\n"
+    "- Must feel like the start to the bait.\n"
+    "-the outro must grammatically attach to the begining of the intro to trigger the loop.\n"
     "- Good outros:\n"
-    "    '—and nobody in football has ever explained why.'\n"
-    "    '—and they still have not forgiven themselves.'\n"
-    "    '—making them the greatest team to never exist on a trophy.'\n"
+    "    '—to stop foreign clubs from ever buying him...'\n"
+    "    '—And this is how ...'\n"
     "- Bad outros:\n"
     "    '—making them the ultimate losers.' (dismissive, kills emotion)\n\n"
 
     "LOOP TEST — read outro into intro aloud:\n"
-    "  '...making them the greatest team to never exist on a trophy. | "\
-    "THEY CHANGED FOOTBALL FOREVER AND WERE NEVER ALLOWED TO WIN—...'\n"
+    "  '...to stop foreign clubs from ever buying him. | "\
+    "THE BRAZILIAN GOVERNMENT DECLARED HIM A NATIONAL TREASURE...'\n"
     "  Must sound like one continuous sentence. If it does not — rewrite.\n\n"
 
     "═══════════════════════════════════════════════════════\n"
     "SCRIPT TECHNICAL RULES\n"
     "═══════════════════════════════════════════════════════\n"
     "- Total duration: 28 to 35 seconds of spoken narration.\n"
-    "- Word count: 70 to 95 words.\n"
+    "- Word count: 70 to 105 words.\n"
     "- Every word earns its place — cut anything that does not add tension.\n"
     "- No empty seconds. No padding. Last word = last millisecond.\n"
     "- Plain spoken sentences only. No bullets, emojis, markdown, stage directions.\n"
@@ -364,9 +470,10 @@ def generate_script(topic: str) -> dict:
         },
     }
 
+    request_data = json.dumps(request_body).encode("utf-8")
     request = Request(
         url=f"{GEMINI_API_BASE}/{model_name}:generateContent?key={api_key}",
-        data=json.dumps(request_body).encode("utf-8"),
+        data=request_data,
         headers={
             "Content-Type": "application/json",
             "User-Agent": "youtube-agent/1.0",
@@ -376,31 +483,60 @@ def generate_script(topic: str) -> dict:
 
     logger.info("Generating script for topic: %s with model %s", topic, model_name)
 
+    fallback_model = getattr(settings, "GEMINI_FALLBACK_MODEL", GEMINI_FALLBACK_MODEL).strip()
+    response_payload = None
+
     try:
-        opener = _build_http_opener()
-        with opener.open(request, timeout=60) as response:
-            response_payload = json.loads(response.read().decode("utf-8"))
-    except HTTPError as exc:
-        error_body = exc.read().decode("utf-8", errors="replace")
-        logger.error(
-            "Gemini API request failed with status %s for model %s",
-            exc.code,
-            model_name,
-        )
-        raise Exception(
-            f"Gemini API request failed with status {exc.code}: {error_body}"
-        ) from exc
-    except URLError as exc:
-        logger.error("Gemini API request could not reach the server: %s", exc.reason)
-        raise Exception(f"Could not reach Gemini API: {exc.reason}") from exc
-    except json.JSONDecodeError as exc:
-        logger.error("Gemini API returned invalid JSON.")
-        raise Exception("Gemini API returned invalid JSON.") from exc
+        response_payload = _execute_gemini_request(request, model_name)
+    except Exception as exc:
+        if fallback_model and fallback_model != model_name:
+            logger.warning(
+                "Primary Gemini model %s failed; trying fallback model %s",
+                model_name,
+                fallback_model,
+            )
+            fallback_request = Request(
+                url=f"{GEMINI_API_BASE}/{fallback_model}:generateContent?key={api_key}",
+                data=request_data,
+                headers={
+                    "Content-Type": "application/json",
+                    "User-Agent": "youtube-agent/1.0",
+                },
+                method="POST",
+            )
+            try:
+                response_payload = _execute_gemini_request(fallback_request, fallback_model)
+                model_name = fallback_model
+                logger.info("Gemini fallback model %s succeeded", fallback_model)
+            except Exception as fallback_exc:
+                logger.error(
+                    "Fallback Gemini model %s also failed. Original error: %s",
+                    fallback_model,
+                    str(exc),
+                )
+                raise fallback_exc from exc
+        else:
+            raise
 
     raw_text = _extract_candidate_text(response_payload)
     result = _parse_script_payload(raw_text)
     logger.info("Script generated successfully for topic: %s", topic)
     return result
+
+# Variable reference table:
+# variable_name | type | purpose
+# GEMINI_API_BASE | str | Base URL for Gemini v1beta generateContent requests.
+# DEFAULT_GEMINI_MODEL | str | Default high-quality model for text generation.
+# GEMINI_FALLBACK_MODEL | str | Secondary model to use when primary fails.
+# GEMINI_MAX_RETRIES | int | Number of retry attempts for API calls.
+# GEMINI_RETRYABLE_STATUS_CODES | set[int] | HTTP status codes treated as transient failures.
+# _build_http_opener | func | Creates a URL opener using optional proxy settings.
+# _extract_candidate_text | func | Extracts raw text content from Gemini response payload.
+# _strip_code_fences | func | Removes markdown fences around JSON from Gemini output.
+# _normalize_scene | func | Normalizes each scene dict and validates required fields.
+# _parse_script_payload | func | Parses Gemini JSON output into title/script/scenes.
+# _execute_gemini_request | func | Sends Gemini requests with retry and error handling.
+# generate_script | func | Builds the prompt, calls Gemini, and returns the parsed payload.
 
 
 def _bootstrap_django() -> None:
@@ -436,3 +572,10 @@ if __name__ == "__main__":
         "Generated script payload: %s",
         json.dumps(generated, ensure_ascii=True, indent=2),
     )
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# _bootstrap_django | func | Bootstraps Django settings for standalone execution.
+# argparse | module | Used for CLI support when running script.py directly.
+# generated | dict | The parsed title/script/scenes payload returned by generate_script.
+# args | argparse.Namespace | Command-line arguments parsed for the standalone runner.

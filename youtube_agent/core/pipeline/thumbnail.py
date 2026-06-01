@@ -14,6 +14,7 @@ Pipeline:
   5. Fallback to pure Pillow card if any step fails
 """
 
+import argparse
 import json
 import logging
 import os
@@ -56,6 +57,7 @@ PLAYER_IDS = {
     "r9":          34161040,
     "r10":         34159850,
     "nazario":     34161040,
+    "pele": 34164201,
 }
 
 COUNTRY_PLAYER_MAP = {
@@ -605,3 +607,24 @@ if __name__ == "__main__":
         scenes  = [],
     )
     print("Thumbnail saved:", path)
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# argparse | module | Used by the standalone CLI runner for thumbnail generation.
+# WIDTH | int | Output thumbnail width in pixels.
+# HEIGHT | int | Output thumbnail height in pixels.
+# SPORTSDB_API | str | Base URL for TheSportsDB API lookups.
+# PLAYER_IDS | dict[str, int] | Known player names mapped to player IDs.
+# COUNTRY_PLAYER_MAP | dict[str, int] | Country keywords mapped to iconic player IDs.
+# CLUB_PLAYER_MAP | dict[str, int] | Club keywords mapped to fallback player IDs.
+# TOPIC_PLAYER_MAP | dict[str, int] | Topic keywords mapped to fallback player IDs.
+# _detect_player | func | Determine the best player for the thumbnail based on text.
+# _fetch_player_image | func | Download a player image from TheSportsDB.
+# _generate_background | func | Create the red/black gradient thumbnail background.
+# _add_vignette | func | Apply a dark vignette effect.
+# _add_diagonal_lines | func | Add subtle texture lines.
+# _load_font | func | Load an available bold font.
+# _wrap_text | func | Wrap hook text to fit the thumbnail width.
+# _draw_outlined_text | func | Render centered outlined text.
+# _composite_thumbnail | func | Composite the final thumbnail and save it.
+# generate_thumbnail | func | Top-level thumbnail generation function used by the pipeline.

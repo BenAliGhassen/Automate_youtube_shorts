@@ -2,12 +2,18 @@ import os
 from pathlib import Path
 from decouple import config, Csv
 
+# Base path for the Django project, used for static/media paths and DB location.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGS_DIR = BASE_DIR / "logs"
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def env_bool(name: str, default: bool = False) -> bool:
+    """Read a boolean environment variable from the .env file.
+
+    The decouple library may return strings for boolean values, so this helper
+    normalizes common true/false values into a Python bool.
+    """
     value = config(name, default=str(default))
     if isinstance(value, bool):
         return value
@@ -160,6 +166,12 @@ GEMINI_API2 = config("GEMINI_API2", default="")
 
 # Default text model for script generation.
 GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-3.5-flash")
+# Fallback text model used when the primary model is unavailable.
+# Use a model supported by the v1beta generateContent endpoint.
+GEMINI_FALLBACK_MODEL = config(
+    "GEMINI_FALLBACK_MODEL",
+    default="gemini-3.1-flash-lite"
+)
 # Default vision model for image relevance checks.
 GEMINI_VISION_MODEL = config("GEMINI_VISION_MODEL", default="gemini-3.1-flash-lite")
 
@@ -174,3 +186,26 @@ VIDEO_TOPICS = config(
     cast=Csv(),
 )
 DAILY_UPLOAD_HOUR = config("DAILY_UPLOAD_HOUR", default=9, cast=int)   # 09:00 UTC
+# ── End of settings and environment configuration.
+# The variables below are used across the Django app for API access,
+# Celery orchestration, and media storage paths.
+
+# Variable reference table:
+# variable_name | type | purpose
+# BASE_DIR | Path | Project root folder for static/media file resolution.
+# LOGS_DIR | Path | Directory where application logs are written.
+# SECRET_KEY | str | Django secret key loaded from environment.
+# DEBUG | bool | Django debug mode flag.
+# ALLOWED_HOSTS | list[str] | Allowed hostnames for the Django app.
+# REDIS_URL | str | Redis broker address for Celery.
+# CELERY_BROKER_URL | str | Celery broker URL configured from Redis.
+# CELERY_RESULT_BACKEND | str | Backend for storing task results.
+# GEMINI_API_KEY | str | Primary Gemini API key for text generation.
+# GEMINI_API2 | str | Secondary Gemini API key for vision scoring.
+# GEMINI_MODEL | str | Primary Gemini model used for generateContent.
+# GEMINI_FALLBACK_MODEL | str | Fallback Gemini model when the primary fails.
+# GEMINI_VISION_MODEL | str | Model used for Gemini Vision relevance checks.
+# PEXELS_API_KEY | str | Optional Pexels API key for future image sources.
+# YOUTUBE_CLIENT_SECRETS_FILE | str | File path for YouTube OAuth credentials.
+# VIDEO_TOPICS | list[str] | Rotating video topics for automatic daily uploads.
+# DAILY_UPLOAD_HOUR | int | UTC hour when the daily pipeline should run.

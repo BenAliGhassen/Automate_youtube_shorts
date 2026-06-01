@@ -1,0 +1,101 @@
+{
+  "scene_index": 4,
+  "keyword": "Marcel Desailly France national football team",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_08.jpg",
+      "score": 70.74,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "quality_score": 31.0,
+      "resolution_score": 100.0,
+      "vision_score": 79.99,
+      "source_title": "File:25th Laureus World Sports Awards - Red Carpet - Marcel Desailly - 240422 192752-3.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_06.jpg",
+      "score": 70.62,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "quality_score": 30.5,
+      "resolution_score": 100.0,
+      "vision_score": 79.99,
+      "source_title": "File:25th Laureus World Sports Awards - Red Carpet - Marcel Desailly - 240422 192758.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_07.jpg",
+      "score": 70.22,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "quality_score": 28.9,
+      "resolution_score": 100.0,
+      "vision_score": 79.99,
+      "source_title": "File:25th Laureus World Sports Awards - Red Carpet - Marcel Desailly - 240422 192752-3 (cropped).jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_08.jpg",
+      "source_title": "File:25th Laureus World Sports Awards - Red Carpet - Marcel Desailly - 240422 192752-3.jpg",
+      "keyword": "Marcel Desailly France national football team",
+      "score": 70.74,
+      "resolution_score": 100.0,
+      "quality_score": 31.0,
+      "vision_score": 79.99,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1920px",
+        "quality_reason": "Brightness=66.6, variance=48.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 33.3,
+          "total_score": 79.99
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_06.jpg",
+      "source_title": "File:25th Laureus World Sports Awards - Red Carpet - Marcel Desailly - 240422 192758.jpg",
+      "keyword": "Marcel Desailly France national football team",
+      "score": 70.62,
+      "resolution_score": 100.0,
+      "quality_score": 30.5,
+      "vision_score": 79.99,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1920px",
+        "quality_reason": "Brightness=65.8, variance=48.1",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 33.3,
+          "total_score": 79.99
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_07.jpg",
+      "source_title": "File:25th Laureus World Sports Awards - Red Carpet - Marcel Desailly - 240422 192752-3 (cropped).jpg",
+      "keyword": "Marcel Desailly France national football team",
+      "score": 70.22,
+      "resolution_score": 100.0,
+      "quality_score": 28.9,
+      "vision_score": 79.99,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1680px",
+        "quality_reason": "Brightness=68.2, variance=43.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 33.3,
+          "total_score": 79.99
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,11 @@
-"""Celery task orchestration for the YouTube Shorts pipeline."""
+"""Celery task orchestration for the YouTube Shorts pipeline.
+
+This module defines the main workflow for the application:
+- generate content (script, audio, visuals)
+- assemble video from downloaded images and audio
+- upload the final video to YouTube
+- manual topic trigger for dashboard use
+"""
 
 import logging
 from pathlib import Path
@@ -17,6 +24,7 @@ def run_daily_pipeline(self):
     Entry point called by the Celery Beat scheduler once per day.
     Picks the next topic and kicks off the full pipeline chain.
     """
+    # Import models lazily so Celery can load the task definitions first.
     from .models import VideoJob, Topic
 
     topic = Topic.get_next()
@@ -42,6 +50,15 @@ def run_daily_pipeline(self):
 # End of core task orchestration.
 # This module defines the main Celery workflow for automatic and manual
 # video generation, assembly, and upload stages.
+
+# Variable reference table:
+# variable_name | type | purpose
+# logger | logging.Logger | Module logger used for pipeline progress and error messages.
+# run_daily_pipeline | task | Scheduled entrypoint to start a new VideoJob from the topic queue.
+# generate_content | task | Generates script, TTS, visuals, and thumbnail for a job.
+# assemble_video | task | Builds the final MP4 video from audio and downloaded image assets.
+# upload_to_youtube | task | Uploads the assembled video to YouTube and records the video ID.
+# trigger_job_for_topic | task | Manually starts a pipeline for a specific topic.
 
 
 # ── Stage 1: Content generation ───────────────────────────────────────────────
@@ -190,3 +207,12 @@ def trigger_job_for_topic(topic: str) -> str:
 
 # End of tasks.py module summary.
 # This marker is intentionally placed at the end of the file.
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# logger | logging.Logger | Module logger for Celery task progress.
+# run_daily_pipeline | task | Scheduler entrypoint for automated daily uploads.
+# generate_content | task | Task for generating script, audio, thumbnail, and visuals.
+# assemble_video | task | Task for rendering the final video file.
+# upload_to_youtube | task | Task for uploading the rendered video to YouTube.
+# trigger_job_for_topic | task | Task for manual topic-based pipeline execution.

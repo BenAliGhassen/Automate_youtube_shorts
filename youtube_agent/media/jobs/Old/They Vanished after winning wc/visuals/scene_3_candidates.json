@@ -1,0 +1,101 @@
+{
+  "scene_index": 3,
+  "keyword": "Italy national football team 1934",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_08.jpg",
+      "score": 75.22,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "quality_score": 58.5,
+      "resolution_score": 100.0,
+      "vision_score": 76.0,
+      "source_title": "File:Calcio Italia vs Cecoslovacchia WC 1934.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_07.jpg",
+      "score": 70.43,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "quality_score": 47.0,
+      "resolution_score": 63.2,
+      "vision_score": 82.0,
+      "source_title": "File:Finale de Coupe du Monde de football 1934, le gardien italien Combi \u00e0 terre, son arri\u00e8re Allemandi d\u00e9gage.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_09.jpg",
+      "score": 70.05,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "quality_score": 58.9,
+      "resolution_score": 64.8,
+      "vision_score": 76.0,
+      "source_title": "File:Schiavio goal in planicka 1934.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_08.jpg",
+      "source_title": "File:Calcio Italia vs Cecoslovacchia WC 1934.jpg",
+      "keyword": "Italy national football team 1934",
+      "score": 75.22,
+      "resolution_score": 100.0,
+      "quality_score": 58.5,
+      "vision_score": 76.0,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=137.3, variance=66.3",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 20.0,
+          "total_score": 76.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_07.jpg",
+      "source_title": "File:Finale de Coupe du Monde de football 1934, le gardien italien Combi \u00e0 terre, son arri\u00e8re Allemandi d\u00e9gage.jpg",
+      "keyword": "Italy national football team 1934",
+      "score": 70.43,
+      "resolution_score": 63.2,
+      "quality_score": 47.0,
+      "vision_score": 82.0,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x379px",
+        "quality_reason": "Brightness=106.7, variance=59.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 40.0,
+          "total_score": 82.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_09.jpg",
+      "source_title": "File:Schiavio goal in planicka 1934.jpg",
+      "keyword": "Italy national football team 1934",
+      "score": 70.05,
+      "resolution_score": 64.8,
+      "quality_score": 58.9,
+      "vision_score": 76.0,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "details": {
+        "resolution_reason": "Resolution score: 600x389px",
+        "quality_reason": "Brightness=126.9, variance=72.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 20.0,
+          "total_score": 76.0
+        }
+      }
+    }
+  ]
+}

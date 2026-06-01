@@ -1,0 +1,189 @@
+{
+  "scene_index": 1,
+  "keyword": "Zinedine Zidane France 2006",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_05.jpg",
+      "score": 88.15,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 52.6,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Italy vs France - FIFA World Cup 2006 final - Lilian Thuram and Zinedine Zidane.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_02.jpg",
+      "score": 81.67,
+      "reason": "[Scored] filename=75.0 vision=100.0 total=92.5",
+      "quality_score": 44.7,
+      "resolution_score": 100.0,
+      "vision_score": 92.5,
+      "source_title": "File:Zinedine zidane wcf 2006-edit.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_04.png",
+      "score": 79.67,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "quality_score": 54.7,
+      "resolution_score": 100.0,
+      "vision_score": 85.0,
+      "source_title": "File:Thuram and Zidane in world cup final 2006.png"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_05.jpg",
+      "source_title": "File:Italy vs France - FIFA World Cup 2006 final - Lilian Thuram and Zinedine Zidane.jpg",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 88.15,
+      "resolution_score": 100.0,
+      "quality_score": 52.6,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1273x1184px",
+        "quality_reason": "Brightness=107.5, variance=70.0",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_02.jpg",
+      "source_title": "File:Zinedine zidane wcf 2006-edit.jpg",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 81.67,
+      "resolution_score": 100.0,
+      "quality_score": 44.7,
+      "vision_score": 92.5,
+      "reason": "[Scored] filename=75.0 vision=100.0 total=92.5",
+      "details": {
+        "resolution_reason": "Resolution score: 1149x2166px",
+        "quality_reason": "Brightness=94.2, variance=61.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 75.0,
+          "total_score": 92.5
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_04.png",
+      "source_title": "File:Thuram and Zidane in world cup final 2006.png",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 79.67,
+      "resolution_score": 100.0,
+      "quality_score": 54.7,
+      "vision_score": 85.0,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1092x1156px",
+        "quality_reason": "Brightness=111.1, variance=72.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 50.0,
+          "total_score": 85.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_01.jpg",
+      "source_title": "File:Zinedine zidane wcf 2006.jpg",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 78.62,
+      "resolution_score": 100.0,
+      "quality_score": 32.5,
+      "vision_score": 92.5,
+      "reason": "[Scored] filename=75.0 vision=100.0 total=92.5",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=81.0, variance=44.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 75.0,
+          "total_score": 92.5
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_03.jpg",
+      "source_title": "File:Zidane-France-2006-home-shirt.jpg",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 78.08,
+      "resolution_score": 100.0,
+      "quality_score": 44.1,
+      "vision_score": 86.76,
+      "reason": "[Scored] filename=75.0 vision=91.8 total=86.76",
+      "details": {
+        "resolution_reason": "Resolution score: 1200x1600px",
+        "quality_reason": "Brightness=81.7, variance=66.7",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 91.8,
+          "filename_score": 75.0,
+          "total_score": 86.76
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_06.jpg",
+      "source_title": "File:Italy vs France 2006.jpg",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 74.8,
+      "resolution_score": 100.0,
+      "quality_score": 35.2,
+      "vision_score": 85.0,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=78.5, variance=50.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 50.0,
+          "total_score": 85.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_07.jpg",
+      "source_title": "File:WM06 Portugal-France Penalty.jpg",
+      "keyword": "Zinedine Zidane France 2006",
+      "score": 72.0,
+      "resolution_score": 100.0,
+      "quality_score": 42.0,
+      "vision_score": 77.5,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "details": {
+        "resolution_reason": "Resolution score: 800x719px",
+        "quality_reason": "Brightness=116.5, variance=44.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 25.0,
+          "total_score": 77.5
+        }
+      }
+    }
+  ]
+}

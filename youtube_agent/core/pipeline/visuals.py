@@ -8,8 +8,8 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, quote
 from urllib.request import Request, urlopen
-from .image_quality    import passes_quality_check
-from .image_relevance  import passes_relevance_check
+from .image_quality    import passes_quality_check, score_quality, score_resolution
+from .image_relevance  import passes_relevance_check, score_image_candidate
 from django.conf import settings
 
 logging.getLogger("core.pipeline.image_quality").setLevel(logging.DEBUG)
@@ -17,10 +17,10 @@ logging.getLogger("core.pipeline.image_relevance").setLevel(logging.DEBUG)
 
 logger = logging.getLogger(__name__)
 
-
-
+# Wikimedia Commons API constants and visual collection limits.
 WIKIMEDIA_API  = "https://commons.wikimedia.org/w/api.php"
-IMAGES_PER_KEYWORD = 5   # images fetched per keyword
+IMAGES_PER_KEYWORD = 7   # images fetched per keyword
+SEARCH_RESULTS_PER_KEYWORD = 30
 VISUAL_COUNT   = 12     # total max images to download
 MIN_IMAGES    = 4     # minimum to proceed
 TARGET_IMAGES = 7    # sweet spot upper bound
@@ -55,6 +55,7 @@ def _wikimedia_request(url: str, retries: int = 3) -> dict:
 
 
 def _wikimedia_search(keyword: str, limit: int = 5) -> list[str]:
+    """Search Wikimedia Commons and return file titles for the keyword."""
     params = urlencode({
         "action":      "query",
         "list":        "search",
@@ -215,6 +216,38 @@ def _build_search_term(keyword: str) -> str:
 
     return keyword
 
+
+def _save_scene_candidates(
+    visuals_dir: Path,
+    scene_index: int,
+    keyword: str,
+    candidates: list[dict],
+) -> None:
+    """
+    Save candidate ranking metadata for a scene.
+    """
+    metadata_path = visuals_dir / f"scene_{scene_index + 1}_candidates.json"
+    metadata = {
+        "scene_index": scene_index + 1,
+        "keyword": keyword,
+        "top_candidates": [
+            {
+                "path": candidate["path"],
+                "score": candidate["score"],
+                "reason": candidate["reason"],
+                "quality_score": candidate["quality_score"],
+                "resolution_score": candidate["resolution_score"],
+                "vision_score": candidate["vision_score"],
+                "source_title": candidate["source_title"],
+            }
+            for candidate in candidates[:3]
+        ],
+        "all_candidates": candidates,
+    }
+    with metadata_path.open("w", encoding="utf-8") as metadata_file:
+        json.dump(metadata, metadata_file, indent=2)
+
+
 def _fetch_images_for_keyword(
     keyword: str,
     job_id: str,
@@ -222,15 +255,14 @@ def _fetch_images_for_keyword(
     all_downloaded: list,
     seen_urls: set,
     max_images: int = 2,
-    topic: str = "",               # ← add this
-) -> list[str]:
+    topic: str = "",
+) -> list[dict]:
     """
     Try to fetch up to max_images for a single keyword.
-    Returns list of saved local file paths.
+    Returns a list of scored candidate dictionaries.
     """
-    search_term = f"{keyword}"
     precise_term = _build_search_term(keyword)
-    file_titles  = _wikimedia_search(precise_term, limit=10)
+    file_titles  = _wikimedia_search(precise_term, limit=SEARCH_RESULTS_PER_KEYWORD)
     logger.info("[%s] Search term: '%s'", job_id[:8], precise_term)
     time.sleep(2.0)
 
@@ -254,10 +286,7 @@ def _fetch_images_for_keyword(
         global_index = len(all_downloaded) + len(keyword_images) + 1
         output_path  = visuals_dir / f"image_{global_index:02d}{ext}"
 
-        # Download
         if _download_image(image_url, output_path):
-
-            # Stage 1+2 — quality check (local, free)
             quality_ok, quality_reason = passes_quality_check(output_path)
             if not quality_ok:
                 output_path.unlink(missing_ok=True)
@@ -268,14 +297,15 @@ def _fetch_images_for_keyword(
                 time.sleep(1.0)
                 continue
 
-            # Stage 3+4 — relevance check (filename + Gemini Vision)
-            relevance_ok, relevance_reason = passes_relevance_check(
+            resolution_score, resolution_reason = score_resolution(output_path)
+            quality_score, quality_reason = score_quality(output_path)
+            relevance_passed, relevance_reason, relevance_score, relevance_details = score_image_candidate(
                 image_path=output_path,
                 file_title=title,
                 keyword=keyword,
                 topic=topic,
             )
-            if not relevance_ok:
+            if not relevance_passed:
                 output_path.unlink(missing_ok=True)
                 logger.info(
                     "[%s] Relevance REJECTED: %s — %s",
@@ -284,12 +314,33 @@ def _fetch_images_for_keyword(
                 time.sleep(1.0)
                 continue
 
-            # All checks passed
+            score = round(
+                relevance_score * 0.60
+                + quality_score * 0.25
+                + resolution_score * 0.15,
+                2,
+            )
+
             seen_urls.add(image_url)
-            keyword_images.append(str(output_path))
+            candidate = {
+                "path": str(output_path),
+                "source_title": title,
+                "keyword": keyword,
+                "score": score,
+                "resolution_score": resolution_score,
+                "quality_score": quality_score,
+                "vision_score": relevance_score,
+                "reason": relevance_reason,
+                "details": {
+                    "resolution_reason": resolution_reason,
+                    "quality_reason": quality_reason,
+                    "relevance_details": relevance_details,
+                },
+            }
+            keyword_images.append(candidate)
             logger.info(
-                "[%s] ACCEPTED image_%02d for '%s'",
-                job_id[:8], global_index, keyword
+                "[%s] ACCEPTED %s (score=%.2f) for '%s'",
+                job_id[:8], output_path.name, score, keyword,
             )
         else:
             logger.warning("[%s] Download failed: %s", job_id[:8], title)
@@ -341,7 +392,11 @@ def _duplicate_best_image(
 
 def fetch_visuals(scenes: list[dict], job_id: str, topic: str = "") -> list[str]:
     """
-    For each scene, try the main keyword then backups until enough images found.
+    For each scene, try the main keyword then backups until enough images are found.
+    Downloads up to IMAGES_PER_KEYWORD candidates per scene, scores them, and selects
+    the top 3 candidates per scene. Candidate metadata for each scene is persisted
+    as JSON under the visuals directory.
+
     Minimum 5 images required — raises Exception if not met.
     Target is 6-7 images — stops early if TARGET_IMAGES reached.
     """
@@ -381,21 +436,25 @@ def fetch_visuals(scenes: list[dict], job_id: str, topic: str = "") -> list[str]
             label = "main" if attempt == 0 else f"backup {attempt}"
             logger.info("[%s] Trying %s keyword: '%s'", job_id[:8], label, keyword)
 
-            images = _fetch_images_for_keyword(
+            candidates = _fetch_images_for_keyword(
                 keyword=keyword,
                 job_id=job_id,
                 visuals_dir=visuals_dir,
                 all_downloaded=all_downloaded,
                 seen_urls=seen_urls,
                 max_images=IMAGES_PER_KEYWORD,
-                topic=topic,                    # ← add this
+                topic=topic,
             )
 
-            if images:
-                scene_images.extend(images)
+            if candidates:
+                candidates.sort(key=lambda item: item["score"], reverse=True)
+                top_candidates = candidates[:3]
+                _save_scene_candidates(visuals_dir, scene_index, keyword, candidates)
+
+                scene_images.extend([candidate["path"] for candidate in top_candidates])
                 logger.info(
-                    "[%s] '%s' -> %s image(s) found",
-                    job_id[:8], keyword, len(images)
+                    "[%s] '%s' -> %s candidate(s) collected, %s top selected",
+                    job_id[:8], keyword, len(candidates), len(top_candidates)
                 )
                 break   # got images — no need to try more backups
             else:
@@ -440,6 +499,24 @@ def fetch_visuals(scenes: list[dict], job_id: str, topic: str = "") -> list[str]
 # End of image collection and filtering logic.
 # This module tries keywords and backups in order, downloads image files,
 # and rejects images that fail quality or relevance checks.
+# Variable reference table:
+# variable_name | type | purpose
+# WIKIMEDIA_API | str | Wikimedia Commons API base URL.
+# IMAGES_PER_KEYWORD | int | How many images are attempted per keyword.
+# SEARCH_RESULTS_PER_KEYWORD | int | Number of search results fetched per keyword.
+# VISUAL_COUNT | int | Maximum images the pipeline will consider.
+# MIN_IMAGES | int | Minimum images required for a valid video.
+# TARGET_IMAGES | int | Ideal image count to build a good short.
+# _wikimedia_request | func | Handles retries for Wikimedia API calls.
+# _wikimedia_search | func | Searches Wikimedia Commons using a keyword.
+# _get_image_url | func | Resolves a file title to an image URL.
+# _download_image | func | Downloads image bytes to disk.
+# _is_usable_image | func | Rejects unsupported media file types.
+# _is_well_framed | func | Optional framing and brightness validation.
+# _save_scene_candidates | func | Writes scene candidate metadata to JSON.
+# _fetch_images_for_keyword | func | Collects and scores images for one keyword.
+# _duplicate_best_image | func | Duplicates existing images when there are too few.
+# fetch_visuals | func | Main image acquisition flow for all scenes.
 
 
 
@@ -449,6 +526,16 @@ if __name__ == "__main__":
     print("Do not run visuals.py directly.")
     print("Use: python test_visuals.py <keywords> --job-id <id> --topic <topic>")
     sys.exit(1)
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# logger | logging.Logger | Pipeline logger for visuals downloading and scoring.
+# WIKIMEDIA_API | str | Wikimedia Commons API base URL.
+# IMAGES_PER_KEYWORD | int | Images fetched per keyword attempt.
+# SEARCH_RESULTS_PER_KEYWORD | int | Number of search results pages requested.
+# MIN_IMAGES | int | Lower bound for acceptable images to assemble a video.
+# TARGET_IMAGES | int | Preferred number of images to collect for a job.
+# fetch_visuals | func | Top-level function called by the content pipeline.
 
 
     

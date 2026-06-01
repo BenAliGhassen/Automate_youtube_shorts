@@ -1,0 +1,39 @@
+{
+  "scene_index": 3,
+  "keyword": "France football player",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_05.jpg",
+      "score": 81.83,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 51.3,
+      "resolution_score": 100.0,
+      "vision_score": 90.01,
+      "source_title": "File:France national football team 2018.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_05.jpg",
+      "source_title": "File:France national football team 2018.jpg",
+      "keyword": "France football player",
+      "score": 81.83,
+      "resolution_score": 100.0,
+      "quality_score": 51.3,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=103.0, variance=69.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "scene_index": 1,
+  "keyword": "Uruguay national football team 1930",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_01.jpg",
+      "score": 88.03,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 52.1,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Uruguay national football team 1930.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_04.jpg",
+      "score": 85.62,
+      "reason": "[Scored] filename=60.0 vision=100.0 total=88.0",
+      "quality_score": 71.3,
+      "resolution_score": 100.0,
+      "vision_score": 88.0,
+      "source_title": "File:Argentina national team 1930.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_02.jpg",
+      "score": 77.17,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "quality_score": 65.8,
+      "resolution_score": 76.8,
+      "vision_score": 82.0,
+      "source_title": "File:Uruguay en la Copa Mundial de F\u00fatbol de 1930, Estadio, 1945-01-12 (87).jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_01.jpg",
+      "source_title": "File:Uruguay national football team 1930.jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 88.03,
+      "resolution_score": 100.0,
+      "quality_score": 52.1,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x764px",
+        "quality_reason": "Brightness=137.1, variance=53.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_04.jpg",
+      "source_title": "File:Argentina national team 1930.jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 85.62,
+      "resolution_score": 100.0,
+      "quality_score": 71.3,
+      "vision_score": 88.0,
+      "reason": "[Scored] filename=60.0 vision=100.0 total=88.0",
+      "details": {
+        "resolution_reason": "Resolution score: 960x678px",
+        "quality_reason": "Brightness=149.6, variance=85.1",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 60.0,
+          "total_score": 88.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_02.jpg",
+      "source_title": "File:Uruguay en la Copa Mundial de F\u00fatbol de 1930, Estadio, 1945-01-12 (87).jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 77.17,
+      "resolution_score": 76.8,
+      "quality_score": 65.8,
+      "vision_score": 82.0,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "details": {
+        "resolution_reason": "Resolution score: 656x461px",
+        "quality_reason": "Brightness=158.9, variance=69.6",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 40.0,
+          "total_score": 82.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_07.jpg",
+      "source_title": "File:Argentina lineup v uruguay 1930.jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 74.38,
+      "resolution_score": 70.0,
+      "quality_score": 58.7,
+      "vision_score": 82.0,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1138x420px",
+        "quality_reason": "Brightness=117.9, variance=76.7",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 40.0,
+          "total_score": 82.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_05.jpg",
+      "source_title": "File:Uruguay goal v argentina 1930.jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 69.44,
+      "resolution_score": 64.3,
+      "quality_score": 42.4,
+      "vision_score": 82.0,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "details": {
+        "resolution_reason": "Resolution score: 589x386px",
+        "quality_reason": "Brightness=112.2, variance=47.6",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 40.0,
+          "total_score": 82.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_03.jpg",
+      "source_title": "File:Uruguay en el Mundial 1930, Los Sports, 1930-08-01 (386).jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 69.19,
+      "resolution_score": 52.3,
+      "quality_score": 48.6,
+      "vision_score": 82.0,
+      "reason": "[Scored] filename=40.0 vision=100.0 total=82.0",
+      "details": {
+        "resolution_reason": "Resolution score: 598x314px",
+        "quality_reason": "Brightness=89.4, variance=71.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 40.0,
+          "total_score": 82.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_06.jpg",
+      "source_title": "File:Yugoslavia team v brazil.jpg",
+      "keyword": "Uruguay national football team 1930",
+      "score": 68.65,
+      "resolution_score": 51.5,
+      "quality_score": 61.3,
+      "vision_score": 76.0,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "details": {
+        "resolution_reason": "Resolution score: 423x309px",
+        "quality_reason": "Brightness=146.5, variance=67.1",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 20.0,
+          "total_score": 76.0
+        }
+      }
+    }
+  ]
+}

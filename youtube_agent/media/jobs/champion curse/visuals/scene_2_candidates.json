@@ -1,0 +1,101 @@
+{
+  "scene_index": 2,
+  "keyword": "Senegal football match",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_04.jpg",
+      "score": 82.18,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 52.7,
+      "resolution_score": 100.0,
+      "vision_score": 90.01,
+      "source_title": "File:Match Football Masculin S\u00e9n\u00e9gal x Uruguay Jeux Olympiques 2012 Stade Wembley - Londres UK (2012-07-29) - 55.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_02.jpg",
+      "score": 80.06,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 44.2,
+      "resolution_score": 100.0,
+      "vision_score": 90.01,
+      "source_title": "File:Match Football Masculin S\u00e9n\u00e9gal x Uruguay Jeux Olympiques 2012 Stade Wembley - Londres UK (2012-07-29) - 17.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_03.jpg",
+      "score": 78.16,
+      "reason": "[Scored] filename=66.7 vision=95.0 total=86.51",
+      "quality_score": 45.0,
+      "resolution_score": 100.0,
+      "vision_score": 86.51,
+      "source_title": "File:Match Football Masculin S\u00e9n\u00e9gal x Uruguay Jeux Olympiques 2012 Stade Wembley - Londres UK (2012-07-29) - 10.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_04.jpg",
+      "source_title": "File:Match Football Masculin S\u00e9n\u00e9gal x Uruguay Jeux Olympiques 2012 Stade Wembley - Londres UK (2012-07-29) - 55.jpg",
+      "keyword": "Senegal football match",
+      "score": 82.18,
+      "resolution_score": 100.0,
+      "quality_score": 52.7,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x938px",
+        "quality_reason": "Brightness=127.7, variance=59.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_02.jpg",
+      "source_title": "File:Match Football Masculin S\u00e9n\u00e9gal x Uruguay Jeux Olympiques 2012 Stade Wembley - Londres UK (2012-07-29) - 17.jpg",
+      "keyword": "Senegal football match",
+      "score": 80.06,
+      "resolution_score": 100.0,
+      "quality_score": 44.2,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=122.5, variance=45.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\6eea238e-aa71-4ead-97eb-2d0f57cbb691\\visuals\\image_03.jpg",
+      "source_title": "File:Match Football Masculin S\u00e9n\u00e9gal x Uruguay Jeux Olympiques 2012 Stade Wembley - Londres UK (2012-07-29) - 10.jpg",
+      "keyword": "Senegal football match",
+      "score": 78.16,
+      "resolution_score": 100.0,
+      "quality_score": 45.0,
+      "vision_score": 86.51,
+      "reason": "[Scored] filename=66.7 vision=95.0 total=86.51",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=126.1, variance=45.7",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 80.0,
+          "football_confidence": 100.0,
+          "vision_score": 95.0,
+          "filename_score": 66.7,
+          "total_score": 86.51
+        }
+      }
+    }
+  ]
+}

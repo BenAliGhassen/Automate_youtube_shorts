@@ -1,0 +1,39 @@
+{
+  "scene_index": 2,
+  "keyword": "Uruguay national football team 1950",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a9726dea-5976-469c-b6b8-3ffc061c7d3a\\visuals\\image_02.jpg",
+      "score": 67.17,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "quality_score": 49.4,
+      "resolution_score": 61.5,
+      "vision_score": 76.0,
+      "source_title": "File:Urug1950.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a9726dea-5976-469c-b6b8-3ffc061c7d3a\\visuals\\image_02.jpg",
+      "source_title": "File:Urug1950.jpg",
+      "keyword": "Uruguay national football team 1950",
+      "score": 67.17,
+      "resolution_score": 61.5,
+      "quality_score": 49.4,
+      "vision_score": 76.0,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "details": {
+        "resolution_reason": "Resolution score: 657x369px",
+        "quality_reason": "Brightness=107.0, variance=64.1",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 20.0,
+          "total_score": 76.0
+        }
+      }
+    }
+  ]
+}

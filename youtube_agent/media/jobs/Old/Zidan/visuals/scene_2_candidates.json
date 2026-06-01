@@ -1,0 +1,70 @@
+{
+  "scene_index": 2,
+  "keyword": "Italy national football team 2006",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_05.jpg",
+      "score": 73.2,
+      "reason": "[Scored] filename=40.0 vision=97.5 total=80.25",
+      "quality_score": 40.2,
+      "resolution_score": 100.0,
+      "vision_score": 80.25,
+      "source_title": "File:2006 FIFA World Cup - Italy - Buffon, Materazzi and Perrotta.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_04.png",
+      "score": 69.92,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "quality_score": 43.9,
+      "resolution_score": 89.0,
+      "vision_score": 76.0,
+      "source_title": "File:Italy-France line-up-ar.png"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_05.jpg",
+      "source_title": "File:2006 FIFA World Cup - Italy - Buffon, Materazzi and Perrotta.jpg",
+      "keyword": "Italy national football team 2006",
+      "score": 73.2,
+      "resolution_score": 100.0,
+      "quality_score": 40.2,
+      "vision_score": 80.25,
+      "reason": "[Scored] filename=40.0 vision=97.5 total=80.25",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=103.9, variance=47.6",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 90.0,
+          "football_confidence": 100.0,
+          "vision_score": 97.5,
+          "filename_score": 40.0,
+          "total_score": 80.25
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\03bfd5a8-be0c-4e40-8458-7ae1d0c970b4\\visuals\\image_04.png",
+      "source_title": "File:Italy-France line-up-ar.png",
+      "keyword": "Italy national football team 2006",
+      "score": 69.92,
+      "resolution_score": 89.0,
+      "quality_score": 43.9,
+      "vision_score": 76.0,
+      "reason": "[Scored] filename=20.0 vision=100.0 total=76.0",
+      "details": {
+        "resolution_reason": "Resolution score: 534x738px",
+        "quality_reason": "Brightness=151.6, variance=30.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 20.0,
+          "total_score": 76.0
+        }
+      }
+    }
+  ]
+}

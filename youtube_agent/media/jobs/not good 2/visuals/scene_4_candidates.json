@@ -1,0 +1,39 @@
+{
+  "scene_index": 4,
+  "keyword": "FIFA World Cup trophy",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a9726dea-5976-469c-b6b8-3ffc061c7d3a\\visuals\\image_06.jpg",
+      "score": 82.48,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 53.9,
+      "resolution_score": 100.0,
+      "vision_score": 90.01,
+      "source_title": "File:FIFA World Cup 2010 Spain with cup.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a9726dea-5976-469c-b6b8-3ffc061c7d3a\\visuals\\image_06.jpg",
+      "source_title": "File:FIFA World Cup 2010 Spain with cup.jpg",
+      "keyword": "FIFA World Cup trophy",
+      "score": 82.48,
+      "resolution_score": 100.0,
+      "quality_score": 53.9,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x852px",
+        "quality_reason": "Brightness=104.2, variance=74.3",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    }
+  ]
+}

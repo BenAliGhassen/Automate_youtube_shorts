@@ -16,6 +16,9 @@ FPS    = 30
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_PATH = os.path.join(SCRIPT_DIR, "arial.ttf") 
 
+# Comment: MoviePy requires a font path for TextClip. This path is best-effort.
+# If the font file is unavailable on the host, TextClip may fall back or fail.
+
 def _prepare_image(image_path: str) -> np.ndarray:
     """
     Open an image, resize and center-crop it to 1080x1920,
@@ -148,28 +151,7 @@ def _add_overlays(video_clip, title: str, script: str, duration: float) -> Compo
     """
     layers = [video_clip]
 
-    # ── Title overlay (top, first 3 seconds) ─────────────────────────────────
-    try:
-        title_clip = (
-            TextClip(
-                text=title,                  # ← was txt
-                font_size=60,               # ← was fontsize
-                color="white",
-                font=FONT_PATH,               # ← removed Arial-Bold, use font param only
-                stroke_color="black",
-                stroke_width=2,
-                method="caption",
-                size=(WIDTH - 80, None),
-                text_align="center",        # ← was align
-            )
-            .with_duration(3)
-            .with_position(("center", 120))
-        )
-        layers.append(title_clip)
-        logger.info("Title overlay created")
-    except Exception as exc:
-        logger.warning("Could not create title overlay: %s", exc)
-
+    
     # ── Subtitle overlays (bottom bar, updates every 5 seconds) ──────────────
     chunks = _split_into_chunks(script, chunk_duration=5.0, total_duration=duration)
     logger.info("Creating %s subtitle chunks", len(chunks))
@@ -204,6 +186,70 @@ def _add_overlays(video_clip, title: str, script: str, duration: float) -> Compo
 
 DIRECTIONS = ["zoom_in", "zoom_out", "pan_left", "pan_right"]
 
+def _build_slideshow_from_scene_groups(
+    scene_groups: list[list[str]],
+    scenes: list[dict],
+    total_duration: float,
+) -> object:
+    group_count = sum(len(group) for group in scene_groups)
+    if group_count == 0:
+        raise Exception("No candidate images available to build video.")
+
+    durations = []
+    for scene, group in zip(scenes, scene_groups):
+        if not group:
+            raise Exception(
+                f"Scene '{scene.get('keyword', 'unknown')}' has no candidate images."
+            )
+        scene_duration = scene.get("duration", total_duration / len(scenes))
+        per_image_duration = scene_duration / len(group)
+        durations.extend([per_image_duration] * len(group))
+
+    # Normalize to exact audio length
+    duration_sum = sum(durations)
+    durations = [d * (total_duration / duration_sum) for d in durations]
+
+    clips = []
+    flat_paths = [path for group in scene_groups for path in group]
+    for i, (path, dur) in enumerate(zip(flat_paths, durations)):
+        arr = _prepare_image(path)
+        is_dup = "_dup" in Path(path).stem
+        direction = DIRECTIONS[i % len(DIRECTIONS)]
+
+        clip = _ken_burns_clip(arr, dur, direction=direction)
+        clips.append(clip)
+        logger.info(
+            "  Scene image %s: %.2fs — %s [%s]%s",
+            i + 1, dur, Path(path).name, direction,
+            " (duplicate)" if is_dup else ""
+        )
+
+    return concatenate_videoclips(clips, method="compose")
+
+
+def _load_scene_candidate_paths(visuals_dir: Path, scene_index: int) -> list[str]:
+    metadata_file = visuals_dir / f"scene_{scene_index + 1}_candidates.json"
+    if not metadata_file.exists():
+        return []
+
+    try:
+        with metadata_file.open("r", encoding="utf-8") as f:
+            metadata = json.load(f)
+    except Exception as exc:
+        logger.warning("Could not read scene metadata %s: %s", metadata_file.name, exc)
+        return []
+
+    paths = [item.get("path") for item in metadata.get("top_candidates", []) if item.get("path")]
+    return [str(Path(p)) for p in paths if p]
+
+
+def _load_scene_candidate_groups(visuals_dir: Path, scenes: list[dict]) -> list[list[str]]:
+    return [
+        _load_scene_candidate_paths(visuals_dir, idx)
+        for idx, _ in enumerate(scenes)
+    ]
+
+
 def _build_slideshow_from_scenes(
     image_paths: list[str],
     scenes: list[dict],
@@ -213,7 +259,7 @@ def _build_slideshow_from_scenes(
     n_scenes = len(scenes)
 
     if n_images == n_scenes:
-        durations = [scene["duration"] for scene in scenes]
+        durations = [scene.get("duration", total_duration / n_scenes) for scene in scenes]
     else:
         logger.warning(
             "Image count (%s) != scene count (%s) — equal distribution",
@@ -221,17 +267,13 @@ def _build_slideshow_from_scenes(
         )
         durations = [total_duration / n_images] * n_images
 
-    # Normalize to exact audio length
     duration_sum = sum(durations)
-    durations    = [d * (total_duration / duration_sum) for d in durations]
+    durations = [d * (total_duration / duration_sum) for d in durations]
 
     clips = []
     for i, (path, dur) in enumerate(zip(image_paths, durations)):
         arr = _prepare_image(path)
-
-        # Detect duplicates by filename suffix _dup
-        is_dup    = "_dup" in Path(path).stem
-        # Rotate direction — duplicates get a different direction from their source
+        is_dup = "_dup" in Path(path).stem
         direction = DIRECTIONS[i % len(DIRECTIONS)]
 
         clip = _ken_burns_clip(arr, dur, direction=direction)
@@ -243,7 +285,6 @@ def _build_slideshow_from_scenes(
         )
 
     return concatenate_videoclips(clips, method="compose")
-
 
 
 def build_video(job) -> str:
@@ -260,20 +301,10 @@ def build_video(job) -> str:
 
     logger.info("[%s] Found %s images", str(job.id)[:8], len(image_paths))
 
-    # After collecting image_paths, prepend thumbnail
     thumbnail_path = job_dir / "thumbnail.jpg"
-    if thumbnail_path.exists():
-        image_paths.insert(0, str(thumbnail_path))
-        # Insert a 4.5s scene at the start for the thumbnail
-        if job.scenes:
-            job.scenes.insert(0, {
-                "keyword":  "hook thumbnail",
-                "backups":  [],
-                "duration": 4.5,
-            })
-        logger.info("[%s] Thumbnail prepended as first scene", str(job.id)[:8])
-    else:
-        logger.warning("[%s] No thumbnail found — skipping hook frame", str(job.id)[:8])
+    thumbnail_exists = thumbnail_path.exists()
+    if thumbnail_exists:
+        logger.info("[%s] Thumbnail found, will prepend hook frame", str(job.id)[:8])
 
     # 2. Load audio to get real duration
     audio_path = job.audio_path
@@ -283,8 +314,31 @@ def build_video(job) -> str:
     logger.info("[%s] Audio duration: %.2fs", str(job.id)[:8], duration)
 
     # 3. Build the silent slideshow
-    scenes     = job.scenes   # [{"keyword": ..., "duration": 7.0}, ...]
-    video_clip = _build_slideshow_from_scenes(image_paths, scenes, duration)
+    scenes = list(job.scenes or [])
+    candidate_groups = _load_scene_candidate_groups(visuals_dir, scenes)
+    if all(group for group in candidate_groups):
+        if thumbnail_exists:
+            candidate_groups.insert(0, [str(thumbnail_path)])
+            scenes.insert(0, {
+                "keyword":  "hook thumbnail",
+                "backups":  [],
+                "duration": 4.5,
+            })
+        video_clip = _build_slideshow_from_scene_groups(candidate_groups, scenes, duration)
+    else:
+        if thumbnail_exists:
+            image_paths.insert(0, str(thumbnail_path))
+            if scenes:
+                scenes.insert(0, {
+                    "keyword":  "hook thumbnail",
+                    "backups":  [],
+                    "duration": 4.5,
+                })
+            logger.info("[%s] Thumbnail prepended as first scene", str(job.id)[:8])
+        else:
+            logger.warning("[%s] No thumbnail found — skipping hook frame", str(job.id)[:8])
+
+        video_clip = _build_slideshow_from_scenes(image_paths, scenes, duration)
 
 # 4. Add text overlays
     logger.info("[%s] Adding title and subtitle overlays", str(job.id)[:8])
@@ -335,3 +389,21 @@ if __name__ == "__main__":
     job = VideoJob.objects.get(id=JOB_ID)
     path = build_video(job)
     print("Output:", path)
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# logger | logging.Logger | Module logger for video assembly progress.
+# WIDTH | int | YouTube Shorts standard output width.
+# HEIGHT | int | YouTube Shorts standard output height.
+# FPS | int | Output video frame rate.
+# SCRIPT_DIR | str | Directory path of this module.
+# FONT_PATH | str | Font file path used for MoviePy text overlays.
+# _prepare_image | func | Loads, scales, and crops raw images to 9:16.
+# _ken_burns_clip | func | Creates motion clips from still images.
+# _split_into_chunks | func | Splits script text into timed subtitle segments.
+# _add_overlays | func | Renders title and subtitle text onto the video.
+# _build_slideshow_from_scene_groups | func | Builds slideshow from grouped scene candidates.
+# _load_scene_candidate_paths | func | Reads saved scene candidate metadata from disk.
+# _load_scene_candidate_groups | func | Loads image candidate groups for scenes.
+# _build_slideshow_from_scenes | func | Builds a slideshow from a flat image list.
+# build_video | func | Main video assembly entry point that writes final.mp4.

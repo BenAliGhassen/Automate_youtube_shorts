@@ -1,0 +1,101 @@
+{
+  "scene_index": 1,
+  "keyword": "Maracana stadium 1950",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_02.jpg",
+      "score": 82.17,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "quality_score": 76.7,
+      "resolution_score": 100.0,
+      "vision_score": 79.99,
+      "source_title": "File:Selo da Copa de 1950 Cr 1,20.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_03.jpg",
+      "score": 81.24,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "quality_score": 73.0,
+      "resolution_score": 100.0,
+      "vision_score": 79.99,
+      "source_title": "File:Stamp of Brazil - 1950 - Colnect 207778 - 4th Soccer World cup - Rio de Janeiro.jpeg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_01.jpg",
+      "score": 70.22,
+      "reason": "[Scored] filename=33.3 vision=91.8 total=74.25",
+      "quality_score": 42.7,
+      "resolution_score": 100.0,
+      "vision_score": 74.25,
+      "source_title": "File:Camiseta Brasil 1950 A74276520241123.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_02.jpg",
+      "source_title": "File:Selo da Copa de 1950 Cr 1,20.jpg",
+      "keyword": "Maracana stadium 1950",
+      "score": 82.17,
+      "resolution_score": 100.0,
+      "quality_score": 76.7,
+      "vision_score": 79.99,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x895px",
+        "quality_reason": "Brightness=198.6, variance=70.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 33.3,
+          "total_score": 79.99
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_03.jpg",
+      "source_title": "File:Stamp of Brazil - 1950 - Colnect 207778 - 4th Soccer World cup - Rio de Janeiro.jpeg",
+      "keyword": "Maracana stadium 1950",
+      "score": 81.24,
+      "resolution_score": 100.0,
+      "quality_score": 73.0,
+      "vision_score": 79.99,
+      "reason": "[Scored] filename=33.3 vision=100.0 total=79.99",
+      "details": {
+        "resolution_reason": "Resolution score: 1024x711px",
+        "quality_reason": "Brightness=178.9, variance=73.3",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 33.3,
+          "total_score": 79.99
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_01.jpg",
+      "source_title": "File:Camiseta Brasil 1950 A74276520241123.jpg",
+      "keyword": "Maracana stadium 1950",
+      "score": 70.22,
+      "resolution_score": 100.0,
+      "quality_score": 42.7,
+      "vision_score": 74.25,
+      "reason": "[Scored] filename=33.3 vision=91.8 total=74.25",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1168px",
+        "quality_reason": "Brightness=141.6, variance=33.1",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 91.8,
+          "filename_score": 33.3,
+          "total_score": 74.25
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "scene_index": 2,
+  "keyword": "historic football stadium crowd",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_05.jpg",
+      "score": 74.86,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "quality_score": 67.2,
+      "resolution_score": 100.0,
+      "vision_score": 71.76,
+      "source_title": "File:Band of the Fighting Irish, Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045956103).jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_07.jpg",
+      "score": 74.53,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "quality_score": 65.9,
+      "resolution_score": 100.0,
+      "vision_score": 71.76,
+      "source_title": "File:Band of the Fighting Irish Spelling \"I-R-I-S-H\", Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045959393).jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_06.jpg",
+      "score": 73.61,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "quality_score": 62.2,
+      "resolution_score": 100.0,
+      "vision_score": 71.76,
+      "source_title": "File:Band of the Fighting Irish, Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045953083).jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_05.jpg",
+      "source_title": "File:Band of the Fighting Irish, Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045956103).jpg",
+      "keyword": "historic football stadium crowd",
+      "score": 74.86,
+      "resolution_score": 100.0,
+      "quality_score": 67.2,
+      "vision_score": 71.76,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=130.3, variance=86.9",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 91.8,
+          "filename_score": 25.0,
+          "total_score": 71.76
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_07.jpg",
+      "source_title": "File:Band of the Fighting Irish Spelling \"I-R-I-S-H\", Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045959393).jpg",
+      "keyword": "historic football stadium crowd",
+      "score": 74.53,
+      "resolution_score": 100.0,
+      "quality_score": 65.9,
+      "vision_score": 71.76,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=129.0, variance=85.0",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 91.8,
+          "filename_score": 25.0,
+          "total_score": 71.76
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_06.jpg",
+      "source_title": "File:Band of the Fighting Irish, Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045953083).jpg",
+      "keyword": "historic football stadium crowd",
+      "score": 73.61,
+      "resolution_score": 100.0,
+      "quality_score": 62.2,
+      "vision_score": 71.76,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=117.6, variance=83.7",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 91.8,
+          "filename_score": 25.0,
+          "total_score": 71.76
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a15d8883-28c6-4f49-9aa0-1c51870e5fbb\\visuals\\image_04.jpg",
+      "source_title": "File:Band of the Fighting Irish, Notre Dame Stadium, University of Notre Dame, South Bend, Indiana (11045855185).jpg",
+      "keyword": "historic football stadium crowd",
+      "score": 67.96,
+      "resolution_score": 100.0,
+      "quality_score": 39.6,
+      "vision_score": 71.76,
+      "reason": "[Scored] filename=25.0 vision=91.8 total=71.76",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x960px",
+        "quality_reason": "Brightness=90.2, variance=53.4",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 91.8,
+          "filename_score": 25.0,
+          "total_score": 71.76
+        }
+      }
+    }
+  ]
+}

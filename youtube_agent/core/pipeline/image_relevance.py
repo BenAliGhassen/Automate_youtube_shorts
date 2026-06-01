@@ -1,8 +1,13 @@
 """
 Module 2 — Content relevance filter.
+
 Two-stage approach:
   Stage 1 — Filename filter (local, free, instant)
   Stage 2 — Gemini Vision (API call, only if stage 1 passes)
+
+This module filters Wikimedia candidate images before they are assembled
+into the final video by combining signal from filename heuristics and
+optional Gemini Vision scoring.
 
 Uses 1 Gemini API call per image that passes stage 1.
 Budget impact: ~10 calls per video (5-7 images, some filtered early)
@@ -116,19 +121,34 @@ def _image_to_base64(image_path: Path, max_size: int = 256) -> tuple[str, str]:
         return data, mime_type
 
 
-def passes_gemini_vision_check(
+def compute_filename_score(file_title: str, keyword: str) -> float:
+    """
+    Return a normalized filename score based on keyword coverage.
+    """
+    lower = file_title.lower().replace(" ", "_")
+    keyword_words = [w.lower() for w in keyword.split() if len(w) > 3]
+    if not keyword_words:
+        return 0.0
+    matches = sum(1 for w in keyword_words if w in lower)
+    return round(min(1.0, matches / len(keyword_words)) * 100.0, 1)
+
+
+def _clamp_score(value: float) -> float:
+    return round(min(max(value, 0.0), 100.0), 1)
+
+
+def score_gemini_vision(
     image_path: Path,
     keyword: str,
     topic: str,
-) -> tuple[bool, str]:
+) -> tuple[bool, float, str, dict]:
     """
-    Use Gemini 3.1 Flash Lite to verify image relevance.
-    Uses GEMINI_API2 specifically so GEMINI_API_KEY can remain available for other tasks.
-    Returns (passed, reason).
+    Use Gemini Vision to score the image for keyword relevance.
+    Returns (passed, score, reason, details).
     """
     api_key = getattr(settings, "GEMINI_API2", "").strip()
     if not api_key:
-        return True, "Vision check skipped (no API key)"
+        return True, 0.0, "Vision check skipped (no API key)", {}
 
     model = getattr(settings, "GEMINI_VISION_MODEL", "gemini-3.1-flash-lite").strip()
     endpoint = (
@@ -139,15 +159,16 @@ def passes_gemini_vision_check(
     try:
         image_data, mime_type = _image_to_base64(image_path)
     except Exception as exc:
-        return True, f"Vision check skipped (encoding error: {exc})"
+        return True, 0.0, f"Vision check skipped (encoding error: {exc})", {}
 
     prompt = (
-        "Look at this image. Answer in JSON only.\n"
-        f"Expected: men's football image related to '{keyword}'.\n\n"
+        "You are an image relevance judge for viral football Shorts.\n"
+        f"Evaluate whether this image matches the keyword '{keyword}' and topic '{topic}'.\n"
+        "Return JSON only with scores from 0 to 100.\n"
         "{\n"
-        "  \"is_mens_football\": true or false,\n"
-        "  \"is_relevant\": true or false,\n"
-        "  \"subject_visible\": true or false,\n"
+        "  \"keyword_relevance\": 0-100,\n"
+        "  \"subject_visibility\": 0-100,\n"
+        "  \"football_confidence\": 0-100,\n"
         "  \"reason\": \"one short sentence\"\n"
         "}"
     )
@@ -163,7 +184,7 @@ def passes_gemini_vision_check(
                         }
                     },
                     {
-                        "text": prompt
+                        "text": prompt,
                     }
                 ]
             }
@@ -191,18 +212,18 @@ def passes_gemini_vision_check(
         error_body = exc.read().decode("utf-8", errors="replace")
         if exc.code == 429:
             logger.warning("Gemini Vision rate limited — skipping %s", image_path.name)
-            return True, "Vision check skipped (rate limited)"
+            return True, 0.0, "Vision check skipped (rate limited)", {}
         logger.warning("Gemini Vision error %s: %s", exc.code, error_body[:200])
-        return True, f"Vision check skipped (API error {exc.code})"
+        return True, 0.0, f"Vision check skipped (API error {exc.code})", {}
     except Exception as exc:
         logger.warning("Gemini Vision failed: %s", exc)
-        return True, f"Vision check skipped ({exc})"
+        return True, 0.0, f"Vision check skipped ({exc})", {}
 
     try:
         candidates = data.get("candidates") or []
         if not candidates:
             logger.warning("Gemini Vision: no candidates in response")
-            return True, "Vision check skipped (empty response)"
+            return True, 0.0, "Vision check skipped (empty response)", {}
 
         text = ""
         for part in candidates[0].get("content", {}).get("parts", []):
@@ -211,45 +232,113 @@ def passes_gemini_vision_check(
         text = text.strip()
         if not text:
             logger.warning("Gemini Vision: empty text in response")
-            return True, "Vision check skipped (empty text)"
+            return True, 0.0, "Vision check skipped (empty text)", {}
 
         if text.startswith("```"):
             lines = text.splitlines()
             lines = lines[1:]
-            if lines and lines[-1].strip() == "``":
+            if lines and lines[-1].strip() == "```":
                 lines = lines[:-1]
             text = "\n".join(lines).strip()
 
         result = json.loads(text)
     except Exception as exc:
         logger.warning("Gemini Vision parse error: %s — raw: %s", exc, text[:200])
-        return True, "Vision check skipped (parse error)"
+        return True, 0.0, "Vision check skipped (parse error)", {}
 
-    is_mens = result.get("is_mens_football", True)
-    is_relevant = result.get("is_relevant", True)
-    is_visible = result.get("subject_visible", True)
-    reason = result.get("reason", "")
+    keyword_relevance = _clamp_score(float(result.get("keyword_relevance", 0)))
+    subject_visibility = _clamp_score(float(result.get("subject_visibility", 0)))
+    football_confidence = _clamp_score(float(result.get("football_confidence", 0)))
+    reason = str(result.get("reason", "")).strip()
 
-    passed = is_mens and is_relevant and is_visible
+    vision_score = _clamp_score(
+        keyword_relevance * 0.55
+        + subject_visibility * 0.25
+        + football_confidence * 0.20
+    )
+
+    passed = keyword_relevance >= 50.0 and subject_visibility >= 45.0 and football_confidence >= 40.0
+    details = {
+        "keyword_relevance": keyword_relevance,
+        "subject_visibility": subject_visibility,
+        "football_confidence": football_confidence,
+        "vision_score": vision_score,
+    }
 
     if not passed:
-        parts = []
-        if not is_mens:
-            parts.append("not men's football")
-        if not is_relevant:
-            parts.append("not relevant")
-        if not is_visible:
-            parts.append("subject not visible")
-        full_reason = " | ".join(parts)
-        if reason:
-            full_reason += f" ({reason})"
-        logger.warning("Vision REJECTED %s: %s", image_path.name, full_reason)
-        return False, full_reason
+        logger.warning(
+            "Vision REJECTED %s: keyword=%s, visible=%s, football=%s — %s",
+            image_path.name,
+            keyword_relevance,
+            subject_visibility,
+            football_confidence,
+            reason,
+        )
+        return False, vision_score, f"Vision rejected: {reason}", details
 
-    logger.debug("Vision ACCEPTED %s: %s", image_path.name, reason)
-    return True, f"Vision passed: {reason}"
+    logger.debug(
+        "Vision scored %s for %s: %s",
+        vision_score,
+        image_path.name,
+        reason,
+    )
+    return True, vision_score, f"Vision passed: {reason}", details
+
+
+def passes_gemini_vision_check(
+    image_path: Path,
+    keyword: str,
+    topic: str,
+) -> tuple[bool, str]:
+    passed, score, reason, _details = score_gemini_vision(image_path, keyword, topic)
+    if passed:
+        return True, reason
+    return False, reason
+
 
 # ── Combined check — call this from visuals.py ────────────────────────────────
+
+
+def score_image_candidate(
+    image_path: Path,
+    file_title: str,
+    keyword: str,
+    topic: str,
+) -> tuple[bool, str, float, dict]:
+    """
+    Score an image candidate using filename and Gemini Vision heuristics.
+    Returns (passed, reason, total_score, details).
+    """
+    passed, reason = passes_filename_filter(file_title, keyword)
+    if not passed:
+        logger.info("Stage 1 REJECTED %s: %s", image_path.name, reason)
+        return False, f"[Filename] {reason}", 0.0, {}
+
+    filename_score = compute_filename_score(file_title, keyword)
+    logger.debug("Stage 1 passed for %s -- filename score: %s", image_path.name, filename_score)
+
+    passed, vision_score, reason, details = score_gemini_vision(image_path, keyword, topic)
+    if not passed:
+        logger.info("Stage 2 REJECTED %s: %s", image_path.name, reason)
+        return False, f"[Vision] {reason}", 0.0, details
+
+    total_score = round((filename_score * 0.3) + (vision_score * 0.7), 2)
+    details.update(
+        {
+            "filename_score": filename_score,
+            "vision_score": vision_score,
+            "total_score": total_score,
+        }
+    )
+    logger.debug(
+        "Stage 2 passed for %s -- filename=%s vision=%s total=%s",
+        image_path.name,
+        filename_score,
+        vision_score,
+        total_score,
+    )
+    return True, f"[Scored] filename={filename_score} vision={vision_score} total={total_score}", total_score, details
+
 
 def passes_relevance_check(
     image_path: Path,
@@ -258,21 +347,21 @@ def passes_relevance_check(
     topic: str,
 ) -> tuple[bool, str]:
 
-    # Stage 1 -- filename filter (free, instant)
-    passed, reason = passes_filename_filter(file_title, keyword)
-    if not passed:
-        logger.info("Stage 1 REJECTED %s: %s", image_path.name, reason)
-        return False, f"[Filename] {reason}"
+    passed, reason, _, _ = score_image_candidate(image_path, file_title, keyword, topic)
+    return passed, reason
 
-    logger.debug("Stage 1 passed for %s -- running Gemini Vision check", image_path.name)
 
-    # Stage 2 -- Gemini 3.1 Flash Lite Vision
-    passed, reason = passes_gemini_vision_check(image_path, keyword, topic)
-    if not passed:
-        logger.info("Stage 2 REJECTED %s: %s", image_path.name, reason)
-        return False, f"[Vision] {reason}"
-
-    return True, "Both checks passed"
+# Variable reference table:
+# variable_name | type | purpose
+# REJECT_FILENAME_WORDS | list[str] | Filename tokens that indicate wrong or irrelevant images.
+# FOOTBALL_POSITIVE_WORDS | list[str] | Positive evidence words that make an image more likely football-related.
+# _image_to_base64 | func | Converts a local image file into base64 payload for Gemini Vision.
+# compute_filename_score | func | Returns a numeric heuristic score from Wikimedia filename matching.
+# _clamp_score | func | Clamps evaluation scores to the 0-100 range.
+# score_gemini_vision | func | Calls Gemini Vision to validate image relevance and returns a score.
+# passes_gemini_vision_check | func | Simplified wrapper only returning pass/fail and reason.
+# score_image_candidate | func | Combines filename and vision scores into a total ranking.
+# passes_relevance_check | func | Final scoring wrapper used by the visuals pipeline.
 
 
 # End of image relevance filtering.

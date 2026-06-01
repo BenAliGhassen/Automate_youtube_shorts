@@ -11,6 +11,7 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
+# Default voice used for the generated audio track.
 VOICE_NAME = "en-US-GuyNeural"
 
 
@@ -114,6 +115,15 @@ def generate_audio(script: str, job_id: str) -> str:
     return str(output_path)
 
 
+# Variable reference table:
+# variable_name | type | purpose
+# VOICE_NAME | str | Default voice used for edge-tts audio generation.
+# _save_audio | func | Async helper that saves audio from edge-tts.
+# _preprocess_script | func | Normalizes script text for better TTS pronunciation.
+# _trim_silence | func | Removes trailing silence from generated MP3.
+# generate_audio | func | Top-level TTS function used by the pipeline.
+
+
 def _bootstrap_django() -> None:
     project_root = Path(__file__).resolve().parents[2]
     if str(project_root) not in sys.path:
@@ -149,3 +159,10 @@ if __name__ == "__main__":
         raise SystemExit(1)
 
     logger.info("Generated audio file: %s", audio_file)
+
+# Final variable reference table at EOF:
+# variable_name | type | purpose
+# _bootstrap_django | func | Bootstraps Django settings for standalone execution.
+# argparse | module | Used by the CLI runner in this module.
+# args | argparse.Namespace | Parsed CLI arguments for standalone audio generation.
+# audio_file | str | Output path to the generated MP3 audio.

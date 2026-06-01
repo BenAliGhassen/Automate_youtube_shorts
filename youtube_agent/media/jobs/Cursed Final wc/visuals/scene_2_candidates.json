@@ -1,0 +1,167 @@
+{
+  "scene_index": 2,
+  "keyword": "Uruguay national football team",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_04.jpg",
+      "score": 88.03,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 52.1,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Uruguay national football team 1930.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_05.jpg",
+      "score": 74.38,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "quality_score": 51.5,
+      "resolution_score": 100.0,
+      "vision_score": 77.5,
+      "source_title": "File:Camiseta Uruguay alternativa 02.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_08.jpg",
+      "score": 74.12,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "quality_score": 50.5,
+      "resolution_score": 100.0,
+      "vision_score": 77.5,
+      "source_title": "File:Uruguay 1942.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_04.jpg",
+      "source_title": "File:Uruguay national football team 1930.jpg",
+      "keyword": "Uruguay national football team",
+      "score": 88.03,
+      "resolution_score": 100.0,
+      "quality_score": 52.1,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x764px",
+        "quality_reason": "Brightness=137.1, variance=53.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_05.jpg",
+      "source_title": "File:Camiseta Uruguay alternativa 02.jpg",
+      "keyword": "Uruguay national football team",
+      "score": 74.38,
+      "resolution_score": 100.0,
+      "quality_score": 51.5,
+      "vision_score": 77.5,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=89.9, variance=76.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 25.0,
+          "total_score": 77.5
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_08.jpg",
+      "source_title": "File:Uruguay 1942.jpg",
+      "keyword": "Uruguay national football team",
+      "score": 74.12,
+      "resolution_score": 100.0,
+      "quality_score": 50.5,
+      "vision_score": 77.5,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x827px",
+        "quality_reason": "Brightness=105.9, variance=66.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 25.0,
+          "total_score": 77.5
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_07.jpg",
+      "source_title": "File:Uruguay-Holanda 1.jpg",
+      "keyword": "Uruguay national football team",
+      "score": 72.97,
+      "resolution_score": 100.0,
+      "quality_score": 45.9,
+      "vision_score": 77.5,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=96.8, variance=62.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 25.0,
+          "total_score": 77.5
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_09.jpg",
+      "source_title": "File:Camiseta Uruguay alternativa 01.jpg",
+      "keyword": "Uruguay national football team",
+      "score": 72.72,
+      "resolution_score": 100.0,
+      "quality_score": 44.9,
+      "vision_score": 77.5,
+      "reason": "[Scored] filename=25.0 vision=100.0 total=77.5",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1707px",
+        "quality_reason": "Brightness=94.3, variance=61.8",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 25.0,
+          "total_score": 77.5
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\93b762e4-16d9-4a9e-91ba-8868ace543b2\\visuals\\image_06.jpg",
+      "source_title": "File:Uruguay-Holanda 2.jpg",
+      "keyword": "Uruguay national football team",
+      "score": 68.46,
+      "resolution_score": 100.0,
+      "quality_score": 46.0,
+      "vision_score": 69.94,
+      "reason": "[Scored] filename=25.0 vision=89.2 total=69.94",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=101.9, variance=60.0",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 90.0,
+          "football_confidence": 100.0,
+          "vision_score": 89.2,
+          "filename_score": 25.0,
+          "total_score": 69.94
+        }
+      }
+    }
+  ]
+}
