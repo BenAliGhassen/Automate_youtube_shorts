@@ -1,0 +1,37 @@
+{
+  "scene_index": 5,
+  "keyword": "Alphonso Davies",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a7387985-8109-4305-8aaf-360a29476794\\visuals\\image_05.png",
+      "source": "thesportsdb",
+      "score": 77.92,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 45.7,
+      "resolution_score": 83.3,
+      "vision_score": 90.0,
+      "source_title": "Alphonso Davies"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a7387985-8109-4305-8aaf-360a29476794\\visuals\\image_05.png",
+      "source": "thesportsdb",
+      "source_title": "Alphonso Davies",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/cutout/11afh31756409066.png",
+      "keyword": "Alphonso Davies",
+      "score": 77.92,
+      "resolution_score": 83.3,
+      "quality_score": 45.7,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 500x500px",
+        "quality_reason": "Brightness=60.7, variance=80.5",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}

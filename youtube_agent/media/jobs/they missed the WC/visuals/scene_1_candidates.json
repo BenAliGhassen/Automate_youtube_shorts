@@ -1,0 +1,37 @@
+{
+  "scene_index": 1,
+  "keyword": "Santiago Canizares",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_01.jpg",
+      "source": "thesportsdb",
+      "score": 81.38,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 49.5,
+      "resolution_score": 100.0,
+      "vision_score": 90.0,
+      "source_title": "Santiago Ca\u00f1izares"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_01.jpg",
+      "source": "thesportsdb",
+      "source_title": "Santiago Ca\u00f1izares",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/thumb/q0q4ug1592666314.jpg",
+      "keyword": "Santiago Canizares",
+      "score": 81.38,
+      "resolution_score": 100.0,
+      "quality_score": 49.5,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 700x700px",
+        "quality_reason": "Brightness=138.3, variance=48.2",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}

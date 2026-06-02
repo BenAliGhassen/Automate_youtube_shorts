@@ -34,9 +34,9 @@ REJECT_FILENAME_WORDS = [
     "feminin", "mujer", "damen", "frauen", "nwsl", "wsl", "wfc",
     "matildas", "lionesses",
 
-    # Youth / non-first-team
-    # "youth", "u21", "u20", "u19", "u18", "u17", "u16", "u15",
-    # "junior", "academy", "reserve", "b_team", "under-21",
+    #Youth / non-first-team
+    "youth", "u21", "u20", "u19", "u18", "u17", "u16", "u15",
+    "junior", "academy", "reserve", "b_team", "under-21",
 
     # Kits / logos / icons only (no action)
     "kit_only", "shirt_only", "badge_only", "logo_only",

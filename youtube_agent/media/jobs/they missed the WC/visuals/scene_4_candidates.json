@@ -1,0 +1,76 @@
+{
+  "scene_index": 4,
+  "keyword": "Kevin-Prince Boateng AC Milan",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_04.jpg",
+      "source": "wikimedia",
+      "score": 82.18,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 34.6,
+      "resolution_score": 90.2,
+      "vision_score": 100.0,
+      "source_title": "File:Mesut \u00d6zil & Kevin-Prince Boateng \u2013 (A.C. Milan vs. Real Madrid).jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "score": 78.68,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 38.7,
+      "resolution_score": 100.0,
+      "vision_score": 90.01,
+      "source_title": "File:F\u00e1bio Coentr\u00e3o and Kevin-Prince Boateng, August 2012.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_04.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Mesut \u00d6zil & Kevin-Prince Boateng \u2013 (A.C. Milan vs. Real Madrid).jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Mesut_%C3%96zil_%26_Kevin-Prince_Boateng_%E2%80%93_%28A.C._Milan_vs._Real_Madrid%29.jpg/1280px-Mesut_%C3%96zil_%26_Kevin-Prince_Boateng_%E2%80%93_%28A.C._Milan_vs._Real_Madrid%29.jpg",
+      "keyword": "Kevin-Prince Boateng AC Milan",
+      "score": 82.18,
+      "resolution_score": 90.2,
+      "quality_score": 34.6,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x541px",
+        "quality_reason": "Brightness=108.3, variance=34.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "source_title": "File:F\u00e1bio Coentr\u00e3o and Kevin-Prince Boateng, August 2012.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/F%C3%A1bio_Coentr%C3%A3o_and_Kevin-Prince_Boateng%2C_August_2012.jpg/1280px-F%C3%A1bio_Coentr%C3%A3o_and_Kevin-Prince_Boateng%2C_August_2012.jpg",
+      "keyword": "Kevin-Prince Boateng AC Milan",
+      "score": 78.68,
+      "resolution_score": 100.0,
+      "quality_score": 38.7,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1200px",
+        "quality_reason": "Brightness=105.3, variance=44.0",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    }
+  ]
+}

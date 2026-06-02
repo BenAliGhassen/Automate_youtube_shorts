@@ -177,6 +177,7 @@ GEMINI_VISION_MODEL = config("GEMINI_VISION_MODEL", default="gemini-3.1-flash-li
 
 PEXELS_API_KEY = config("PEXELS_API_KEY", default="")
 YOUTUBE_CLIENT_SECRETS_FILE = config("YOUTUBE_CLIENT_SECRETS_FILE", default="client_secrets.json")
+TTS_VOICE_NAME = config("TTS_VOICE_NAME", default="en-US-GuyNeural")
 
 # ── App settings ──────────────────────────────────────────────────────────────
 # Topics to rotate through for automatic daily uploads
@@ -207,5 +208,6 @@ DAILY_UPLOAD_HOUR = config("DAILY_UPLOAD_HOUR", default=9, cast=int)   # 09:00 U
 # GEMINI_VISION_MODEL | str | Model used for Gemini Vision relevance checks.
 # PEXELS_API_KEY | str | Optional Pexels API key for future image sources.
 # YOUTUBE_CLIENT_SECRETS_FILE | str | File path for YouTube OAuth credentials.
+# TTS_VOICE_NAME | str | Voice name to use for edge-tts text-to-speech.
 # VIDEO_TOPICS | list[str] | Rotating video topics for automatic daily uploads.
 # DAILY_UPLOAD_HOUR | int | UTC hour when the daily pipeline should run.

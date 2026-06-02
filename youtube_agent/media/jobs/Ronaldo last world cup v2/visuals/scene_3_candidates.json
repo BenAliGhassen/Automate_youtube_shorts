@@ -1,0 +1,76 @@
+{
+  "scene_index": 3,
+  "keyword": "Cristiano Ronaldo",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\396c33b9-e430-4d54-ac21-076d702fe153\\visuals\\image_04.jpg",
+      "source": "wikimedia",
+      "score": 89.4,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 57.6,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Funchal (Madeira, Portugal), Museu CR7, Est\u00e1tua de Cristiano Ronaldo -- 2025 -- 1320.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\396c33b9-e430-4d54-ac21-076d702fe153\\visuals\\image_03.jpg",
+      "source": "wikimedia",
+      "score": 83.7,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 34.8,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Argentine - Portugal - Cristiano Ronaldo.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\396c33b9-e430-4d54-ac21-076d702fe153\\visuals\\image_04.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Funchal (Madeira, Portugal), Museu CR7, Est\u00e1tua de Cristiano Ronaldo -- 2025 -- 1320.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Funchal_%28Madeira%2C_Portugal%29%2C_Museu_CR7%2C_Est%C3%A1tua_de_Cristiano_Ronaldo_--_2025_--_1320.jpg/1280px-Funchal_%28Madeira%2C_Portugal%29%2C_Museu_CR7%2C_Est%C3%A1tua_de_Cristiano_Ronaldo_--_2025_--_1320.jpg",
+      "keyword": "Cristiano Ronaldo",
+      "score": 89.4,
+      "resolution_score": 100.0,
+      "quality_score": 57.6,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1920px",
+        "quality_reason": "Brightness=142.0, variance=62.2",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\396c33b9-e430-4d54-ac21-076d702fe153\\visuals\\image_03.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Argentine - Portugal - Cristiano Ronaldo.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Argentine_-_Portugal_-_Cristiano_Ronaldo.jpg/1280px-Argentine_-_Portugal_-_Cristiano_Ronaldo.jpg",
+      "keyword": "Cristiano Ronaldo",
+      "score": 83.7,
+      "resolution_score": 100.0,
+      "quality_score": 34.8,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x853px",
+        "quality_reason": "Brightness=73.7, variance=52.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    }
+  ]
+}

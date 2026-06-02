@@ -1,0 +1,76 @@
+{
+  "scene_index": 5,
+  "keyword": "Lionel Messi",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_08.jpg",
+      "source": "wikimedia",
+      "score": 90.2,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 60.8,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Lionel Messi 2025.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_07.jpg",
+      "source": "wikimedia",
+      "score": 81.45,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 35.8,
+      "resolution_score": 83.3,
+      "vision_score": 100.0,
+      "source_title": "File:Lionel Messi 31mar2007.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_08.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Lionel Messi 2025.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Lionel_Messi_2025.jpg/1280px-Lionel_Messi_2025.jpg",
+      "keyword": "Lionel Messi",
+      "score": 90.2,
+      "resolution_score": 100.0,
+      "quality_score": 60.8,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1848px",
+        "quality_reason": "Brightness=174.1, variance=52.0",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_07.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Lionel Messi 31mar2007.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Lionel_Messi_31mar2007.jpg",
+      "keyword": "Lionel Messi",
+      "score": 81.45,
+      "resolution_score": 83.3,
+      "quality_score": 35.8,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 500x675px",
+        "quality_reason": "Brightness=80.2, variance=51.2",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "scene_index": 4,
+  "keyword": "Lionel Messi",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "score": 88.17,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 52.7,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:LIONEL MESSI - BRESH MIAMI.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "score": 85.75,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 43.0,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Lionel Messi 20180626.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "source_title": "File:LIONEL MESSI - BRESH MIAMI.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/03/LIONEL_MESSI_-_BRESH_MIAMI.jpg",
+      "keyword": "Lionel Messi",
+      "score": 88.17,
+      "resolution_score": 100.0,
+      "quality_score": 52.7,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1200x1799px",
+        "quality_reason": "Brightness=81.2, variance=83.7",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a2a05bf1-8715-4fb2-b65b-e75b45da5cde\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Lionel Messi 20180626.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lionel_Messi_20180626.jpg",
+      "keyword": "Lionel Messi",
+      "score": 85.75,
+      "resolution_score": 100.0,
+      "quality_score": 43.0,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 701x1000px",
+        "quality_reason": "Brightness=87.7, variance=61.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    }
+  ]
+}

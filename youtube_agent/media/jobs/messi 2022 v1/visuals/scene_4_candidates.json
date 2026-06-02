@@ -1,0 +1,76 @@
+{
+  "scene_index": 4,
+  "keyword": "Lionel Messi",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a52a92d1-a0bb-4a5a-812a-6d0cad528370\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "score": 85.75,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 43.0,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Lionel Messi 20180626.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a52a92d1-a0bb-4a5a-812a-6d0cad528370\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "score": 81.45,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 35.8,
+      "resolution_score": 83.3,
+      "vision_score": 100.0,
+      "source_title": "File:Lionel Messi 31mar2007.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a52a92d1-a0bb-4a5a-812a-6d0cad528370\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Lionel Messi 20180626.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Lionel_Messi_20180626.jpg",
+      "keyword": "Lionel Messi",
+      "score": 85.75,
+      "resolution_score": 100.0,
+      "quality_score": 43.0,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 701x1000px",
+        "quality_reason": "Brightness=87.7, variance=61.5",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a52a92d1-a0bb-4a5a-812a-6d0cad528370\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Lionel Messi 31mar2007.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Lionel_Messi_31mar2007.jpg",
+      "keyword": "Lionel Messi",
+      "score": 81.45,
+      "resolution_score": 83.3,
+      "quality_score": 35.8,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 500x675px",
+        "quality_reason": "Brightness=80.2, variance=51.2",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    }
+  ]
+}

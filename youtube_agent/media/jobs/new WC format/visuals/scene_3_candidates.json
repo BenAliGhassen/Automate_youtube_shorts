@@ -1,0 +1,37 @@
+{
+  "scene_index": 3,
+  "keyword": "Kevin De Bruyne",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a7387985-8109-4305-8aaf-360a29476794\\visuals\\image_03.png",
+      "source": "thesportsdb",
+      "score": 79.22,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 50.9,
+      "resolution_score": 83.3,
+      "vision_score": 90.0,
+      "source_title": "Kevin De Bruyne"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a7387985-8109-4305-8aaf-360a29476794\\visuals\\image_03.png",
+      "source": "thesportsdb",
+      "source_title": "Kevin De Bruyne",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/cutout/o4flia1764089447.png",
+      "keyword": "Kevin De Bruyne",
+      "score": 79.22,
+      "resolution_score": 83.3,
+      "quality_score": 50.9,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 500x500px",
+        "quality_reason": "Brightness=66.7, variance=87.7",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}

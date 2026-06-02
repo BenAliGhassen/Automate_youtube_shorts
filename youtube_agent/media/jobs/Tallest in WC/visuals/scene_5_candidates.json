@@ -1,0 +1,76 @@
+{
+  "scene_index": 5,
+  "keyword": "Belgium National Team",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5e95c0ae-e669-4851-a639-a532d609772c\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "score": 78.95,
+      "reason": "[Scored] filename=100.0 vision=82.2 total=87.54",
+      "quality_score": 45.7,
+      "resolution_score": 100.0,
+      "vision_score": 87.54,
+      "source_title": "File:Belgium national football team at Samsung.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5e95c0ae-e669-4851-a639-a532d609772c\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "score": 78.46,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 44.7,
+      "resolution_score": 88.5,
+      "vision_score": 90.01,
+      "source_title": "File:Belgian national football team WC2022.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5e95c0ae-e669-4851-a639-a532d609772c\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Belgium national football team at Samsung.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Belgium_national_football_team_at_Samsung.jpg/1280px-Belgium_national_football_team_at_Samsung.jpg",
+      "keyword": "Belgium National Team",
+      "score": 78.95,
+      "resolution_score": 100.0,
+      "quality_score": 45.7,
+      "vision_score": 87.54,
+      "reason": "[Scored] filename=100.0 vision=82.2 total=87.54",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x719px",
+        "quality_reason": "Brightness=73.9, variance=73.8",
+        "relevance_details": {
+          "keyword_relevance": 85.0,
+          "subject_visibility": 70.0,
+          "football_confidence": 90.0,
+          "vision_score": 82.2,
+          "filename_score": 100.0,
+          "total_score": 87.54
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5e95c0ae-e669-4851-a639-a532d609772c\\visuals\\image_05.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Belgian national football team WC2022.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/1/11/Belgian_national_football_team_WC2022.jpg",
+      "keyword": "Belgium National Team",
+      "score": 78.46,
+      "resolution_score": 88.5,
+      "quality_score": 44.7,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 800x531px",
+        "quality_reason": "Brightness=92.0, variance=62.6",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "scene_index": 4,
+  "keyword": "Weston McKennie",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\587a11d8-1e5b-4845-90dd-4b19a716289e\\visuals\\image_04.png",
+      "source": "thesportsdb",
+      "score": 77.22,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 42.9,
+      "resolution_score": 83.3,
+      "vision_score": 90.0,
+      "source_title": "Weston McKennie"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\587a11d8-1e5b-4845-90dd-4b19a716289e\\visuals\\image_04.png",
+      "source": "thesportsdb",
+      "source_title": "Weston McKennie",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/cutout/ct34v01759225325.png",
+      "keyword": "Weston McKennie",
+      "score": 77.22,
+      "resolution_score": 83.3,
+      "quality_score": 42.9,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 500x500px",
+        "quality_reason": "Brightness=54.0, variance=78.4",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}

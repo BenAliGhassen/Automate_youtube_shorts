@@ -1,0 +1,37 @@
+{
+  "scene_index": 3,
+  "keyword": "Neymar",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\c45767ad-e01f-45b6-bf4e-cde6b29fca32\\visuals\\image_03.png",
+      "source": "thesportsdb",
+      "score": 81.82,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 61.3,
+      "resolution_score": 83.3,
+      "vision_score": 90.0,
+      "source_title": "Neymar"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\c45767ad-e01f-45b6-bf4e-cde6b29fca32\\visuals\\image_03.png",
+      "source": "thesportsdb",
+      "source_title": "Neymar",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/cutout/av4ar01767782947.png",
+      "keyword": "Neymar",
+      "score": 81.82,
+      "resolution_score": 83.3,
+      "quality_score": 61.3,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 500x500px",
+        "quality_reason": "Brightness=82.2, variance=105.8",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}

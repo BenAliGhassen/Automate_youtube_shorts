@@ -1,0 +1,42 @@
+{
+  "scene_index": 4,
+  "keyword": "Simon Bloch Jorgensen",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\12e610a8-4cdf-4236-bbc7-bfab12d2265c\\visuals\\image_03.jpg",
+      "source": "wikimedia",
+      "score": 84.78,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "quality_score": 63.1,
+      "resolution_score": 100.0,
+      "vision_score": 90.01,
+      "source_title": "File:Simon Bloch J\u00f8rgensen.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\12e610a8-4cdf-4236-bbc7-bfab12d2265c\\visuals\\image_03.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Simon Bloch J\u00f8rgensen.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Simon_Bloch_J%C3%B8rgensen.jpg/1280px-Simon_Bloch_J%C3%B8rgensen.jpg",
+      "keyword": "Simon Bloch Jorgensen",
+      "score": 84.78,
+      "resolution_score": 100.0,
+      "quality_score": 63.1,
+      "vision_score": 90.01,
+      "reason": "[Scored] filename=66.7 vision=100.0 total=90.01",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1069px",
+        "quality_reason": "Brightness=175.5, variance=55.7",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 66.7,
+          "total_score": 90.01
+        }
+      }
+    }
+  ]
+}

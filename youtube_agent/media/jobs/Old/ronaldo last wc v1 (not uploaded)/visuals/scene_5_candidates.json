@@ -1,0 +1,76 @@
+{
+  "scene_index": 5,
+  "keyword": "Cristiano Ronaldo",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a0aa523f-84bc-4d74-8dad-92499c239580\\visuals\\image_07.jpg",
+      "source": "wikimedia",
+      "score": 88.12,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 52.5,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Cristiano Ronaldo, 2010.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a0aa523f-84bc-4d74-8dad-92499c239580\\visuals\\image_08.jpg",
+      "source": "wikimedia",
+      "score": 87.5,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "quality_score": 50.0,
+      "resolution_score": 100.0,
+      "vision_score": 100.0,
+      "source_title": "File:Cristiano Ronaldo 2018.jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a0aa523f-84bc-4d74-8dad-92499c239580\\visuals\\image_07.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Cristiano Ronaldo, 2010.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/61/Cristiano_Ronaldo%2C_2010.jpg",
+      "keyword": "Cristiano Ronaldo",
+      "score": 88.12,
+      "resolution_score": 100.0,
+      "quality_score": 52.5,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 781x1056px",
+        "quality_reason": "Brightness=112.6, variance=67.3",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\a0aa523f-84bc-4d74-8dad-92499c239580\\visuals\\image_08.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Cristiano Ronaldo 2018.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Cristiano_Ronaldo_2018.jpg",
+      "keyword": "Cristiano Ronaldo",
+      "score": 87.5,
+      "resolution_score": 100.0,
+      "quality_score": 50.0,
+      "vision_score": 100.0,
+      "reason": "[Scored] filename=100.0 vision=100.0 total=100.0",
+      "details": {
+        "resolution_reason": "Resolution score: 613x920px",
+        "quality_reason": "Brightness=109.5, variance=63.9",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 100.0,
+          "total_score": 100.0
+        }
+      }
+    }
+  ]
+}

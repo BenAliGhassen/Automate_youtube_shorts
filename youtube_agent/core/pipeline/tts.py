@@ -15,13 +15,19 @@ logger = logging.getLogger(__name__)
 VOICE_NAME = "en-US-GuyNeural"
 
 
+def _get_voice_name() -> str:
+    """Return the configured TTS voice name, falling back to the built-in default."""
+    voice_name = getattr(settings, "TTS_VOICE_NAME", "").strip()
+    return voice_name or VOICE_NAME
+
+
 async def _save_audio(script: str, output_path: Path) -> None:
     try:
         import edge_tts
     except ImportError as exc:
         raise Exception("edge-tts is not installed. Run `pip install edge-tts`.") from exc
 
-    communicator = edge_tts.Communicate(text=script, voice=VOICE_NAME)
+    communicator = edge_tts.Communicate(text=script, voice=_get_voice_name())
     await communicator.save(str(output_path))
 
 
@@ -99,6 +105,9 @@ def generate_audio(script: str, job_id: str) -> str:
     logger.info("[%s] Generating audio with voice %s", job_id[:8], VOICE_NAME)
 
     clean_script = _preprocess_script(script.strip())
+    voice_name = _get_voice_name()
+
+    logger.info("[%s] Generating audio with voice %s", job_id[:8], voice_name)
 
     try:
         asyncio.run(_save_audio(clean_script, output_path))

@@ -1,0 +1,76 @@
+{
+  "scene_index": 5,
+  "keyword": "Santiago Canizares",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "score": 79.8,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "quality_score": 55.2,
+      "resolution_score": 100.0,
+      "vision_score": 85.0,
+      "source_title": "File:Santiago Ca\u00f1izares 2026.jpg"
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_07.jpg",
+      "source": "wikimedia",
+      "score": 77.47,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "quality_score": 45.9,
+      "resolution_score": 100.0,
+      "vision_score": 85.0,
+      "source_title": "File:Santiago Ca\u00f1izares (Tio Pep 2019).jpg"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_06.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Santiago Ca\u00f1izares 2026.jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Santiago_Ca%C3%B1izares_2026.jpg/1280px-Santiago_Ca%C3%B1izares_2026.jpg",
+      "keyword": "Santiago Canizares",
+      "score": 79.8,
+      "resolution_score": 100.0,
+      "quality_score": 55.2,
+      "vision_score": 85.0,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1220px",
+        "quality_reason": "Brightness=107.0, variance=75.4",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 50.0,
+          "total_score": 85.0
+        }
+      }
+    },
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5ac5ae55-1d41-455b-b1b8-c0d6bfb1d654\\visuals\\image_07.jpg",
+      "source": "wikimedia",
+      "source_title": "File:Santiago Ca\u00f1izares (Tio Pep 2019).jpg",
+      "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Santiago_Ca%C3%B1izares_%28Tio_Pep_2019%29.jpg/1280px-Santiago_Ca%C3%B1izares_%28Tio_Pep_2019%29.jpg",
+      "keyword": "Santiago Canizares",
+      "score": 77.47,
+      "resolution_score": 100.0,
+      "quality_score": 45.9,
+      "vision_score": 85.0,
+      "reason": "[Scored] filename=50.0 vision=100.0 total=85.0",
+      "details": {
+        "resolution_reason": "Resolution score: 1280x1424px",
+        "quality_reason": "Brightness=108.8, variance=56.3",
+        "relevance_details": {
+          "keyword_relevance": 100.0,
+          "subject_visibility": 100.0,
+          "football_confidence": 100.0,
+          "vision_score": 100.0,
+          "filename_score": 50.0,
+          "total_score": 85.0
+        }
+      }
+    }
+  ]
+}

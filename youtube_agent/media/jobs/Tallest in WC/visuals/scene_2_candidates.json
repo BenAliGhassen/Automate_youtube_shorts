@@ -1,0 +1,37 @@
+{
+  "scene_index": 2,
+  "keyword": "Andries Noppert",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5e95c0ae-e669-4851-a639-a532d609772c\\visuals\\image_02.png",
+      "source": "thesportsdb",
+      "score": 78.9,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 49.6,
+      "resolution_score": 83.3,
+      "vision_score": 90.0,
+      "source_title": "Andries Noppert"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\5e95c0ae-e669-4851-a639-a532d609772c\\visuals\\image_02.png",
+      "source": "thesportsdb",
+      "source_title": "Andries Noppert",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/cutout/f3258g1728931146.png",
+      "keyword": "Andries Noppert",
+      "score": 78.9,
+      "resolution_score": 83.3,
+      "quality_score": 49.6,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 500x500px",
+        "quality_reason": "Brightness=126.1, variance=54.6",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}

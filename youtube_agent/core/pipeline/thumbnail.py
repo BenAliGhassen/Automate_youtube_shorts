@@ -1,23 +1,25 @@
-"""
+﻿"""
 Thumbnail generator for YouTube Shorts hook frame.
 Layout:
   - Red/black dramatic gradient background
   - Bold hook text at the top
-  - Player image (from TheSportsDB) centered at the bottom
-  - Fallback: Pillow-only card if player image unavailable
+  - Player/team image (from TheSportsDB) centered at the bottom when available
+  - Fallback: Pillow-only card if no SportsDB image is found
 
 Pipeline:
-  1. Extract player name from topic/scenes
-  2. Fetch player cutout from TheSportsDB
-  3. Composite player over gradient background
-  4. Add hook text at top
-  5. Fallback to pure Pillow card if any step fails
+  1. Extract player or team name from topic/scenes
+  2. Dynamically search TheSportsDB for players or teams mentioned in the topic/hook/scenes
+  3. Fetch player cutout or team-related image from TheSportsDB
+  4. Composite the image over the dramatic background
+  5. Add hook text at top
+  6. Fallback to pure Pillow card if any step fails
 """
 
 import argparse
 import json
 import logging
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -32,151 +34,394 @@ HEIGHT = 1920
 
 SPORTSDB_API = "https://www.thesportsdb.com/api/v1/json/3"
 
-# ── Player/Country/Club/Topic mappings ───────────────────────────────────────
+# ── SportsDB search helpers ───────────────────────────────────────────────
+#
+# This pipeline dynamically searches TheSportsDB for players and teams using
+# generated topic/hook/scene keywords.
+# It no longer relies on hard-coded player or topic ID maps for thumbnail selection.
 
-PLAYER_IDS = {
-    "messi":       34146370,
-    "ronaldo":     34146304,
-    "mbappe":      34162098,
-    "neymar":      34146371,
-    "haaland":     34169116,
-    "benzema":     34146309,
-    "modric":      34146306,
-    "salah":       34145506,
-    "lewandowski": 34146705,
-    "vinicius":    34161324,
-    "bellingham":  34171882,
-    "pedri":       34172243,
-    "yamal":       34219490,
-    "griezmann":   34159231,
-    "kane":        34146220,
-    "de bruyne":   34155057,
-    "ronaldinho":  34159850,
-    "zidane":      34161049,
-    "cruyff":      34163559,
-    "r9":          34161040,
-    "r10":         34159850,
-    "nazario":     34161040,
-    "pele": 34164201,
-}
+# ── SportsDB entity search helpers ──────────────────────────────────────────
 
-COUNTRY_PLAYER_MAP = {
-    "brazil":      34161040,
-    "brasil":      34161040,
-    "argentina":   34146370,
-    "france":      34161049,
-    "portugal":    34146304,
-    "netherlands": 34163559,
-    "holland":     34163559,
-    "dutch":       34163559,
-    "germany":     34146705,
-    "spain":       34146306,
-    "england":     34146220,
-    "italy":       34146306,
-    "croatia":     34146306,
-    "senegal":     34145506,
-    "africa":      34145506,
-    "colombia":    34146370,
-    "uruguay":     34146370,
-    "mexico":      34162098,
-}
+def _sportsdb_request(url: str, retries: int = 3) -> dict:
+    """Perform a SportsDB request, retrying on transient failures."""
+    for attempt in range(retries):
+        try:
+            req = Request(
+                url=url,
+                headers={"User-Agent": "youtube-agent/1.0"},
+                method="GET",
+            )
+            with urlopen(req, timeout=15) as response:
+                return json.loads(response.read().decode("utf-8"))
 
-CLUB_PLAYER_MAP = {
-    "barcelona":          34146370,
-    "fc barcelona":       34146370,
-    "real madrid":        34146304,
-    "manchester united":  34146304,
-    "juventus":           34146304,
-    "psg":                34162098,
-    "paris":              34162098,
-    "liverpool":          34145506,
-    "manchester city":    34155057,
-    "bayern":             34146705,
-    "chelsea":            34159231,
-    "arsenal":            34146220,
-    "inter miami":        34146370,
-    "miami":              34146370,
-    "dortmund":           34169116,
-    "ajax":               34163559,
-    "atletico madrid":    34159231,
-}
+        except HTTPError as exc:
+            if exc.code == 429:
+                wait = 2 ** attempt * 2
+                logger.warning(
+                    "SportsDB rate limited — waiting %ss (attempt %s/%s)",
+                    wait,
+                    attempt + 1,
+                    retries,
+                )
+                time.sleep(wait)
+                continue
+            logger.warning("SportsDB request failed with HTTP %s: %s", exc.code, exc)
+            break
 
-TOPIC_PLAYER_MAP = {
-    "world cup":        34161040,
-    "champions league": 34146304,
-    "ballon d'or":      34146370,
-    "ballon dor":       34146370,
-    "golden boot":      34146304,
-    "hat trick":        34146370,
-    "record":           34146304,
-    "goat":             34146370,
-    "greatest":         34146370,
-    "best":             34146370,
-    "worst":            34161040,
-    "loss":             34161040,
-    "defeat":           34161040,
-    "curse":            34163559,
-    "final":            34146304,
-    "legend":           34161040,
-    "comeback":         34146370,
-    "injury":           34161040,
-    "retired":          34163559,
-    "forgotten":        34159850,
-    "scandal":          34159850,
-    "controversial":    34161049,
-    "headbutt":         34161049,
-    "red card":         34161049,
-    "banned":           34159850,
-    "penalty":          34146304,
-    "free kick":        34146370,
-    "dribble":          34159850,
-    "skill":            34159850,
-}
+        except URLError as exc:
+            logger.warning("SportsDB request error: %s", exc)
+            if attempt + 1 < retries:
+                time.sleep(2 ** attempt)
+                continue
+            break
+
+        except Exception as exc:
+            logger.warning("SportsDB request failed: %s", exc)
+            break
+
+    return {}
 
 
-# ── Player detection ──────────────────────────────────────────────────────────
+def _normalize_search_term(value: str) -> str:
+    """Normalize a text value into a safe SportsDB search query."""
+    tokens = re.findall(r"[A-Za-z0-9']+", value)
+    return " ".join(tokens).strip()
 
-def _detect_player(topic: str, hook: str, scenes: list) -> tuple[int | None, str]:
-    """
-    Detect the most relevant player for the thumbnail.
-    Priority order:
-      1. Known player name directly in text
-      2. Country name → iconic player for that country
-      3. Club name → iconic player for that club
-      4. Topic keyword → thematically relevant player
-      5. None — text-only thumbnail
 
-    Returns (player_id, detection_reason) or (None, reason).
-    """
-    all_text = f"{topic} {hook} {' '.join(s.get('keyword', '') for s in scenes)}".lower()
+def _get_category_representative(topic: str, hook: str) -> tuple[str, str] | None:
+    """Return a representative player name for category-based or clickbait topics."""
+    lower = f"{topic} {hook}".lower()
 
-    # Priority 1 — direct player name match
-    for name, pid in PLAYER_IDS.items():
-        if name in all_text:
-            logger.info("Player detected by name: %s", name)
-            return pid, f"name match: {name}"
+    # Category-specific anchors: use a known player even when no named player appears.
+    if "shortest" in lower:
+        return "player", "Lionel Messi"
+    if "tallest" in lower:
+        return "player", "Erling Haaland"
+    if "oldest" in lower:
+        return "player", "Cristiano Ronaldo"
 
-    # Priority 2 — country match
-    for country, pid in COUNTRY_PLAYER_MAP.items():
-        if country in all_text:
-            logger.info("Player detected by country: %s", country)
-            return pid, f"country match: {country}"
+    # Broad topic-based clickbait fallback for player-only thumbnails.
+    if "world cup" in lower or "fifa" in lower:
+        return "player", "Lionel Messi"
+    if "champions league" in lower or "ucl" in lower:
+        return "player", "Erling Haaland"
+    if "portugal" in lower:
+        return "player", "Cristiano Ronaldo"
+    if "brazil" in lower:
+        return "player", "Neymar Jr"
+    if "argentina" in lower:
+        return "player", "Lionel Messi"
+    if "manchester city" in lower or "man city" in lower:
+        return "player", "Erling Haaland"
+    if "barcelona" in lower:
+        return "player", "Lionel Messi"
 
-    # Priority 3 — club match
-    for club, pid in CLUB_PLAYER_MAP.items():
-        if club in all_text:
-            logger.info("Player detected by club: %s", club)
-            return pid, f"club match: {club}"
+    return None
 
-    # Priority 4 — topic keyword match
-    for keyword, pid in TOPIC_PLAYER_MAP.items():
-        if keyword in all_text:
-            logger.info("Player detected by topic keyword: %s", keyword)
-            return pid, f"topic match: {keyword}"
 
-    # Priority 5 — default to R9 as the most universally dramatic player
-    logger.info("No match found — defaulting to R9")
-    return 34145943, "default: R9"
+def _select_thumbnail_text(title: str, hook: str) -> str:
+    """Choose the best headline for the thumbnail between title and hook."""
+    title_clean = title.strip()
+    hook_clean = hook.strip()
+
+    if title_clean and len(title_clean) <= 45 and len(hook_clean) > 65:
+        return title_clean
+    if hook_clean and len(hook_clean) <= 85:
+        return hook_clean
+    return title_clean or hook_clean
+
+
+def _should_skip_generic_candidate(normalized: str) -> bool:
+    """Skip generic or non-entity candidate strings when building SportsDB search terms."""
+    generic_terms = {
+        "world cup",
+        "world cup 2026",
+        "fifa world cup",
+        "fifa world cup 2026",
+        "fifa",
+        "world cup",
+        "2026",
+        "2026 world cup",
+        "the 5 tallest players",
+        "5 tallest players",
+        "tallest players",
+        "shortest players",
+        "oldest players",
+        "tallest player",
+        "shortest player",
+        "oldest player",
+        "player",
+        "players",
+        "team",
+        "teams",
+        "football",
+        "soccer",
+        "goal",
+        "goals",
+        "record",
+        "stats",
+        "highest",
+        "lowest",
+    }
+
+    if normalized in generic_terms:
+        return True
+
+    if re.fullmatch(r"\d+(?:st|nd|rd|th)?", normalized):
+        return True
+
+    if re.search(r"\b(?:tallest|shortest|oldest|youngest|fastest|biggest|smallest|best|worst|record|goal|stats|championship|final|cup|world|fifa)\b", normalized) and len(normalized.split()) <= 3:
+        return True
+
+    return False
+
+
+def _candidate_is_team_name(candidate: str) -> bool:
+    """Simple heuristic to decide whether a normalized candidate looks like a team name."""
+    team_indicators = {
+        "fc",
+        "real",
+        "united",
+        "city",
+        "sporting",
+        "atletico",
+        "athletic",
+        "club",
+        "national",
+        "america",
+        "galatasaray",
+        "munich",
+        "madrid",
+        "barcelona",
+        "psg",
+        "liverpool",
+        "chelsea",
+        "arsenal",
+        "dortmund",
+        "inter",
+        "juventus",
+        "milan",
+        "ac",
+    }
+    if any(token in candidate.split() for token in team_indicators):
+        return True
+    if "national" in candidate:
+        return True
+    return False
+
+
+def _build_search_candidates(topic: str, hook: str, scenes: list) -> list[str]:
+    """Generate candidate player or team search terms from the topic, hook, and scene keywords."""
+    seen = set()
+    candidates = []
+    raw_terms = [topic, hook] + [scene.get("keyword", "") for scene in scenes]
+
+    def add_candidate(term: str) -> None:
+        normalized = _normalize_search_term(term)
+        if not normalized or normalized in seen or _should_skip_generic_candidate(normalized):
+            return
+        seen.add(normalized)
+        candidates.append(normalized)
+
+    for raw in raw_terms:
+        add_candidate(raw)
+        normalized = _normalize_search_term(raw)
+        if not normalized:
+            continue
+
+        for part in re.split(r"\s+(?:vs|versus)\.?\s+", normalized, flags=re.I):
+            add_candidate(part)
+
+        words = normalized.split()
+        if len(words) > 1:
+            max_length = min(4, len(words))
+            for length in range(max_length, 1, -1):
+                for start in range(len(words) - length + 1):
+                    add_candidate(" ".join(words[start:start + length]))
+
+            for length in range(2, min(4, len(words)) + 1):
+                add_candidate(" ".join(words[-length:]))
+
+    return candidates[:24]
+
+
+def _extract_image_url(record: dict, fields: list[str]) -> str | None:
+    """Return the first non-empty URL from a SportsDB record."""
+    for field in fields:
+        url = record.get(field)
+        if isinstance(url, str) and url.strip():
+            return url.strip()
+    return None
+
+
+def _search_sportsdb_player(name: str) -> tuple[int, str] | None:
+    """Search TheSportsDB for a player name and return the first usable result."""
+    url = f"{SPORTSDB_API}/searchplayers.php?p={quote(name)}"
+    data = _sportsdb_request(url)
+    players = data.get("player") or []
+    for player in players:
+        player_id = player.get("idPlayer")
+        image_url = _extract_image_url(
+            player,
+            ["strCutout", "strRender", "strThumb", "strFanart", "strThumbSmall"],
+        )
+        if player_id and image_url:
+            logger.info("SportsDB player search matched: %s", player.get("strPlayer"))
+            return int(player_id), player.get("strPlayer", name)
+    return None
+
+
+def _search_sportsdb_team(name: str) -> tuple[int, str] | None:
+    """Search TheSportsDB for a team name and return the first usable result."""
+    url = f"{SPORTSDB_API}/searchteams.php?t={quote(name)}"
+    data = _sportsdb_request(url)
+    teams = data.get("teams") or []
+    for team in teams:
+        team_id = team.get("idTeam")
+        image_url = _extract_image_url(
+            team,
+            [
+                "strTeamBadge",
+                "strTeamLogo",
+                "strTeamBanner",
+                "strTeamFanart1",
+                "strTeamFanart2",
+                "strTeamJersey",
+            ],
+        )
+        if team_id and image_url:
+            logger.info("SportsDB team search matched: %s", team.get("strTeam"))
+            return int(team_id), team.get("strTeam", name)
+    return None
+
+
+def _fetch_team_image(team_id: int) -> bytes | None:
+    """Fetch a team image from TheSportsDB by team ID."""
+    url = f"{SPORTSDB_API}/lookupteam.php?id={team_id}"
+    data = _sportsdb_request(url)
+    teams = data.get("teams") or []
+    if not teams:
+        logger.warning("TheSportsDB: no team found for ID %s", team_id)
+        return None
+
+    team = teams[0]
+    image_url = _extract_image_url(
+        team,
+        [
+            "strTeamBanner",
+            "strTeamFanart1",
+            "strTeamFanart2",
+            "strTeamJersey",
+            "strTeamLogo",
+            "strTeamBadge",
+        ],
+    )
+    if not image_url:
+        logger.warning("No team image URL available for team ID %s", team_id)
+        return None
+
+    return _download_image_bytes(image_url)
+
+
+def _download_image_bytes(url: str, retries: int = 3) -> bytes | None:
+    """Download image bytes from a URL with retry support."""
+    for attempt in range(retries):
+        try:
+            req = Request(
+                url=url,
+                headers={"User-Agent": "youtube-agent/1.0"},
+                method="GET",
+            )
+            with urlopen(req, timeout=30) as response:
+                data = response.read()
+                if data and len(data) > 5000:
+                    return data
+                return None
+
+        except HTTPError as exc:
+            if exc.code == 429:
+                wait = 2 ** attempt * 3
+                logger.warning(
+                    "SportsDB download rate limited — waiting %ss (attempt %s/%s)",
+                    wait,
+                    attempt + 1,
+                    retries,
+                )
+                time.sleep(wait)
+                continue
+            logger.warning("Failed to download SportsDB image %s: %s", url, exc)
+            return None
+
+        except URLError as exc:
+            logger.warning("Failed to download SportsDB image %s: %s", url, exc)
+            if attempt + 1 < retries:
+                time.sleep(2 ** attempt)
+                continue
+            return None
+
+        except Exception as exc:
+            logger.warning("Failed to download SportsDB image %s: %s", url, exc)
+            return None
+
+    return None
+
+
+# The thumbnail search logic is intentionally dynamic: it prefers SportsDB lookups
+# for real player or team names extracted from the topic, hook, and generated scenes.
+# Wikimedia Commons is kept as a backup only for scene visuals when SportsDB imagery
+# is not available.
+def _detect_player_or_team(topic: str, hook: str, scenes: list) -> tuple[str | None, int | None, str]:
+    """Detect the best SportsDB player or team to use for the thumbnail."""
+    candidates = _build_search_candidates(topic, hook, scenes)
+    for candidate in candidates:
+        if not candidate or _should_skip_generic_candidate(candidate):
+            continue
+
+        if _candidate_is_team_name(candidate):
+            logger.info("Candidate looks like a team; trying team search first: %s", candidate)
+            team_match = _search_sportsdb_team(candidate)
+            if team_match:
+                team_id, team_name = team_match
+                return "team", team_id, f"SportsDB team search: {team_name}"
+
+            logger.info("Trying SportsDB player search for team-like text: %s", candidate)
+            player_match = _search_sportsdb_player(candidate)
+            if player_match:
+                player_id, player_name = player_match
+                return "player", player_id, f"SportsDB player search: {player_name}"
+
+        else:
+            logger.info("Trying SportsDB player search for: %s", candidate)
+            player_match = _search_sportsdb_player(candidate)
+            if player_match:
+                player_id, player_name = player_match
+                return "player", player_id, f"SportsDB player search: {player_name}"
+
+            logger.info("Trying SportsDB team search for: %s", candidate)
+            team_match = _search_sportsdb_team(candidate)
+            if team_match:
+                team_id, team_name = team_match
+                return "team", team_id, f"SportsDB team search: {team_name}"
+
+    # If no direct SportsDB candidate matches, fall back to a strong topic-related player.
+    # This ensures a player image is used even when the topic does not name a player.
+    representative = _get_category_representative(topic, hook)
+    if representative:
+        entity_type, name = representative
+        logger.info("Category-based thumbnail fallback selected: %s", name)
+        if entity_type == "player":
+            player_match = _search_sportsdb_player(name)
+            if player_match:
+                player_id, player_name = player_match
+                return "player", player_id, f"category representative: {player_name}"
+        elif entity_type == "team":
+            team_match = _search_sportsdb_team(name)
+            if team_match:
+                team_id, team_name = team_match
+                return "team", team_id, f"category representative: {team_name}"
+
+    logger.info("No SportsDB player or team found for the current topic/scenes")
+    return None, None, "no SportsDB player or team matched"
 
 
 # ── TheSportsDB player image ──────────────────────────────────────────────────
@@ -472,7 +717,8 @@ def _composite_thumbnail(
 
         # Wrap hook text
         lines   = _wrap_text(hook_clean, font_large, WIDTH - 80, draw)
-        current_y = 60
+        # Start the title closer to the player image so the top section feels tighter.
+        current_y = 42
 
         # If too many lines switch to medium font
         if len(lines) > 3:
@@ -491,10 +737,10 @@ def _composite_thumbnail(
                 outline=(180, 0, 0),
                 outline_width=5,
             )
-            current_y += 8   # extra line spacing
+            current_y += 6   # extra line spacing
 
         # ── Red accent line under text ────────────────────────────────────
-        line_y = current_y + 20
+        line_y = current_y + 12
         draw.rectangle(
             [60, line_y, WIDTH - 60, line_y + 5],
             fill=(220, 20, 20)
@@ -543,30 +789,42 @@ def generate_thumbnail(
     Returns local file path as string.
 
     Steps:
-    1. Detect player ID from topic/hook/scenes
-    2. Fetch player image from TheSportsDB by ID
-    3. Composite: gradient + player + hook text
-    4. Fallback to text-only card if player image unavailable
+    1. Detect player or team ID from topic/hook/scenes using SportsDB search
+    2. Fetch player or team image from TheSportsDB by ID
+    3. Composite: gradient + SportsDB image + hook text
+    4. Fallback to text-only card if SportsDB image unavailable
     """
     output_path = job_dir / "thumbnail.jpg"
     scenes      = scenes or []
 
-    # Step 1 — detect player (returns tuple: (player_id, reason))
-    player_id, reason = _detect_player(topic, hook, scenes)
-    logger.info("Player selected: ID=%s reason=%s", player_id, reason)
+    # Step 1 — detect SportsDB player or team entity
+    entity_type, entity_id, reason = _detect_player_or_team(topic, hook, scenes)
+    logger.info(
+        "SportsDB entity selected: type=%s id=%s reason=%s",
+        entity_type,
+        entity_id,
+        reason,
+    )
 
-    # Step 2 — fetch player image by ID
-    player_bytes = None
-    if player_id:
-        player_bytes = _fetch_player_image(player_id)
-        if not player_bytes:
-            logger.warning(
-                "No image fetched for player ID %s -- text-only thumbnail",
-                player_id
-            )
+    thumbnail_text = _select_thumbnail_text(title, hook)
+    logger.info("Selected thumbnail text: %s", thumbnail_text)
 
-    # Step 3 — composite (works with or without player image)
-    success = _composite_thumbnail(hook, player_bytes, output_path)
+    # Step 2 — fetch image by entity type
+    entity_bytes = None
+    if entity_type == "player" and entity_id:
+        entity_bytes = _fetch_player_image(entity_id)
+    elif entity_type == "team" and entity_id:
+        entity_bytes = _fetch_team_image(entity_id)
+
+    if not entity_bytes and entity_id:
+        logger.warning(
+            "No SportsDB image fetched for %s ID %s -- text-only thumbnail",
+            entity_type,
+            entity_id,
+        )
+
+    # Step 3 — composite (works with or without SportsDB image)
+    success = _composite_thumbnail(thumbnail_text, entity_bytes, output_path)
 
     if success:
         return str(output_path)
@@ -614,10 +872,6 @@ if __name__ == "__main__":
 # WIDTH | int | Output thumbnail width in pixels.
 # HEIGHT | int | Output thumbnail height in pixels.
 # SPORTSDB_API | str | Base URL for TheSportsDB API lookups.
-# PLAYER_IDS | dict[str, int] | Known player names mapped to player IDs.
-# COUNTRY_PLAYER_MAP | dict[str, int] | Country keywords mapped to iconic player IDs.
-# CLUB_PLAYER_MAP | dict[str, int] | Club keywords mapped to fallback player IDs.
-# TOPIC_PLAYER_MAP | dict[str, int] | Topic keywords mapped to fallback player IDs.
 # _detect_player | func | Determine the best player for the thumbnail based on text.
 # _fetch_player_image | func | Download a player image from TheSportsDB.
 # _generate_background | func | Create the red/black gradient thumbnail background.
@@ -628,3 +882,5 @@ if __name__ == "__main__":
 # _draw_outlined_text | func | Render centered outlined text.
 # _composite_thumbnail | func | Composite the final thumbnail and save it.
 # generate_thumbnail | func | Top-level thumbnail generation function used by the pipeline.
+
+

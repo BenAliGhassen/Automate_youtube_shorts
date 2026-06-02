@@ -1,0 +1,37 @@
+{
+  "scene_index": 5,
+  "keyword": "Giovanni Reyna",
+  "top_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\587a11d8-1e5b-4845-90dd-4b19a716289e\\visuals\\image_05.png",
+      "source": "thesportsdb",
+      "score": 82.17,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "quality_score": 62.7,
+      "resolution_score": 83.3,
+      "vision_score": 90.0,
+      "source_title": "Giovanni Reyna"
+    }
+  ],
+  "all_candidates": [
+    {
+      "path": "C:\\Users\\Ben Ali\\Desktop\\My PC\\Projects\\Youtube_agent\\youtube_agent\\media\\jobs\\587a11d8-1e5b-4845-90dd-4b19a716289e\\visuals\\image_05.png",
+      "source": "thesportsdb",
+      "source_title": "Giovanni Reyna",
+      "source_url": "https://r2.thesportsdb.com/images/media/player/cutout/xsovcs1762966653.png",
+      "keyword": "Giovanni Reyna",
+      "score": 82.17,
+      "resolution_score": 83.3,
+      "quality_score": 62.7,
+      "vision_score": 90.0,
+      "reason": "TheSportsDB pre-curated player image \u2014 relevance assumed",
+      "details": {
+        "resolution_reason": "Resolution score: 500x500px",
+        "quality_reason": "Brightness=87.7, variance=105.4",
+        "relevance_details": {
+          "source": "thesportsdb_assumed"
+        }
+      }
+    }
+  ]
+}
